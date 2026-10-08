@@ -168,7 +168,8 @@
                         '<span class="press-item-title">' + esc(item.title) + '</span>' +
                         '<span class="press-item-pub">' + thumb +
                             (item.logo
-                                ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '" loading="lazy" decoding="async">'
+                                ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '" loading="lazy" decoding="async">' +
+                                  (item.video ? '<span class="press-item-tag">video</span>' : '')
                                 : '<span>' + esc(item.pub) + (item.video ? ' \u00b7 video' : '') + '</span>') +
                         '</span>' +
                         '<span class="press-item-right">' +

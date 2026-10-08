@@ -378,11 +378,11 @@
         press: [
             {
                 pub: 'Totem',
+                logo: 'assets/press/totem-logo.webp',
                 title: 'Lakras / Amehl: The Girls Shaking Up Brooklyn\u2019s Migrant Fashion Scene',
                 // The year is taken from the date of the Instagram post.
                 date: '2026',
                 href: 'https://www.instagram.com/p/Dd9GEgVEbr4/',
-                image: 'assets/press/totem.webp',
             },
             {
                 pub: 'The Daily Front Row',
@@ -408,8 +408,8 @@
                 title: 'First time in Vogue: The Treasure',
                 date: '2023',
                 href: 'project.html?slug=the-treasure',
-                // A thumbnail on the row; `video: true` adds a play button.
-                image: 'assets/projects/the-treasure/cover.webp',
+                logo: 'assets/press/vogue-thailand.webp',
+                // `video: true` adds a small "video" tag next to the logo.
                 video: true,
             },
             { pub: 'Vogue', title: 'The Platform Redefining Contemporary Fashion', date: '2026' },
