@@ -593,6 +593,11 @@ html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
     pointer-events: none;
 }
 
+/* **Bold** words in the intro sentence. Instrument Serif has one weight, so this is the browser's
+   own bold; a little extra spacing keeps the thickened letters from touching. */
+.stage-intro strong,
+.statement strong { font-weight: 700; letter-spacing: 0.012em; }
+
 .drag-trail {
     position: absolute;
     inset: 0;

@@ -172,7 +172,7 @@
     // Intro sentence (js/data.js) wherever a page has a [data-intro] slot.
     function fillIntro() {
         document.querySelectorAll('[data-intro]').forEach(function (el) {
-            el.textContent = data.intro
+            el.innerHTML = HG.boldText(data.intro)
         })
     }
 

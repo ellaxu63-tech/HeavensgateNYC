@@ -13,8 +13,9 @@
         siteName: 'HEAVENSGATE NYC',
 
         // Centered on the home page, between the floating project images.
+        // **Double stars** make the words between them bold.
         intro:
-            'HEAVENSGATE NYC is an independent fashion and performance platform producing runway shows, live presentations, and creative experiences for emerging designers and artists.',
+            '**HEAVENSGATE NYC** is an independent fashion and performance platform producing **runway shows, live presentations, and creative experiences** for emerging designers and artists.',
 
         // Shown in the footer and on the Connect page.
         contactEmail: 'info@heavensgateny.com',

@@ -163,6 +163,11 @@
         )
     }
 
+    // Text with **bold** parts: escaped first, then **x** becomes <strong>x</strong>.
+    HG.boldText = function (text) {
+        return HG.esc(text).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    }
+
     // Turns every @handle in a (plain) string into an Instagram link.
     HG.linkHandles = function (text) {
         return HG.esc(text).replace(/@([A-Za-z0-9._]*[A-Za-z0-9_])/g, function (match, handle) {
