@@ -48,12 +48,12 @@ link.
 | Framer override                         | Now                                                                 |
 | --------------------------------------- | ------------------------------------------------------------------- |
 | `withProjectPhysics`                    | `js/physics.js` — same placement, drift, hover and drag-trail logic |
-| `withMotionToggle`                      | PAUSE / RESUME button (`js/layout.js`)                              |
+| `withMotionToggle`                      | PAUSE / RESUME button in the home footer bar (`js/layout.js`)       |
 | `withProjectNavigationCollapse` (+ aliases) | Nav fades out and becomes inert while a project is active (`js/layout.js` + CSS) |
 | `withNavMenu`                           | MENU overlay, built on every page (`js/layout.js`)                  |
-| `withNavPillLinks`                      | PRESS / EVENTS pills beside MENU (`js/layout.js`)                   |
+| `withNavPillLinks`                      | GALLERY / PRESS / EVENTS links beside MENU (`js/layout.js`)         |
 | `withPressPage`, `withEventsPage`       | `press.html`, `events.html` (`js/pages.js`)                         |
-| `TokonomaVerticalPills`                 | ABOUT / SHOWS vertical pills on the home page                       |
+| `TokonomaVerticalPills`                 | ABOUT / SHOWS links in the home page footer bar                     |
 | `TokonomaNumberedList`                  | The numbered rows in the MENU overlay                               |
 | Custom cursor (dot → OPEN pill)         | `js/cursor.js`, now on every page                                   |
 | Framer `createStore`                    | `js/store.js`                                                       |
@@ -73,12 +73,35 @@ Behaviour you may notice compared with the Framer version:
   another part of the screen, and it keeps growing after PAUSE.
 - The DRAG TO MOVE pill fades while a project is selected.
 
+## Look: grid and fonts
+
+The layout is built on thin grid lines: a line near each side edge, a centre
+line, and horizontal rules under the header and above the footer. Pages split
+at the centre line (title on the left, text on the right). The lines are drawn
+once in [`css/styles.css`](css/styles.css) and reused by the header, footer and
+menu so they run straight through. On narrow screens the centre line is dropped
+and everything becomes a single column.
+
+Fonts are self-hosted in `assets/fonts/` (no external requests):
+**Instrument Serif** for big text and the wordmark, **Geist Mono** for
+everything small (uppercase labels, captions, body copy).
+
+Knobs at the top of `css/styles.css`:
+
+| Variable           | What it does                                                         |
+| ------------------ | -------------------------------------------------------------------- |
+| `--gutter`         | How far the side lines sit from the screen edge (text starts at 2×)  |
+| `--grid`           | Colour / strength of the grid lines                                  |
+| `--display-case`   | `lowercase` (default) or `none` for serif text exactly as typed      |
+| `--accent`         | The MENU pill and drag-hint dot                                      |
+| `--bg` / `--fg`    | Background and text colour (with `--bg-rgb` / `--fg-rgb`)            |
+| `--serif`, `--mono`| The two font stacks                                                  |
+
 ## Tuning
 
 The home page feel is controlled by the `PHYSICS` and `DRAG` objects at the top
 of [`js/physics.js`](js/physics.js) (drift, friction, hover scale, drag trail
-colour / strength). Colours and spacing are CSS variables at the top of
-[`css/styles.css`](css/styles.css).
+colour / strength).
 
 ## Accessibility
 

@@ -65,14 +65,12 @@
                 var href = item.href ? ' href="' + esc(item.href) + '"' : ''
                 return (
                     '<' + tag + ' class="press-item"' + href + '>' +
-                        '<div class="press-item-left">' +
-                            '<span class="press-item-pub">' + esc(item.pub) + '</span>' +
-                            '<span class="press-item-title">' + esc(item.title) + '</span>' +
-                        '</div>' +
-                        '<div class="press-item-right">' +
+                        '<span class="press-item-title">' + esc(item.title) + '</span>' +
+                        '<span class="press-item-pub">' + esc(item.pub) + '</span>' +
+                        '<span class="press-item-right">' +
                             '<span class="press-item-date">' + esc(item.date) + '</span>' +
                             (item.href ? '<span class="press-item-arrow" aria-hidden="true">↗</span>' : '') +
-                        '</div>' +
+                        '</span>' +
                     '</' + tag + '>'
                 )
             })

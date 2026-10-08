@@ -1,8 +1,8 @@
 /*
  * Shared page chrome, built once for every page so the navigation lives in a
- * single place (js/data.js): header + PRESS / EVENTS pills + MENU, the
- * full-screen menu, the footer, and — on the home page — the ABOUT / SHOWS
- * vertical pills and the PAUSE / RESUME button.
+ * single place (js/data.js): header (wordmark, link pills, MENU), the
+ * full-screen menu and the footer. On the home page the footer is a fixed bar
+ * holding the ABOUT / SHOWS links and the PAUSE / RESUME button.
  *
  * Also: when a project is hovered / focused on the home page, the navigation
  * fades out and becomes inert (this replaces the old "nav collapse" override).
@@ -45,7 +45,7 @@
             '<a class="brand" href="index.html">' + esc(data.siteName) + '</a>' +
             '<div class="site-nav" data-nav-collapse>' +
                 '<nav class="pill-links" aria-label="Press and events">' + pillLinks(data.headerPills) + '</nav>' +
-                '<button type="button" class="pill menu-toggle" aria-expanded="false" aria-controls="menu-overlay">MENU</button>' +
+                '<button type="button" class="pill pill--accent menu-toggle" aria-expanded="false" aria-controls="menu-overlay">MENU</button>' +
             '</div>'
         return header
     }
@@ -79,7 +79,7 @@
 
     function initMenu(toggle, menu) {
         var inertTargets = function () {
-            return Array.prototype.slice.call(document.querySelectorAll('#main, .site-footer, .home-controls'))
+            return Array.prototype.slice.call(document.querySelectorAll('#main, .site-footer'))
         }
 
         function setOpen(open, returnFocus) {
@@ -119,32 +119,27 @@
     }
 
     // ----------------------------------------------------------- footer
+    // Home: a fixed bar with ABOUT / SHOWS on the left and PAUSE / RESUME on
+    // the right. Other pages: copyright on the left, links on the right.
     function buildFooter() {
         var footer = document.createElement('footer')
-        footer.className = 'site-footer'
-        footer.innerHTML =
-            '<span>© ' + new Date().getFullYear() + ' ' + esc(data.siteName) + '</span>' +
-            '<nav class="footer-links" aria-label="Footer">' +
-                data.secondary
-                    .map(function (item) {
-                        return '<a ' + linkAttrs(item) + '>' + esc(item.label) + '</a>'
-                    })
-                    .join('') +
-                '<a href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>' +
-            '</nav>'
+        if (isHome) {
+            footer.className = 'site-footer site-footer--fixed'
+            footer.innerHTML =
+                '<nav class="footer-links" aria-label="About and shows" data-nav-collapse>' +
+                    pillLinks(data.secondary) +
+                '</nav>' +
+                '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion">PAUSE</button>'
+        } else {
+            footer.className = 'site-footer'
+            footer.innerHTML =
+                '<span class="footer-copy">© ' + new Date().getFullYear() + ' ' + esc(data.siteName) + '</span>' +
+                '<nav class="footer-links" aria-label="Footer">' +
+                    pillLinks(data.secondary) +
+                    '<a class="pill" href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>' +
+                '</nav>'
+        }
         return footer
-    }
-
-    // -------------------------------------------- home page extra controls
-    function buildHomeControls() {
-        var wrap = document.createElement('div')
-        wrap.className = 'home-controls'
-        wrap.innerHTML =
-            '<nav class="vertical-pills" aria-label="About and shows" data-nav-collapse>' +
-                pillLinks(data.secondary, 'pill--vertical') +
-            '</nav>' +
-            '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion">PAUSE</button>'
-        return wrap
     }
 
     function initMotionToggle(button) {
@@ -191,11 +186,7 @@
     document.body.prepend(skip, header, menu)
     initMenu(header.querySelector('.menu-toggle'), menu)
 
-    if (isHome) {
-        document.body.appendChild(buildHomeControls())
-        initMotionToggle(document.getElementById('motion-toggle'))
-    } else {
-        document.body.appendChild(buildFooter())
-    }
+    document.body.appendChild(buildFooter())
+    if (isHome) initMotionToggle(document.getElementById('motion-toggle'))
     initNavCollapse()
 })()

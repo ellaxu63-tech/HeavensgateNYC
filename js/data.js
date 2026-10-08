@@ -31,13 +31,15 @@
             { label: 'EVENTS', href: 'events.html' },
         ],
 
-        // Small outlined pills in the header, left of MENU.
+        // Links in the right half of the header, left of MENU (up to three fit
+        // the grid columns).
         headerPills: [
+            { label: 'GALLERY', href: 'gallery.html' },
             { label: 'PRESS', href: 'press.html' },
             { label: 'EVENTS', href: 'events.html' },
         ],
 
-        // Secondary pages (vertical pills on the home page, and in the menu).
+        // Secondary pages (left of the home page footer bar, and in the menu).
         secondary: [
             { label: 'ABOUT', href: 'about.html' },
             { label: 'SHOWS', href: 'shows.html' },
