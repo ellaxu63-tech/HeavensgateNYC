@@ -93,10 +93,12 @@
             total += Math.hypot(path[j].x - path[j - 1].x, path[j].y - path[j - 1].y)
             path[j].s = total
         }
-        var tailLen = Math.max(1, Math.min(tail, total * 0.5))
-        var headLen = Math.max(1, Math.min(head, total * 0.5))
+        // An end with no taper (under 1px) is left square at its full width.
+        var tailLen = tail >= 1 ? Math.min(tail, total * 0.5) : 0
+        var headLen = head >= 1 ? Math.min(head, total * 0.5) : 0
         path.forEach(function (p) {
-            p.w = Math.max(0.6, p.w * smoothstep(p.s / tailLen) * smoothstep((total - p.s) / headLen))
+            var factor = (tailLen ? smoothstep(p.s / tailLen) : 1) * (headLen ? smoothstep((total - p.s) / headLen) : 1)
+            p.w = Math.max(0.6, p.w * factor)
         })
         return path
     }

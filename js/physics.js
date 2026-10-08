@@ -1269,7 +1269,14 @@
     layoutCards()
     ready = true
     startLoop()
-    scheduleGhost(GHOST.firstDelay)
+    // The flourish waits for the opening rings (js/orbits.js) to be gone.
+    if (HG.opening && !HG.opening.done) {
+        HG.opening.onDone(function () {
+            scheduleGhost(1200)
+        })
+    } else {
+        scheduleGhost(GHOST.firstDelay)
+    }
 
     if (typeof ResizeObserver !== 'undefined') {
         var resizeObserver = new ResizeObserver(scheduleRelayout)

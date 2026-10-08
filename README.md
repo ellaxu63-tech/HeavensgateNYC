@@ -150,18 +150,18 @@ image); the cursor uses it.
 
 ## The orbits (page open)
 
-When the home page opens, four big white rings are drawn across it one after
-another, in the same stroke you draw with: long ellipses at different tilts that
-run off the edges of the window, thick on one side and thin on the other. They
-move: each ring is a stroke whose pen travels round it while its tail is rubbed
-out behind, so about two seconds after a ring starts it is gone, and once the
-last has gone the page is clear to draw on. They sit over the images but never
-take clicks or hovers. It is `js/orbits.js` + the "orbits" block in
+Once the home page has loaded and is on screen, four big white rings are drawn
+across it one after another, in the same stroke you draw with: long ellipses at
+different tilts that cross each other and run off the edges of the window,
+arranged like the rings on the "the sin : vanish" poster. A pen travels round
+each ring. With all four in place they are left up for about two seconds, then
+each is rubbed out along its length and the page is clear to draw on (the
+draw-here flourish follows). They sit over the images but under the sentence,
+and never take clicks or hovers. It is `js/orbits.js` + the "orbits" block in
 `css/styles.css`. At the top of the script, `RINGS` sets each ring (where, how
-big, how tilted, where the pen starts and which way it goes, when it starts)
-and `DRAW` / `LAG` / `RUB` set the timing. The rings are placed so they pass
-around the intro sentence rather than through it. With reduced motion nothing is
-drawn.
+big, how tilted, how thick, where the pen starts and which way it goes) and
+`STAGGER` / `DRAW` / `HOLD` / `STAGGER_OUT` / `RUB` set the timing. With
+reduced motion nothing is drawn.
 
 ## The fall
 
