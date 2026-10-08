@@ -81,6 +81,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: transparent; /* <html> paints the page colour, so the grid lines can sit behind content */
     color: var(--fg);
     font-family: var(--mono);
     font-size: 13px;
