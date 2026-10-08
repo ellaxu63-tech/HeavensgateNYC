@@ -14,7 +14,7 @@
 
         // **Double stars** make the words between them bold.
         // The short line in the middle of the home page, between the floating images.
-        introShort: '**HEAVENSGATE NYC** produces **runway shows, live presentations, and creative experiences**.',
+        introShort: '**HEAVENSGATE NYC** is a **creative platform** for emerging + international designers and artists.',
         // The full sentence, on the About and Studio pages.
         intro:
             '**HEAVENSGATE NYC** is an independent fashion and performance platform producing **runway shows, live presentations, and creative experiences** for emerging designers and artists.',
