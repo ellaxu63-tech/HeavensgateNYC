@@ -172,7 +172,8 @@
     // Intro sentence (js/data.js) wherever a page has a [data-intro] slot.
     function fillIntro() {
         document.querySelectorAll('[data-intro]').forEach(function (el) {
-            el.innerHTML = HG.boldText(data.intro)
+            // data-intro="short" is the short line on the home page; plain data-intro is the full sentence.
+            el.innerHTML = HG.boldText(el.getAttribute('data-intro') === 'short' ? data.introShort : data.intro)
         })
     }
 

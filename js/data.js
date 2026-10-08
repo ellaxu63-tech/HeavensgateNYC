@@ -12,8 +12,10 @@
     HG.data = {
         siteName: 'HEAVENSGATE NYC',
 
-        // Centered on the home page, between the floating project images.
         // **Double stars** make the words between them bold.
+        // The short line in the middle of the home page, between the floating images.
+        introShort: '**HEAVENSGATE NYC** produces **runway shows, live presentations, and creative experiences**.',
+        // The full sentence, on the About and Studio pages.
         intro:
             '**HEAVENSGATE NYC** is an independent fashion and performance platform producing **runway shows, live presentations, and creative experiences** for emerging designers and artists.',
 
