@@ -157,10 +157,93 @@
     }
 
     // ------------------------------------------- nav fades while a project is active
+    // ------------------------------------------- dashed outlines (the collapse effect)
+    // While an image is hovered, the nav, wordmark, logo, bottom bar and intro
+    // sentence collapse into dashed outlines. Each outline is an SVG rectangle
+    // (a ring for the logo) drawn on one layer over the page and placed over its
+    // element, with the dashes spaced so they join up evenly all the way round.
+    var dashed = []
+    var dashLayer = null
+
+    function initDashedOutlines() {
+        var NS = 'http://www.w3.org/2000/svg'
+        dashLayer = document.createElement('div')
+        dashLayer.className = 'dash-layer'
+        dashLayer.setAttribute('aria-hidden', 'true')
+        document.body.appendChild(dashLayer)
+
+        // offset: how far the outline sits outside the element (negative: inside).
+        // kind: 'pill' (fully rounded), 'circle' or a corner radius in px.
+        var targets = [
+            ['.site-nav .pill', 0, 'pill'],
+            ['.site-footer--fixed .pill', 0, 'pill'],
+            ['.brand-name', 7, 'pill'],
+            ['.brand-logo', -8, 'circle'],
+            ['.stage-intro', 18, 36],
+        ]
+        targets.forEach(function (t) {
+            document.querySelectorAll(t[0]).forEach(function (el) {
+                var svg = document.createElementNS(NS, 'svg')
+                svg.setAttribute('class', 'dash-outline')
+                var shape = document.createElementNS(NS, t[2] === 'circle' ? 'circle' : 'rect')
+                svg.appendChild(shape)
+                dashLayer.appendChild(svg)
+                dashed.push({ el: el, svg: svg, shape: shape, offset: t[1], kind: t[2] })
+            })
+        })
+        placeDashedOutlines()
+        window.addEventListener('resize', placeDashedOutlines)
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeDashedOutlines)
+    }
+
+    function placeDashedOutlines() {
+        var DASH = 9 // length of a dash, px
+        var GAP = 6 // length of a gap, px
+        var W = 1.5 // line width, px
+        dashed.forEach(function (d) {
+            var r = d.el.getBoundingClientRect()
+            var w = r.width + d.offset * 2
+            var h = r.height + d.offset * 2
+            if (r.width < 2 || r.height < 2 || w < 6 || h < 6) {
+                d.svg.style.display = 'none'
+                return
+            }
+            d.svg.style.display = ''
+            d.svg.style.left = r.left - d.offset + 'px'
+            d.svg.style.top = r.top - d.offset + 'px'
+            d.svg.setAttribute('width', w)
+            d.svg.setAttribute('height', h)
+
+            var perimeter
+            if (d.kind === 'circle') {
+                var radius = Math.min(w, h) / 2 - W / 2
+                d.shape.setAttribute('cx', w / 2)
+                d.shape.setAttribute('cy', h / 2)
+                d.shape.setAttribute('r', radius)
+                perimeter = 2 * Math.PI * radius
+            } else {
+                var rw = w - W
+                var rh = h - W
+                var rx = Math.min(d.kind === 'pill' ? rh / 2 : d.kind, rw / 2, rh / 2)
+                d.shape.setAttribute('x', W / 2)
+                d.shape.setAttribute('y', W / 2)
+                d.shape.setAttribute('width', rw)
+                d.shape.setAttribute('height', rh)
+                d.shape.setAttribute('rx', rx)
+                perimeter = 2 * (rw - 2 * rx) + 2 * (rh - 2 * rx) + 2 * Math.PI * rx
+            }
+            // Whole number of dashes, so the pattern closes up without a stumpy one.
+            var count = Math.max(6, Math.round(perimeter / (DASH + GAP)))
+            var unit = perimeter / count
+            d.shape.setAttribute('stroke-dasharray', (unit * DASH / (DASH + GAP)).toFixed(2) + ' ' + (unit * GAP / (DASH + GAP)).toFixed(2))
+        })
+    }
+
     function initNavCollapse() {
         var root = document.documentElement
         HG.motion.subscribe(function (state) {
             root.classList.toggle('project-selected', state.projectActive)
+            if (state.projectActive && dashLayer) placeDashedOutlines()
             document.querySelectorAll('[data-nav-collapse]').forEach(function (el) {
                 el.inert = state.projectActive
                 if (state.projectActive) el.setAttribute('aria-hidden', 'true')
@@ -191,6 +274,7 @@
 
     document.body.appendChild(buildFooter())
     if (isHome) initMotionToggle(document.getElementById('motion-toggle'))
+    if (isHome) initDashedOutlines()
     initNavCollapse()
     HG.capsBrand(document.body)
 })()

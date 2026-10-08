@@ -164,9 +164,7 @@ main:focus { outline: none; }
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    outline: 1.5px dashed transparent; /* draws only while an image is hovered (see "collapse") */
-    outline-offset: 0;
-    transition: background 160ms ease, opacity 160ms ease, color 240ms ease, outline-color 240ms ease;
+    transition: background 160ms ease, opacity 160ms ease, color 240ms ease;
 }
 .pill:hover { background: var(--hover); }
 .pill[aria-current="page"] { background: var(--current); }
@@ -614,52 +612,39 @@ html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
 /* ------------------------------------------------------------------ collapse
    While an image is hovered / focused on the home page, the writing around it
    collapses: text and logo fade out and only a dashed outline of each is left
-   where it was, so the layout holds and the image has the stage. Outlines use
-   `outline`, so nothing moves. Take a part out of the effect by deleting its
-   selector below. */
+   where it was, so the layout holds and the image has the stage. The dashed
+   outlines are drawn by js/layout.js (see initDashedOutlines) on a layer that
+   sits over the page. Take a part out of the effect by deleting its selector. */
 html.project-selected [data-nav-collapse] { pointer-events: none; }
 
 html.project-selected .site-nav .pill,
 html.project-selected .site-footer--fixed .pill {
     color: transparent;
     background: transparent;
-    outline-color: rgba(var(--fg-rgb), 0.9);
 }
 
-/* The wordmark and the logo. */
-.brand { position: relative; }
-.brand-name {
-    outline: 1.5px dashed transparent;
-    outline-offset: 7px;
-    border-radius: 999px;
-    transition: color 240ms ease, outline-color 240ms ease;
-}
+.brand-name { transition: color 240ms ease; }
 .brand-logo { transition: opacity 240ms ease; }
-.brand::before {
-    content: "";
-    position: absolute;
-    left: 7px;
-    top: 7px;
-    width: calc(var(--header-h) - 15px);
-    height: calc(var(--header-h) - 15px);
-    border: 1.5px dashed rgba(var(--fg-rgb), 0.9);
-    border-radius: 50%;
-    opacity: 0;
+html.project-selected .brand-name { color: transparent; }
+html.project-selected .brand-logo { opacity: 0; }
+
+.stage-intro { transition: color 240ms ease; }
+html.project-selected .stage-intro { color: transparent; }
+
+/* The layer with the dashed outlines: fixed over the whole window, invisible
+   until an image is hovered. */
+.dash-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
     pointer-events: none;
+    opacity: 0;
     transition: opacity 240ms ease;
 }
-html.project-selected .brand-name { color: transparent; outline-color: rgba(var(--fg-rgb), 0.9); }
-html.project-selected .brand-logo { opacity: 0; }
-html.project-selected .brand::before { opacity: 1; }
-
-/* The sentence in the middle. */
-.stage-intro {
-    outline: 1.5px dashed transparent;
-    outline-offset: 18px;
-    border-radius: 36px;
-    transition: color 240ms ease, outline-color 240ms ease;
-}
-html.project-selected .stage-intro { color: transparent; outline-color: rgba(var(--fg-rgb), 0.9); }
+html.project-selected .dash-layer { opacity: 1; }
+.dash-outline { position: absolute; display: block; overflow: visible; }
+.dash-outline rect,
+.dash-outline circle { fill: none; stroke: rgba(var(--fg-rgb), 0.95); stroke-width: 1.5; stroke-linecap: butt; }
 
 /* --------------------------------------------------------- content pages */
 .page { padding-top: var(--header-h); }
@@ -970,7 +955,7 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
     .pill,
     .brand-name,
     .brand-logo,
-    .brand::before,
+    .dash-layer,
     .stage-intro,
     .stage .project-card,
     .stage .project-caption { transition: none !important; }
