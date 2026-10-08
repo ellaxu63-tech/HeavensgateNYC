@@ -132,7 +132,7 @@
                 '<nav class="footer-links" aria-label="About and shows" data-nav-collapse>' +
                     pillLinks(data.secondary) +
                 '</nav>' +
-                '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion">PAUSE</button>'
+                '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion" data-nav-collapse>PAUSE</button>'
         } else {
             footer.className = 'site-footer'
             footer.innerHTML =
