@@ -746,6 +746,12 @@ a.press-item:hover .press-item-arrow { opacity: 1; }
 }
 .events-card:nth-child(even) { padding-left: var(--gutter); padding-right: var(--pad); }
 a.events-card:hover { background: rgba(var(--fg-rgb), 0.05); }
+
+/* With a poster: the poster on the left, the usual card text beside it. */
+.events-card--poster { display: grid; grid-template-columns: minmax(110px, 36%) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+.events-card-poster { display: block; align-self: start; box-shadow: 0 0 0 1px var(--grid); background: rgba(var(--fg-rgb), 0.06); }
+.events-card-poster img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.events-card-body { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .events-card-tag {
     display: inline-flex;
     align-items: center;

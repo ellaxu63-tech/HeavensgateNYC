@@ -32,6 +32,10 @@
         )
     }
 
+    HG.eventUrl = function (event) {
+        return 'event.html?slug=' + encodeURIComponent(event.slug)
+    }
+
     // "Category — Year"; the year is optional.
     HG.projectMeta = function (project) {
         return [project.category, project.year].filter(Boolean).join(' — ')

@@ -28,6 +28,7 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `press.html`    | Press list                                                                 |
 | `events.html`   | Events (upcoming + past)                                                   |
 | `shows.html`    | Events of type "Show"                                                      |
+| `event.html`    | One event with its posters (`event.html?slug=nyfw-2026-collective-runway`) |
 | `about.html`    | About                                                                      |
 
 ## Editing content
@@ -49,6 +50,10 @@ A project can also have (all optional, see the comment above `projects`):
 `video` (a clip shown first on the project page: a file in
 `assets/projects/<project>/`, or a YouTube / Vimeo link) and `credits` (role + names;
 anything written like `@handle` links to that Instagram profile).
+
+Events work the same way: add one to `events`. Give it a `slug`, an `image` (the
+poster shown on its card) and `images` (all the posters, main one first) and
+the card links to its own page; `summary` and `credits` fill that page.
 
 ## How the old Framer overrides map to this site
 

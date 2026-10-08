@@ -20,6 +20,53 @@
         })
     }
 
+    // ----------------------------------------- shared by project / event pages
+    // The bio: a blank line starts a new paragraph; @handles become links.
+    function bioHtml(summary) {
+        return String(summary || '')
+            .split(/\n\s*\n/)
+            .filter(function (paragraph) {
+                return paragraph.trim()
+            })
+            .map(function (paragraph) {
+                return '<p class="page-lede">' + HG.linkHandles(paragraph.trim()) + '</p>'
+            })
+            .join('')
+    }
+
+    // Role on the left, names on the right (@handles link to Instagram).
+    function creditsHtml(credits) {
+        if (!credits || !credits.length) return ''
+        return (
+            '<dl class="credits">' +
+            credits
+                .map(function (credit) {
+                    return (
+                        '<div class="credit">' +
+                            '<dt>' + esc(credit.role) + '</dt>' +
+                            '<dd>' + credit.names.map(function (name) { return '<span>' + HG.linkHandles(name) + '</span>' }).join('') + '</dd>' +
+                        '</div>'
+                    )
+                })
+                .join('') +
+            '</dl>'
+        )
+    }
+
+    // Each item is a path or { src, alt }. Everything after the first loads lazily.
+    function imagesHtml(items, fallbackAlt) {
+        return items
+            .map(function (item, i) {
+                var src = typeof item === 'string' ? item : item.src
+                var alt = (typeof item === 'string' ? '' : item.alt) || fallbackAlt
+                return (
+                    '<img class="project-hero" src="' + esc(src) + '" alt="' + esc(alt) + '"' +
+                    (i > 0 ? ' loading="lazy"' : '') + ' decoding="async">'
+                )
+            })
+            .join('')
+    }
+
     // ------------------------------------------------------ project detail
     function renderProject() {
         var slug = new URLSearchParams(location.search).get('slug')
@@ -42,50 +89,27 @@
         document.title = project.title + ' — ' + data.siteName
 
         var images = project.images && project.images.length ? project.images : [project.image]
-        var bio = String(project.summary)
-            .split(/\n\s*\n/)
-            .map(function (paragraph) {
-                return '<p class="page-lede">' + HG.linkHandles(paragraph.trim()) + '</p>'
-            })
-            .join('')
         var videoItems = project.videos || (project.video ? [project.video] : [])
         var videos = videoItems
             .map(function (item) {
                 return HG.videoHtml(item, project.title)
             })
             .join('')
-        var credits = (project.credits || [])
-            .map(function (credit) {
-                return (
-                    '<div class="credit">' +
-                        '<dt>' + esc(credit.role) + '</dt>' +
-                        '<dd>' + credit.names.map(function (name) { return '<span>' + HG.linkHandles(name) + '</span>' }).join('') + '</dd>' +
-                    '</div>'
-                )
-            })
-            .join('')
+        var bio = bioHtml(project.summary)
+        var credits = creditsHtml(project.credits)
 
         holder.innerHTML =
             '<a class="back-link" href="gallery.html">← Gallery</a>' +
             '<div class="project-layout">' +
                 '<div class="project-images">' +
                     videos +
-                    images
-                        .map(function (item, i) {
-                            var src = typeof item === 'string' ? item : item.src
-                            var alt = (typeof item === 'string' ? '' : item.alt) || project.title
-                            return (
-                                '<img class="project-hero" src="' + esc(src) + '" alt="' + esc(alt) + '"' +
-                                (i > 0 ? ' loading="lazy"' : '') + ' decoding="async">'
-                            )
-                        })
-                        .join('') +
+                    imagesHtml(images, project.title) +
                 '</div>' +
                 '<div class="project-info">' +
                     '<p class="eyebrow">' + esc(HG.projectMeta(project)) + '</p>' +
                     '<h1 class="page-title">' + esc(project.title) + '</h1>' +
                     bio +
-                    (credits ? '<dl class="credits">' + credits + '</dl>' : '') +
+                    credits +
                 '</div>' +
             '</div>' +
             '<nav class="project-pager" aria-label="More projects">' +
@@ -144,20 +168,57 @@
             .join('')
     }
 
+    // --------------------------------------------------------- event detail
+    function renderEvent() {
+        var slug = new URLSearchParams(location.search).get('slug')
+        var ev = data.events.filter(function (e) {
+            return e.slug === slug
+        })[0]
+        var holder = main.querySelector('.project-page')
+
+        if (!ev) {
+            document.title = 'Event not found — ' + data.siteName
+            holder.innerHTML =
+                '<h1 class="page-title">Event not found</h1>' +
+                '<p class="page-lede"><a class="text-link" href="events.html">Back to the events</a></p>'
+            return
+        }
+
+        document.title = ev.title + ' — ' + data.siteName
+        var images = ev.images && ev.images.length ? ev.images : ev.image ? [ev.image] : []
+        holder.innerHTML =
+            '<a class="back-link" href="events.html">← Events</a>' +
+            '<div class="project-layout">' +
+                '<div class="project-images">' + imagesHtml(images, ev.title) + '</div>' +
+                '<div class="project-info">' +
+                    '<p class="eyebrow">' + esc([ev.type, ev.date, ev.location].filter(Boolean).join(' — ')) + '</p>' +
+                    '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
+                    bioHtml(ev.summary) +
+                    creditsHtml(ev.credits) +
+                '</div>' +
+            '</div>'
+    }
+
     // ------------------------------------------------------ events / shows
     function renderEvents(filter) {
         var list = data.events.filter(filter || function () { return true })
         main.querySelector('.events-grid').innerHTML = list
             .map(function (ev) {
-                var tag = ev.href ? 'a' : 'article'
-                var href = ev.href ? ' href="' + esc(ev.href) + '"' : ''
+                var link = ev.href || (ev.slug ? HG.eventUrl(ev) : '')
+                var tag = link ? 'a' : 'article'
+                var href = link ? ' href="' + esc(link) + '"' : ''
+                var body =
+                    '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ev.tag) + '</span>' +
+                    '<span class="events-card-date">' + esc(ev.date) + '</span>' +
+                    '<h2 class="events-card-title">' + esc(ev.title) + '</h2>' +
+                    '<div class="events-card-meta"><span>' + esc(ev.location) + '</span><span>' + esc(ev.type) + '</span></div>' +
+                    (link ? '<span class="events-card-arrow" aria-hidden="true">↗</span>' : '')
+                if (!ev.image) return '<' + tag + ' class="events-card"' + href + '>' + body + '</' + tag + '>'
+                // With a poster: the poster on the left, the text beside it.
                 return (
-                    '<' + tag + ' class="events-card"' + href + '>' +
-                        '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ev.tag) + '</span>' +
-                        '<span class="events-card-date">' + esc(ev.date) + '</span>' +
-                        '<h2 class="events-card-title">' + esc(ev.title) + '</h2>' +
-                        '<div class="events-card-meta"><span>' + esc(ev.location) + '</span><span>' + esc(ev.type) + '</span></div>' +
-                        (ev.href ? '<span class="events-card-arrow" aria-hidden="true">↗</span>' : '') +
+                    '<' + tag + ' class="events-card events-card--poster"' + href + '>' +
+                        '<span class="events-card-poster"><img src="' + esc(ev.image) + '" alt="" loading="lazy" decoding="async"></span>' +
+                        '<span class="events-card-body">' + body + '</span>' +
                     '</' + tag + '>'
                 )
             })
@@ -178,6 +239,9 @@
             break
         case 'project':
             renderProject()
+            break
+        case 'event':
+            renderEvent()
             break
         case 'press':
             renderPress()

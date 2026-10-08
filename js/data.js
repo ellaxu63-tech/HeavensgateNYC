@@ -229,9 +229,57 @@
             { pub: 'Highsnobiety', title: 'The Newest Presentation Is Everything', date: '2024' },
         ],
 
-        // PLACEHOLDER events. `type: 'Show'` ones also appear on the Shows page.
-        // Add an `href` to make a card a link.
+        // Events. `type: 'Show'` ones also appear on the Shows page. The ones
+        // without a slug / image below are PLACEHOLDERS.
+        //   href     – makes the card a link to somewhere else
+        //   slug     – gives the event its own page (event.html?slug=...)
+        //   image    – poster / photo shown on the card (keep it small)
+        //   images   – everything shown on the event page, main one first; each
+        //              a path or { src, alt }
+        //   summary  – the text on the event page (blank line = new paragraph)
+        //   credits  – [{ role, names: [...] }], same as for projects
         events: [
+            {
+                slug: 'nyfw-2026-collective-runway',
+                tag: 'Past',
+                title: 'NYFW 2026 Collective Runway',
+                date: 'Feb 14, 2026',
+                location: 'Stone Circle Theater, New York',
+                type: 'Show',
+                image: 'assets/events/velvet-playground-nyfw-2026/cover.webp',
+                images: [
+                    {
+                        src: 'assets/events/velvet-playground-nyfw-2026/01-main.webp',
+                        alt: 'Main poster: Velvet Playground NYFW 2026 Collective Runway, 2/14/26 8 PM, Stone Circle Theater, glam rock live performance. Two women in a rocky cave, one in a red mesh dress with a pale snake across her.',
+                    },
+                    {
+                        src: 'assets/events/velvet-playground-nyfw-2026/02-bailey-prado.webp',
+                        alt: 'Poster for Bailey Prado: a model in a white crochet top and layered lace skirt stands against a white wall with a ladder, the name signed beside her.',
+                    },
+                    {
+                        src: 'assets/events/velvet-playground-nyfw-2026/03-when-the-xu-fits.webp',
+                        alt: 'Poster for When The Xu Fits: four models in beaded and corseted tops pose close together.',
+                    },
+                    {
+                        src: 'assets/events/velvet-playground-nyfw-2026/04-moore.webp',
+                        alt: 'Poster for Moore: a performer in a lilac bob wig and silver bracelets, in a black fuzzy bandeau and shorts, poses against a dark green background.',
+                    },
+                    {
+                        src: 'assets/events/velvet-playground-nyfw-2026/05-3399.webp',
+                        alt: 'Poster for 3399: eight models in striped dresses, bright tights and caps pose on a graffiti-covered concrete ledge.',
+                    },
+                ],
+                summary:
+                    'Velvet Playground presented the NYFW 2026 Collective Runway on February 14, 2026 at 8 PM at Stone Circle Theater in New York: a group show with a glam rock live performance.\n\n' +
+                    'Below, the main poster followed by the posters for Bailey Prado, When The Xu Fits, Moore and 3399.',
+                credits: [
+                    { role: 'Date', names: ['February 14, 2026, 8 PM'] },
+                    { role: 'Venue', names: ['Stone Circle Theater, New York'] },
+                    { role: 'Presented by', names: ['Velvet Playground'] },
+                    { role: 'On the posters', names: ['Bailey Prado', 'When The Xu Fits', 'Moore', '3399'] },
+                    { role: 'Music', names: ['Glam rock live performance'] },
+                ],
+            },
             { tag: 'Upcoming', title: 'SS27 Presentation', date: 'March 2027', location: 'Paris', type: 'Show' },
             { tag: 'Upcoming', title: 'HEAVENSGATE × Archive Pop-Up', date: 'Nov 2026', location: 'Tokyo', type: 'Exhibition' },
             { tag: 'Past', title: 'FW26 Runway Show', date: 'Sep 2026', location: 'New York', type: 'Show' },
