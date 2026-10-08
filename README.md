@@ -36,14 +36,14 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 **Everything lives in [`js/data.js`](js/data.js)**: the intro sentence, contact
 email, menu links, projects, press and events.
 
-> Some entries are still **placeholders** and should be replaced or deleted
-> before launch: the ten coloured-blob projects ("Runway 01" and so on), the
-> press rows without a link, and the events without a poster (SS27
-> Presentation and the other Upcoming / Past entries at the end of the list).
+> Everything on the site is real content now. The one row still waiting on
+> information is Press > Vogue China, whose headline and year are still to
+> come.
 
 To add a project, add an entry to `projects` and drop its image into
 `assets/projects/`. It automatically appears on the home page, in the gallery,
-and gets its own page. The first entry is the first one in the gallery. Add an
+and gets its own page. Anything you add without real content (an image or a
+video) will look empty, so only add finished entries. The first entry is the first one in the gallery. Add an
 `href` to a press item or event to turn it into a link.
 
 A project can also have (all optional, see the comment above `projects`):
