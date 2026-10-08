@@ -385,7 +385,9 @@
                 image: 'assets/press/totem.webp',
             },
             {
-                pub: 'Fashion Week Daily',
+                pub: 'The Daily Front Row',
+                // `logo` is shown instead of the name (white on transparent).
+                logo: 'assets/press/the-daily-front-row.webp',
                 // The title is taken from the web address; replace it with the
                 // article's exact headline if it differs. Add the year (`date`).
                 title: 'The Elephant in the Room: HEAVENSGATE NYC\u2019s Runway That Refuses to Whisper',
@@ -394,6 +396,7 @@
             },
             {
                 pub: 'Vogue China',
+                logo: 'assets/press/vogue-china.webp',
                 // PLACEHOLDER title: replace it with the article's headline (and
                 // add the year in `date`) once it is known.
                 title: 'Featured in Vogue China',

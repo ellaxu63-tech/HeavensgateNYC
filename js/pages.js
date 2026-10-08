@@ -164,9 +164,13 @@
                     ? '<span class="press-item-thumb' + (item.video ? ' is-video' : '') + '"><img src="' + esc(item.image) + '" alt="" loading="lazy" decoding="async"></span>'
                     : ''
                 return (
-                    '<' + tag + ' class="press-item' + (thumb ? ' press-item--thumb' : '') + '"' + href + '>' +
+                    '<' + tag + ' class="press-item' + (thumb || item.logo ? ' press-item--thumb' : '') + '"' + href + '>' +
                         '<span class="press-item-title">' + esc(item.title) + '</span>' +
-                        '<span class="press-item-pub">' + thumb + '<span>' + esc(item.pub) + (item.video ? ' \u00b7 video' : '') + '</span></span>' +
+                        '<span class="press-item-pub">' + thumb +
+                            (item.logo
+                                ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '" loading="lazy" decoding="async">'
+                                : '<span>' + esc(item.pub) + (item.video ? ' \u00b7 video' : '') + '</span>') +
+                        '</span>' +
                         '<span class="press-item-right">' +
                             '<span class="press-item-date">' + esc(item.date) + '</span>' +
                             (item.href ? '<span class="press-item-arrow" aria-hidden="true">↗</span>' : '') +
