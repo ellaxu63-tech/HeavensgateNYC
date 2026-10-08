@@ -109,6 +109,50 @@
                 ],
             },
             {
+                slug: 'the-last-human-fashion-show',
+                title: 'The Last Human Fashion Show',
+                category: 'Fashion Show',
+                year: '2026',
+                image: 'assets/projects/the-last-human-fashion-show/cover.jpg',
+                ratio: 1.5,
+                images: [
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/01.jpg',
+                        alt: 'Two models seen from behind in white fringed, open-back looks: one with long gold and brown braids studded with pearls, the other with a long dark braid and a pearl hair clip, in a bright room with a disco ball.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/02.jpg',
+                        alt: 'A model in a black bodysuit and sheer black tights with a pink satin rosette at the hip stands holding a phone in a backstage room, bags and garment covers on the floor around her.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/03.jpg',
+                        alt: 'A model with purple hair rollers and deep red eye makeup wears a polka-dot corset with a folded vintage newspaper-print panel and a gathered white skirt, backstage beside a pink suitcase.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/04.jpg',
+                        alt: 'Two models on a rooftop against a blue sky and the city skyline: one in a pale green satin cut-out top with a black bow, the other in a cream fur bandeau over a blue sequin dress.',
+                    },
+                ],
+                summary:
+                    'THE LAST HUMAN FASHION SHOW took place on September 12, 2026 in Brooklyn, during New York Fashion Week: a runway experience celebrating what remains raw, imperfect, emotional, and human.\n\n' +
+                    'Eight designers showed experimental fashion, and the night ended with a techno afterparty with @discharge.nyc.',
+                credits: [
+                    {
+                        role: 'Featured designers',
+                        names: ['@loveumissuwantuneedu', '@manninonyc', '@yejinahhhhh_works', '@vita_mazza_06', '@humanjuices', '@twntytwo30', '@_restate', '@sdn.brooklyn'],
+                    },
+                    { role: 'Producer', names: ['@elladotnet'] },
+                    { role: 'Casting / Backstage coordinator', names: ['322 Production'] },
+                    { role: 'Music producer', names: ['@r.dna__'] },
+                    { role: 'DJs', names: ['@sabinin_', '@megan.rosengarten', '@cow.tools.cow.tools'] },
+                    { role: 'Afterparty', names: ['@discharge.nyc'] },
+                    {
+                        role: 'Photography',
+                        names: ['@sudokyu', '@frankyoucomeagain', '@absolutelyolivia', '@yinkaabrams_', '@thomxsn', '@judovisuals'],
+                    },
+                ],
+            },
+            {
                 slug: 'stardust-fashion-show',
                 title: 'Stardust Fashion Show',
                 category: 'Fashion Show',
