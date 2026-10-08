@@ -36,8 +36,10 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 **Everything lives in [`js/data.js`](js/data.js)**: the intro sentence, contact
 email, menu links, projects, press and events.
 
-> The projects, press items, events and the `hello@example.com` address are
-> **placeholders**. Replace them before launch.
+> Some entries are still **placeholders** and should be replaced or deleted
+> before launch: the ten coloured-blob projects ("Runway 01" and so on), the
+> press rows without a link, and the events without a poster (SS27
+> Presentation and the other Upcoming / Past entries at the end of the list).
 
 To add a project, add an entry to `projects` and drop its image into
 `assets/projects/`. It automatically appears on the home page, in the gallery,

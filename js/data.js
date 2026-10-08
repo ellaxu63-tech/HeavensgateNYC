@@ -19,8 +19,8 @@
         intro:
             'HEAVENSGATE NYC is an independent fashion and performance platform producing runway shows, live presentations, and creative experiences for emerging designers and artists.',
 
-        // Replace with the real address before launch.
-        contactEmail: 'hello@example.com',
+        // Shown in the footer and on the Connect page.
+        contactEmail: 'info@heavensgateny.com',
 
         // The video on the home page: a floating thumbnail (the poster image) that
         // opens a player when clicked. Remove this block to take it off.
