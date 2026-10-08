@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="800" viewBox="0 0 1100 800">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d2410"/><stop offset="1" stop-color="#000"/></linearGradient>
+<filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="72"/></filter>
+<filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0"/></filter>
+</defs>
+<rect width="1100" height="800" fill="url(#g)"/>
+<g filter="url(#b)"><ellipse cx="501" cy="442" rx="226" ry="200" fill="#fff2b0" opacity="0.7"/><ellipse cx="846" cy="668" rx="282" ry="263" fill="#fff2b0" opacity="0.7"/><ellipse cx="550" cy="435" rx="293" ry="214" fill="#fff2b0" opacity="0.85"/></g>
+<rect width="1100" height="800" filter="url(#n)"/>
+</svg>
