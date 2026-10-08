@@ -151,6 +151,12 @@
     }
 
     // --------------------------------------------------------------- press
+    // A small line under a press title: the subtitle and the writer.
+    function deckHtml(item) {
+        var line = [item.deck, item.by ? 'by ' + item.by : ''].filter(Boolean).join(' \u00b7 ')
+        return line ? '<span class="press-item-deck">' + esc(line) + '</span>' : ''
+    }
+
     function renderPress() {
         main.querySelector('.press-list').innerHTML = data.press
             .map(function (item) {
@@ -165,7 +171,7 @@
                     : ''
                 return (
                     '<' + tag + ' class="press-item' + (thumb || item.logo ? ' press-item--thumb' : '') + '"' + href + '>' +
-                        '<span class="press-item-title">' + esc(item.title) + '</span>' +
+                        '<span class="press-item-title">' + esc(item.title) + deckHtml(item) + '</span>' +
                         '<span class="press-item-pub">' + thumb +
                             (item.logo
                                 ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '" loading="lazy" decoding="async">' +

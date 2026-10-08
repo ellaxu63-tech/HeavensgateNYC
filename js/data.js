@@ -93,6 +93,7 @@
                 slug: 'sound-form',
                 title: 'SOUND / FORM',
                 category: 'Fashion Performance',
+                year: '2026',
                 image: 'assets/projects/sound-form/cover.jpg',
                 ratio: 0.667,
                 images: [
@@ -131,6 +132,10 @@
                     {
                         src: 'assets/projects/sound-form/09.webp',
                         alt: 'A performer with pink hair and gold lipstick in a cream crocheted dress poses with hands at their shoulders, surrounded by other performers in pink and gold hoods. The projection behind them reads Amehl x Lakras.',
+                    },
+                    {
+                        src: 'assets/events/sound-form/01-poster.webp',
+                        alt: 'The SOUND / FORM poster: orange-red with the title in a wobbling grey oval. Fashion performances by HEAVENSGATE NYC + sounds by Cultivated Sound. NYFW 26, NYFW closing weekend + Climate Week prelude, 9.18.26, Honey\u2019s. Cultivated Sound: Chamberlain Zhang, Sploofi, Elladotnet.',
                     },
                 ],
                 summary:
@@ -388,10 +393,11 @@
                 pub: 'The Daily Front Row',
                 // `logo` is shown instead of the name (white on transparent).
                 logo: 'assets/press/the-daily-front-row.webp',
-                // The title is taken from the web address; replace it with the
-                // article's exact headline if it differs. Add the year (`date`).
-                title: 'The Elephant in the Room: HEAVENSGATE NYC\u2019s Runway That Refuses to Whisper',
-                date: '',
+                title: '\u201cThe Elephant in the Room\u201d: HEAVENSGATE NYC\u2019s Runway That Refuses to Whisper',
+                // A line under the title (the subtitle) and the writer.
+                deck: 'HEAVENSGATE NYC Brings \u2018The Elephant in the Room\u2019 to Bogart House',
+                by: 'Tom White',
+                date: 'Sep 29, 2025',
                 href: 'https://fashionweekdaily.com/the-elephant-in-the-room-heavensgate-nycs-runway-that-refuses-to-whisper/',
             },
             {
@@ -438,6 +444,31 @@
         //              projects); an event also shows its project's video
         //   projectLabel – wording of the link to the project (default "See the photos")
         events: [
+            {
+                slug: 'sound-form',
+                tag: 'Past',
+                title: 'SOUND / FORM',
+                date: 'Sep 18, 2026',
+                location: 'Honey\u2019s, Brooklyn',
+                type: 'Show',
+                image: 'assets/events/sound-form/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/sound-form/01-poster.webp',
+                        thumb: 'assets/events/sound-form/thumb-01.webp',
+                        alt: 'The SOUND / FORM poster: orange-red with the title in a wobbling grey oval. Fashion performances by HEAVENSGATE NYC + sounds by Cultivated Sound. NYFW 26, NYFW closing weekend + Climate Week prelude, 9.18.26, Honey\u2019s. Cultivated Sound: Chamberlain Zhang, Sploofi, Elladotnet.',
+                    },
+                ],
+                // From the poster. The bio, the credits and the link to the photos
+                // come from the project with this slug.
+                details: [
+                    { role: 'Date', names: ['Friday, September 18, 2026'] },
+                    { role: 'Venue', names: ['Honey\u2019s, Brooklyn'] },
+                    { role: 'Part of', names: ['NYFW 26 closing weekend + Climate Week prelude'] },
+                    { role: 'Format', names: ['Fashion performances by HEAVENSGATE NYC + sounds by Cultivated Sound'] },
+                ],
+                project: 'sound-form',
+            },
             {
                 slug: 'the-last-human-fashion-show',
                 tag: 'Past',
