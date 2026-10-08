@@ -59,8 +59,9 @@
             })
         }
         HG.data.events.forEach(function (ev) {
-            if (!ev.slug || !ev.images) return
-            ev.images.forEach(function (item, i) {
+            var list = ev.images || (ev.image ? [ev.image] : null)
+            if (!ev.slug || !list) return
+            list.forEach(function (item, i) {
                 var img = typeof item === 'string' ? { src: item } : item
                 cards.push({
                     slug: 'event-' + ev.slug + '-' + (i + 1),

@@ -600,6 +600,41 @@
                 project: 'miss-conduct',
             },
             {
+                slug: 'ctrl-shop-del',
+                tag: 'Past',
+                title: 'CTRL + SHOP + DEL',
+                // TODO: add the year (`date: 'Jun 21, 20xx'`) and move this event to its
+                // place in the list, newest first.
+                date: 'Jun 21',
+                location: 'VERS, Brooklyn',
+                type: 'Market',
+                image: 'assets/events/ctrl-shop-del/poster.webp',
+                video: {
+                    src: 'assets/events/ctrl-shop-del/ctrl-shop-del.mp4',
+                    poster: 'assets/events/ctrl-shop-del/poster.webp',
+                    ratio: 0.8,
+                    autoplay: true,
+                    title: 'CTRL + SHOP + DEL motion poster',
+                },
+                summary:
+                    'CTRL + SHOP + DEL: a day-to-night market and afterparty hosted by @heavensgatenyc and @studiocult.co at @versbk.nyc.\n\n' +
+                    'Shop a curated lineup of local designers, meet the @studiocult.co team, and stay for the afterparty with a DJ set by @nextdimensional.\n\n' +
+                    'Tickets include a free drink + exclusive jewelry piece. Market is free to attend. A portion of proceeds will support the @versbk.nyc Fund.',
+                details: [
+                    { role: 'Date', names: ['June 21'] },
+                    { role: 'Market', names: ['12\u20138 PM, free with RSVP'] },
+                    { role: 'Party', names: ['9 PM\u201312 AM, $20 with a free drink + exclusive jewelry piece'] },
+                    { role: 'DJ set', names: ['9 PM, @nextdimensional'] },
+                    { role: 'Venue', names: ['VERS: Clothing for People, 1329 Willoughby Ave, Brooklyn, NY 11237'] },
+                    { role: 'Theme', names: ['Fine wares market and party: Y2K, crafts, nostalgia'] },
+                ],
+                credits: [
+                    { role: 'Hosted by', names: ['@heavensgatenyc', '@studiocult.co'] },
+                    { role: 'At', names: ['@versbk.nyc'] },
+                    { role: 'DJ set by', names: ['@nextdimensional'] },
+                ],
+            },
+            {
                 slug: 'artifice-003',
                 tag: 'Past',
                 title: 'Artifice 003',

@@ -214,8 +214,9 @@
         var photosLink = proj
             ? '<p class="page-lede"><a class="text-link" href="' + esc(HG.projectUrl(proj)) + '">' + esc(ev.projectLabel || 'See the photos') + ' →</a></p>'
             : ''
-        var images = ev.images && ev.images.length ? ev.images : ev.image ? [ev.image] : []
         var videoItems = ev.videos || (ev.video ? [ev.video] : proj ? proj.videos || (proj.video ? [proj.video] : []) : [])
+        // With a video, the card image is just its poster frame, so don't repeat it.
+        var images = ev.images && ev.images.length ? ev.images : ev.image && !videoItems.length ? [ev.image] : []
         var videos = videoItems
             .map(function (item) {
                 return HG.videoHtml(item, ev.title)
