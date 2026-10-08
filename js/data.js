@@ -786,7 +786,7 @@
                 slug: 'love-bug',
                 tag: 'Past',
                 title: 'Love Bug Pop-Up',
-                // TODO: add the year of this edition (a monthly series, 2022\u20132025).
+                // TODO: add the year of this pop-up (HEAVENSGATE NYC ran pop-ups 2022\u20132025).
                 date: 'Jan 26\u201328',
                 location: '123 Bowery, 5th floor',
                 type: 'Pop-up',
@@ -799,10 +799,9 @@
                         alt: 'The Love Bug pop-up poster: a heart-shaped red ladybird with black heart spots on a grey grainy background, with red script lettering. 123 Bowery, 5th floor. 1/26 to 1/28, 1:00 to 8:00. The faint line at the top reads: I never thought that I\u2019d catch this.',
                     },
                 ],
-                summary: 'Love Bug was a monthly pop-up, from 2022 to 2025.',
+                summary: 'Love Bug was a HEAVENSGATE NYC pop-up. HEAVENSGATE NYC hosted other pop-ups from 2022 to 2025.',
                 details: [
-                    { role: 'Series', names: ['Monthly pop-ups, 2022\u20132025'] },
-                    { role: 'This edition', names: ['January 26\u201328'] },
+                    { role: 'Dates', names: ['January 26\u201328'] },
                     { role: 'Hours', names: ['1:00\u20138:00 PM'] },
                     { role: 'Venue', names: ['123 Bowery, 5th floor'] },
                 ],
