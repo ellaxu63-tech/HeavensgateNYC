@@ -5,8 +5,9 @@
  *    intro text (they never cover it), then drift with light physics.
  *  - Hover / focus: the card scales up, shows its caption and every other card
  *    fades out; the navigation fades out too (via HG.motion.projectActive).
- *  - Drag anywhere: draws a purple trail and nudges the cards with parallax.
- *    A normal click on a card still opens it.
+ *  - Drag anywhere: draws a ribbon of pink chrome and nudges the cards with
+ *    parallax. A normal click on a card still opens it. Until someone has
+ *    drawn, a flourish draws itself every few seconds to show what to do.
  *  - PAUSE / RESUME (HG.motion.paused), reduced-motion and hidden tabs stop
  *    the animation loop.
  */
@@ -32,19 +33,39 @@
         rotationDamping: 0.82,
     }
 
-    // Drag-to-draw interaction. Tweak these for more / less movement.
+    // Drag-to-draw interaction. Tweak these for more / less movement, or to
+    // change how the drawn line looks.
     var DRAG = {
-        color: '#9A6AF0',
-        lineWidth: 4,
-        dotWidth: 5.5,
+        // The line is a ribbon: thick where you move slowly, thin where you move
+        // fast, pointed at both ends.
+        lineWidth: 12, // widest part, px
+        minWidth: 2.6, // thinnest part, px
+        fastSpeed: 1.5, // px per ms that counts as "fast"
+        taperTail: 48, // length of the pointed start, px
+        taperHead: 30, // length of the pointed end (at the pointer), px
+        // Chrome: dark edge, pink body with a metal sheen, white highlight on one
+        // side, shaded side (colours sampled from the reference poster).
+        edge: '#683f4d',
+        shade: '#b04a70',
+        chrome: [
+            ['0', '#fedbe8'],
+            ['0.28', '#e891a7'],
+            ['0.5', '#fff4f8'],
+            ['0.74', '#d9769a'],
+            ['1', '#f4a2b3'],
+        ],
+        sparkleEvery: 4, // a little star every N samples while drawing
         // Keeps normal clicks from being mistaken for a drag.
         threshold: 10,
         sampleDistance: 12,
         movementMin: 0.48,
         movementMax: 1.15,
         maxPointerStep: 72,
-        fadeMs: 520,
+        fadeMs: 1000,
     }
+
+    // The flourish that draws itself until someone has drawn (see playGhost).
+    var GHOST = { firstDelay: 1800, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
 
     // -------------------------------------------------------------- helpers
     function hashString(input) {
@@ -123,6 +144,8 @@
         lastX: 0,
         lastY: 0,
         points: [],
+        samples: 0,
+        sparkles: [],
         suppressClickUntil: 0,
         fadeTimer: null,
     }
@@ -146,6 +169,10 @@
         window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches
 
     // ------------------------------------------------------------ drag trail
+    // What you draw is a ribbon of polished pink chrome, like the swirls on the
+    // poster: a dark edge, a pink metal body, a white highlight on one side, a
+    // shaded side, and a few sparkles. All plain SVG inside one overlay; only
+    // its attributes change while you drag.
     var SVG_NS = 'http://www.w3.org/2000/svg'
 
     function svgEl(tag, attrs) {
@@ -156,60 +183,297 @@
         return el
     }
 
-    // One SVG overlay for the whole gesture; only its attributes change while dragging.
     var dragSvg = svgEl('svg', { 'aria-hidden': 'true' })
     dragSvg.setAttribute('class', 'drag-trail')
     dragSvg.style.transition = 'opacity ' + DRAG.fadeMs + 'ms ease'
 
-    var dragLine = svgEl('polyline', {
-        fill: 'none',
-        stroke: DRAG.color,
-        'stroke-width': DRAG.lineWidth,
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round',
-        opacity: '0.78',
+    var chromeGradient = svgEl('linearGradient', {
+        id: 'hg-chrome',
+        gradientUnits: 'userSpaceOnUse',
+        x1: '0',
+        y1: '0',
+        x2: '380',
+        y2: '380',
+        spreadMethod: 'reflect',
     })
-    var dragDots = svgEl('polyline', {
-        fill: 'none',
-        stroke: DRAG.color,
-        'stroke-width': DRAG.dotWidth,
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round',
-        'stroke-dasharray': '0.1 25',
-        opacity: '0.9',
+    DRAG.chrome.forEach(function (stop) {
+        chromeGradient.appendChild(svgEl('stop', { offset: stop[0], 'stop-color': stop[1] }))
     })
-    var dragRing = svgEl('circle', {
-        r: '11',
-        fill: 'none',
-        stroke: 'rgba(255,255,255,0.9)',
-        'stroke-width': '4',
-        opacity: '0',
-    })
-    var dragDot = svgEl('circle', { r: '3.5', fill: '#FFFFFF', opacity: '0' })
-    dragSvg.append(dragLine, dragDots, dragRing, dragDot)
+    var starShape = svgEl('path', { id: 'hg-star', d: HG.STAR_PATH })
+    var defs = svgEl('defs')
+    defs.append(chromeGradient, starShape)
 
-    function clearDragGeometry() {
-        dragLine.setAttribute('points', '')
-        dragDots.setAttribute('points', '')
-        dragRing.setAttribute('opacity', '0')
-        dragDot.setAttribute('opacity', '0')
-        drag.points = []
+    var ribbonBody = svgEl('polygon', {
+        fill: 'url(#hg-chrome)',
+        stroke: DRAG.edge,
+        'stroke-width': '1.1',
+        'stroke-linejoin': 'round',
+    })
+    var ribbonShade = svgEl('polygon', { fill: DRAG.shade, opacity: '0.5' })
+    var ribbonShine = svgEl('polygon', { fill: '#ffffff', opacity: '0.92' })
+    var sparkleLayer = svgEl('g', { fill: '#ffffff' })
+    // A star at the pen tip: on touch screens there is no cursor to show where
+    // you are.
+    var headStar = svgEl('use', { href: '#hg-star', fill: '#ffffff', opacity: '0' })
+    dragSvg.append(defs, ribbonBody, ribbonShade, ribbonShine, sparkleLayer, headStar)
+
+    function smoothstep(t) {
+        t = clamp(t, 0, 1)
+        return t * t * (3 - 2 * t)
     }
 
-    function updateDragGeometry(x, y) {
-        var pointString = drag.points
-            .concat([{ x: x, y: y }])
-            .map(function (p) {
-                return p.x.toFixed(1) + ',' + p.y.toFixed(1)
-            })
-            .join(' ')
-        dragLine.setAttribute('points', pointString)
-        dragDots.setAttribute('points', pointString)
-        ;[dragRing, dragDot].forEach(function (el) {
-            el.setAttribute('cx', x.toFixed(1))
-            el.setAttribute('cy', y.toFixed(1))
-            el.setAttribute('opacity', '1')
+    // Offset outline of the centre line: `factor` scales the width, `shift`
+    // moves the centre towards the light (up-left) when positive.
+    function ribbonOutline(path, factor, shift) {
+        var left = []
+        var right = []
+        for (var i = 0; i < path.length; i++) {
+            var a = path[Math.max(0, i - 1)]
+            var b = path[Math.min(path.length - 1, i + 1)]
+            var tx = b.x - a.x
+            var ty = b.y - a.y
+            var len = Math.hypot(tx, ty) || 1
+            var nx = -ty / len
+            var ny = tx / len
+            var half = (path[i].w * factor) / 2
+            var cx = path[i].x - shift * path[i].w * 0.7
+            var cy = path[i].y - shift * path[i].w * 0.7
+            left.push((cx + nx * half).toFixed(1) + ',' + (cy + ny * half).toFixed(1))
+            right.push((cx - nx * half).toFixed(1) + ',' + (cy - ny * half).toFixed(1))
+        }
+        return left.concat(right.reverse()).join(' ')
+    }
+
+    // points: [{ x, y, t }] with t in ms. Draws the ribbon through them.
+    function renderRibbon(points) {
+        if (points.length < 2) return clearRibbon()
+
+        // Width at each point from how fast the pointer was moving there.
+        var widths = points.map(function (p, i) {
+            if (i === 0) return DRAG.lineWidth * 0.6
+            var q = points[i - 1]
+            var speed = Math.hypot(p.x - q.x, p.y - q.y) / Math.max(1, p.t - q.t)
+            return DRAG.minWidth + (DRAG.lineWidth - DRAG.minWidth) * (1 - clamp(speed / DRAG.fastSpeed, 0, 1))
         })
+        widths = widths.map(function (w, i) {
+            var before = i > 0 ? widths[i - 1] : w
+            var after = i < widths.length - 1 ? widths[i + 1] : w
+            return before * 0.25 + w * 0.5 + after * 0.25
+        })
+
+        // Smooth centre line (Catmull-Rom spline through the points).
+        var STEPS = 6
+        var path = []
+        for (var i = 0; i < points.length - 1; i++) {
+            var p0 = points[Math.max(0, i - 1)]
+            var p1 = points[i]
+            var p2 = points[i + 1]
+            var p3 = points[Math.min(points.length - 1, i + 2)]
+            for (var k = 0; k < STEPS; k++) {
+                var t = k / STEPS
+                var t2 = t * t
+                var t3 = t2 * t
+                path.push({
+                    x: 0.5 * (2 * p1.x + (p2.x - p0.x) * t + (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 + (3 * p1.x - p0.x - 3 * p2.x + p3.x) * t3),
+                    y: 0.5 * (2 * p1.y + (p2.y - p0.y) * t + (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 + (3 * p1.y - p0.y - 3 * p2.y + p3.y) * t3),
+                    w: widths[i] + (widths[i + 1] - widths[i]) * t,
+                })
+            }
+        }
+        var tail = points[points.length - 1]
+        path.push({ x: tail.x, y: tail.y, w: widths[widths.length - 1] })
+
+        // Point both ends.
+        var total = 0
+        path[0].s = 0
+        for (var j = 1; j < path.length; j++) {
+            total += Math.hypot(path[j].x - path[j - 1].x, path[j].y - path[j - 1].y)
+            path[j].s = total
+        }
+        var tailLen = Math.max(1, Math.min(DRAG.taperTail, total * 0.5))
+        var headLen = Math.max(1, Math.min(DRAG.taperHead, total * 0.5))
+        path.forEach(function (p) {
+            p.w = Math.max(0.6, p.w * smoothstep(p.s / tailLen) * smoothstep((total - p.s) / headLen))
+        })
+
+        ribbonBody.setAttribute('points', ribbonOutline(path, 1, 0))
+        ribbonShade.setAttribute('points', ribbonOutline(path, 0.42, -0.2))
+        ribbonShine.setAttribute('points', ribbonOutline(path, 0.26, 0.2))
+
+        if (touchLike) {
+            headStar.setAttribute('transform', 'translate(' + tail.x.toFixed(1) + ' ' + tail.y.toFixed(1) + ') scale(11)')
+            headStar.setAttribute('opacity', '1')
+        }
+    }
+
+    function clearRibbon() {
+        ;[ribbonBody, ribbonShade, ribbonShine].forEach(function (el) {
+            el.setAttribute('points', '')
+        })
+        headStar.setAttribute('opacity', '0')
+    }
+
+    function clearDragGeometry() {
+        clearRibbon()
+        while (sparkleLayer.firstChild) sparkleLayer.removeChild(sparkleLayer.firstChild)
+        drag.points = []
+        drag.sparkles = []
+        drag.samples = 0
+        ribbonHead = null
+    }
+
+    // The newest point is the pointer itself; draw at most once per frame.
+    var ribbonHead = null
+    var ribbonRaf = null
+    function updateDragGeometry(x, y) {
+        ribbonHead = { x: x, y: y, t: performance.now() }
+        if (ribbonRaf !== null) return
+        ribbonRaf = window.requestAnimationFrame(function () {
+            ribbonRaf = null
+            if (ribbonHead && drag.active) renderRibbon(drag.points.concat([ribbonHead]))
+        })
+    }
+
+    // A little star dropped near the line every few samples.
+    function addSparkle(x, y) {
+        var el = svgEl('use', { href: '#hg-star' })
+        var size = 4 + Math.random() * 6
+        el.setAttribute(
+            'transform',
+            'translate(' + (x + (Math.random() - 0.5) * 22).toFixed(1) + ' ' + (y + (Math.random() - 0.5) * 22).toFixed(1) +
+                ') rotate(' + (Math.random() * 45).toFixed(0) + ') scale(' + size.toFixed(1) + ')'
+        )
+        el.setAttribute('opacity', (0.55 + Math.random() * 0.45).toFixed(2))
+        sparkleLayer.appendChild(el)
+        drag.sparkles.push(el)
+        if (drag.sparkles.length > 36) sparkleLayer.removeChild(drag.sparkles.shift())
+    }
+
+    // -------------------------------------------------- "draw here" demo
+    // Until someone has drawn, a flourish draws itself every few seconds, so
+    // it is obvious the page can be drawn on. It stops for good on the first
+    // real drag, and never plays with reduced motion.
+    var hasDrawn = false
+    try {
+        hasDrawn = window.sessionStorage.getItem('hg-drawn') === '1'
+    } catch (e) {}
+    if (hasDrawn) document.documentElement.classList.add('has-drawn')
+
+    var ghost = { timer: null, raf: null, running: false, plays: 0 }
+
+    // A looping, hand-drawn-looking curve (a prolate trochoid), as stage points.
+    function ghostPath(w, h, textBottom) {
+        var loops = 2
+        var count = 46
+        var raw = []
+        for (var i = 0; i <= count; i++) {
+            var th = (i / count) * Math.PI * 2 * loops
+            raw.push({ x: th - 1.9 * Math.sin(th), y: -1.9 * Math.cos(th) + 0.4 * Math.sin(th * 0.5) })
+        }
+        var xs = raw.map(function (p) { return p.x })
+        var ys = raw.map(function (p) { return p.y })
+        var minX = Math.min.apply(null, xs)
+        var maxX = Math.max.apply(null, xs)
+        var minY = Math.min.apply(null, ys)
+        var maxY = Math.max.apply(null, ys)
+        // Below the intro text, so the flourish never writes over it.
+        var top = clamp(textBottom + 18, h * 0.4, h * 0.72)
+        var width = w * 0.84
+        var height = Math.max(70, Math.min(h * 0.34, width * 0.5, h - 28 - top))
+        var left = w * 0.08
+        return raw.map(function (p, i) {
+            return {
+                x: left + ((p.x - minX) / (maxX - minX)) * width,
+                y: top + ((p.y - minY) / (maxY - minY)) * height,
+                t: (i / count) * GHOST.drawMs,
+            }
+        })
+    }
+
+    function ghostAllowed() {
+        return (
+            !hasDrawn &&
+            !drag.active &&
+            docVisible &&
+            !reducedMotionMedia.matches &&
+            !document.documentElement.classList.contains('project-selected') &&
+            !document.documentElement.classList.contains('menu-open')
+        )
+    }
+
+    function scheduleGhost(delay) {
+        if (ghost.timer !== null) window.clearTimeout(ghost.timer)
+        ghost.timer = null
+        if (hasDrawn || ghost.plays >= GHOST.maxPlays) return
+        ghost.timer = window.setTimeout(playGhost, delay)
+    }
+
+    function cancelGhost() {
+        if (ghost.timer !== null) window.clearTimeout(ghost.timer)
+        if (ghost.raf !== null) window.cancelAnimationFrame(ghost.raf)
+        ghost.timer = null
+        ghost.raf = null
+        if (ghost.running) {
+            ghost.running = false
+            dragSvg.style.transition = 'none'
+            dragSvg.style.opacity = '0'
+            clearDragGeometry()
+        }
+    }
+
+    function playGhost() {
+        ghost.timer = null
+        if (!ghostAllowed()) return scheduleGhost(2500)
+        var rect = host.getBoundingClientRect()
+        var path = ghostPath(rect.width, rect.height, intro.getBoundingClientRect().bottom - rect.top)
+        var started = performance.now()
+        ghost.running = true
+        ghost.plays++
+        dragSvg.style.transition = 'none'
+        dragSvg.style.opacity = '1'
+
+        function frame(now) {
+            ghost.raf = null
+            if (!ghost.running) return
+            var u = clamp((now - started) / GHOST.drawMs, 0, 1)
+            var eased = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
+            var f = eased * (path.length - 1)
+            var whole = Math.floor(f)
+            var points = path.slice(0, whole + 1)
+            if (whole < path.length - 1) {
+                var m = f - whole
+                var a = path[whole]
+                var b = path[whole + 1]
+                points.push({ x: a.x + (b.x - a.x) * m, y: a.y + (b.y - a.y) * m, t: a.t + (b.t - a.t) * m })
+            }
+            renderRibbon(points)
+            if (u < 1) {
+                ghost.raf = window.requestAnimationFrame(frame)
+                return
+            }
+            ghost.timer = window.setTimeout(function () {
+                dragSvg.style.transition = 'opacity ' + GHOST.fadeMs + 'ms ease'
+                dragSvg.style.opacity = '0'
+                ghost.timer = window.setTimeout(function () {
+                    ghost.timer = null
+                    ghost.running = false
+                    clearDragGeometry()
+                    scheduleGhost(GHOST.every)
+                }, GHOST.fadeMs + 40)
+            }, GHOST.holdMs)
+        }
+        ghost.raf = window.requestAnimationFrame(frame)
+    }
+
+    // The first real drag: the demo and the hint have done their job.
+    function markDrawn() {
+        if (hasDrawn) return
+        hasDrawn = true
+        document.documentElement.classList.add('has-drawn')
+        try {
+            window.sessionStorage.setItem('hg-drawn', '1')
+        } catch (e) {}
+        cancelGhost()
     }
 
     // ----------------------------------------------------- intro obstacle
@@ -984,6 +1248,7 @@
             // stays visible while the composition moves.
             clearActive()
             document.documentElement.classList.add('is-dragging')
+            markDrawn()
         }
         if (!drag.dragging) return
 
@@ -1012,8 +1277,10 @@
 
         var last = drag.points[drag.points.length - 1]
         if (!last || Math.hypot(p.x - last.x, p.y - last.y) >= DRAG.sampleDistance) {
-            drag.points.push({ x: p.x, y: p.y })
+            drag.points.push({ x: p.x, y: p.y, t: performance.now() })
             if (drag.points.length > 120) drag.points.shift()
+            drag.samples++
+            if (drag.samples % DRAG.sparkleEvery === 0) addSparkle(p.x, p.y)
         }
         drag.lastX = p.x
         drag.lastY = p.y
@@ -1037,8 +1304,9 @@
         drag.pointerId = event.pointerId
         drag.startX = drag.lastX = p.x
         drag.startY = drag.lastY = p.y
+        cancelGhost()
         clearDragGeometry()
-        drag.points = [{ x: p.x, y: p.y }]
+        drag.points = [{ x: p.x, y: p.y, t: performance.now() }]
         dragSvg.style.transition = 'none'
         dragSvg.style.opacity = '0'
 
@@ -1140,6 +1408,7 @@
     layoutCards()
     ready = true
     startLoop()
+    scheduleGhost(GHOST.firstDelay)
 
     if (typeof ResizeObserver !== 'undefined') {
         var resizeObserver = new ResizeObserver(scheduleRelayout)

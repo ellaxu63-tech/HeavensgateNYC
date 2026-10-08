@@ -76,7 +76,7 @@ Behaviour you may notice compared with the Framer version:
   smaller screens every card ended up in the one strip tall enough for it.
 - A hovered card now stays where it is and shrinks to fit rather than jumping to
   another part of the screen, and it keeps growing after PAUSE.
-- The DRAG TO MOVE pill fades while a project is selected.
+- The DRAG TO DRAW & MOVE pill fades while a project is selected, and for good once someone has drawn.
 
 ## Look: grid and fonts
 
@@ -108,15 +108,31 @@ Knobs at the top of `css/styles.css`:
 | `--gutter`         | How far the side lines sit from the screen edge (text starts at 2×)  |
 | `--grid`           | Colour / strength of the grid lines                                  |
 | `--display-case`   | `lowercase` (default) or `none` for serif text exactly as typed      |
-| `--accent`         | The MENU pill and drag-hint dot                                      |
+| `--accent`         | The pink (from the reference poster): MENU pill, drag hint, star     |
 | `--bg` / `--fg`    | Background and text colour (with `--bg-rgb` / `--fg-rgb`)            |
 | `--serif`, `--mono`| The two font stacks                                                  |
 
+## Drawing on the home page
+
+Dragging anywhere on the home page nudges the images and draws a ribbon of
+pink chrome: thick where you move slowly, thin where you move fast, pointed at
+both ends, with sparkles dropped along it. It fades a second after you let go.
+
+To make that obvious: the cursor is a star that spins slowly over the page (and
+faster while drawing), a pulsing DRAG TO DRAW & MOVE pill sits above the intro
+text, and until someone has drawn, a flourish draws itself every few seconds
+(up to four times, never with reduced motion). The pill and the demo stop for
+the rest of the visit as soon as someone draws.
+
+The star is `HG.STAR_PATH` in `js/components.js` (traced from the reference
+image); the cursor, the sparkles and the hint all use it.
+
 ## Tuning
 
-The home page feel is controlled by the `PHYSICS` and `DRAG` objects at the top
-of [`js/physics.js`](js/physics.js) (drift, friction, hover scale, drag trail
-colour / strength).
+The home page feel is controlled by the `PHYSICS`, `DRAG` and `GHOST` objects at
+the top of [`js/physics.js`](js/physics.js): drift, friction, hover scale, and
+for the drawing the ribbon width, taper, chrome colours, sparkle rate, fade time
+and the self-drawing demo's timing.
 
 ## Accessibility
 

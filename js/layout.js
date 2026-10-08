@@ -176,8 +176,16 @@
         })
     }
 
+    // Star icons (the DRAG hint): any [data-star] element gets the star shape.
+    function fillStars() {
+        document.querySelectorAll('[data-star]').forEach(function (el) {
+            el.innerHTML = HG.starSvg('star')
+        })
+    }
+
     // -------------------------------------------------------------- init
     fillIntro()
+    fillStars()
 
     var skip = document.createElement('a')
     skip.className = 'skip-link'

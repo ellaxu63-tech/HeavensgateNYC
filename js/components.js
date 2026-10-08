@@ -16,6 +16,22 @@
         return 'project.html?slug=' + encodeURIComponent(project.slug)
     }
 
+    /*
+     * The star: an eight-pointed sparkle, traced from the reference image. Used
+     * for the cursor, the sparkles in the drawing and the DRAG hint. Normalised:
+     * the points are 1 unit from the centre (0,0), so draw it in a
+     * viewBox="-1 -1 2 2".
+     */
+    HG.STAR_PATH = 'M1 0 L0.129 0.054 L0.707 0.707 L0.054 0.129 L0 1 L-0.054 0.129 L-0.707 0.707 L-0.129 0.054 L-1 0 L-0.129 -0.054 L-0.707 -0.707 L-0.054 -0.129 L0 -1 L0.054 -0.129 L0.707 -0.707 L0.129 -0.054 Z'
+
+    HG.starSvg = function (className) {
+        return (
+            '<svg class="' + (className || 'star') + '" viewBox="-1 -1 2 2" aria-hidden="true" focusable="false">' +
+                '<path d="' + HG.STAR_PATH + '"/>' +
+            '</svg>'
+        )
+    }
+
     // "Category — Year"; the year is optional.
     HG.projectMeta = function (project) {
         return [project.category, project.year].filter(Boolean).join(' — ')

@@ -40,8 +40,9 @@
     --grid: rgba(var(--fg-rgb), 0.38); /* the grid lines */
     --hover: rgba(var(--fg-rgb), 0.14); /* pill hover */
     --current: rgba(var(--fg-rgb), 0.24); /* pill of the page you are on */
-    --accent: #9a6af0;
-    --accent-fg: #fff;
+    --accent: #ee92ac; /* the pink from the reference poster */
+    --accent-rgb: 238, 146, 172;
+    --accent-fg: #000;
     --upcoming: #ff4b5c;
 
     --serif: "Instrument Serif", "Times New Roman", Times, serif;
@@ -346,15 +347,25 @@ html.menu-open { overflow: hidden; }
     will-change: transform;
 }
 #hg-cursor.active { opacity: 1; }
-#hg-cursor .cursor-dot {
+/* The cursor is a star (the same shape as the sparkles in the drawing). It is
+   white and the cursor inverts against what is under it, so it reads on both
+   the black page and the photos. */
+#hg-cursor .cursor-star {
     position: absolute;
-    left: -6px;
-    top: -6px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #fff;
+    left: -18px;
+    top: -18px;
+    width: 36px;
+    height: 36px;
+    transition: transform 220ms ease;
 }
+#hg-cursor .cursor-star .star { display: block; width: 100%; height: 100%; fill: #fff; }
+/* Over the home page stage the star turns slowly: "you can draw here". The
+   shape repeats every 45 degrees, so the loop is seamless. */
+#hg-cursor.over-stage .cursor-star .star { animation: star-spin 6s linear infinite; }
+/* While drawing it grows and spins faster. */
+html.is-dragging #hg-cursor .cursor-star { transform: scale(1.35); }
+html.is-dragging #hg-cursor .cursor-star .star { animation: star-spin 1.2s linear infinite; }
+@keyframes star-spin { to { transform: rotate(45deg); } }
 #hg-cursor .cursor-open {
     position: absolute;
     left: 0;
@@ -374,7 +385,7 @@ html.menu-open { overflow: hidden; }
     white-space: nowrap;
 }
 html:not(.is-dragging) #hg-cursor.project-hover { mix-blend-mode: normal; }
-html:not(.is-dragging) #hg-cursor.project-hover .cursor-dot { display: none; }
+html:not(.is-dragging) #hg-cursor.project-hover .cursor-star { display: none; }
 html:not(.is-dragging) #hg-cursor.project-hover .cursor-open { display: flex; }
 
 /* -------------------------------------------------------- project cards */
@@ -475,34 +486,35 @@ html:not(.is-dragging) #hg-cursor.project-hover .cursor-open { display: flex; }
 .drag-hint {
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 20px);
+    bottom: calc(100% + 22px);
     z-index: 101;
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 8px 12px;
+    gap: 10px;
+    padding: 11px 18px 11px 14px;
     transform: translateX(-50%);
-    border: 1px solid var(--grid);
+    border: 1px solid var(--accent);
     border-radius: 999px;
-    background: rgba(var(--bg-rgb), 0.72);
+    background: rgba(var(--bg-rgb), 0.78);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    color: rgba(var(--fg-rgb), 0.86);
-    font: 400 11px/1 var(--mono);
-    letter-spacing: 0.04em;
+    color: #fff;
+    font: 400 12px/1 var(--mono);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     white-space: nowrap;
     text-wrap: nowrap;
+    animation: hint-pulse 2.6s ease-out infinite;
     transition: opacity 180ms ease;
 }
-html.project-selected .drag-hint { opacity: 0; }
-.drag-hint i {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(154, 106, 240, 0.14);
+html.project-selected .drag-hint,
+html.has-drawn .drag-hint,
+html.is-dragging .drag-hint { opacity: 0; animation: none; }
+.hint-star { display: block; width: 18px; height: 18px; flex: none; }
+.hint-star .star { display: block; width: 100%; height: 100%; fill: var(--accent); animation: star-spin 5s linear infinite; }
+@keyframes hint-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.55); }
+    70%, 100% { box-shadow: 0 0 0 16px rgba(var(--accent-rgb), 0); }
 }
 
 .drag-trail {
@@ -789,6 +801,9 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
     .stage .project-card,
     .drag-hint,
     .stage .project-caption { transition: none !important; }
+    .drag-hint,
+    .hint-star .star,
+    #hg-cursor .star { animation: none !important; }
 }
 
 .visually-hidden {
