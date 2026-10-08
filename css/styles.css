@@ -164,7 +164,7 @@ main:focus { outline: none; }
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    transition: background 160ms ease, opacity 160ms ease, color 240ms ease;
+    transition: background 160ms ease, opacity 160ms ease;
 }
 .pill:hover { background: var(--hover); }
 .pill[aria-current="page"] { background: var(--current); }
@@ -609,42 +609,39 @@ html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
     opacity: 0;
 }
 
-/* ------------------------------------------------------------------ collapse
-   While an image is hovered / focused on the home page, the writing around it
-   collapses: text and logo fade out and only a dashed outline of each is left
-   where it was, so the layout holds and the image has the stage. The dashed
-   outlines are drawn by js/layout.js (see initDashedOutlines) on a layer that
-   sits over the page. Take a part out of the effect by deleting its selector. */
+/* ------------------------------------------------------------------ the fall
+   While an image is hovered / focused on the home page, the nav, the wordmark,
+   the logo, the bottom bar and every word of the sentence drop to the floor
+   and pile up there, tumbling; when the pointer leaves, they spring back. It
+   is js/collapse.js: it makes copies of the pieces on a layer over the page and
+   animates those, while the originals stay in place but hidden. */
 html.project-selected [data-nav-collapse] { pointer-events: none; }
 
-html.project-selected .site-nav .pill,
-html.project-selected .site-footer--fixed .pill {
-    color: transparent;
-    background: transparent;
-}
+html.fall-on .site-nav .pill,
+html.fall-on .site-footer--fixed .pill,
+html.fall-on .site-header .brand-name,
+html.fall-on .site-header .brand-logo,
+html.fall-on .stage-intro { visibility: hidden; }
 
-.brand-name { transition: color 240ms ease; }
-.brand-logo { transition: opacity 240ms ease; }
-html.project-selected .brand-name { color: transparent; }
-html.project-selected .brand-logo { opacity: 0; }
-
-.stage-intro { transition: color 240ms ease; }
-html.project-selected .stage-intro { color: transparent; }
-
-/* The layer with the dashed outlines: fixed over the whole window, invisible
-   until an image is hovered. */
-.dash-layer {
+.fall-layer {
     position: fixed;
     inset: 0;
     z-index: 1100;
+    overflow: hidden;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 240ms ease;
+    color: var(--fg);
+    font-family: var(--mono);
 }
-html.project-selected .dash-layer { opacity: 1; }
-.dash-outline { position: absolute; display: block; overflow: visible; }
-.dash-outline rect,
-.dash-outline circle { fill: none; stroke: rgba(var(--fg-rgb), 0.95); stroke-width: 1.5; stroke-linecap: butt; }
+.fall-layer > * { position: absolute; margin: 0; white-space: nowrap; will-change: transform; }
+
+/* Reduced motion: nothing falls, the writing just fades out. */
+@media (prefers-reduced-motion: reduce) {
+    html.project-selected .site-nav .pill,
+    html.project-selected .site-footer--fixed .pill { color: transparent; background: transparent; }
+    html.project-selected .site-header .brand-name,
+    html.project-selected .stage-intro { color: transparent; }
+    html.project-selected .site-header .brand-logo { opacity: 0; }
+}
 
 /* --------------------------------------------------------- content pages */
 .page { padding-top: var(--header-h); }
@@ -952,11 +949,6 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
     .menu-label,
     .project-cover img,
     [data-nav-collapse],
-    .pill,
-    .brand-name,
-    .brand-logo,
-    .dash-layer,
-    .stage-intro,
     .stage .project-card,
     .stage .project-caption { transition: none !important; }
     #hg-cursor .star { animation: none !important; }

@@ -145,6 +145,17 @@ someone draws; the cursor label stays.
 The star is `HG.STAR_PATH` in `js/components.js` (traced from the reference
 image); the cursor uses it.
 
+## The fall
+
+Hovering (or focusing) an image on the home page makes the writing around it drop
+to the floor: the nav pills, MENU, the wordmark, the logo, the bottom bar and
+every word of the intro sentence fall with gravity, bounce, tumble and pile up
+along the bottom edge. Moving off the image springs them back. It is
+`js/collapse.js`; the numbers at the top of it (gravity, bounce, tilt, how
+many land upside down, how fast they return) change how it feels. It works on
+copies, so the page itself never moves. With reduced motion, nothing falls and
+the writing just fades out.
+
 ## Tuning
 
 The home page feel is controlled by the `PHYSICS`, `DRAG` and `GHOST` objects at
