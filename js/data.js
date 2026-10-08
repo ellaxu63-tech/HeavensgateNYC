@@ -734,6 +734,65 @@
                 project: 'the-treasure',
                 projectLabel: 'See it in the gallery',
             },
+            {
+                slug: 'stardust-fashion-show',
+                tag: 'Past',
+                title: 'Stardust Fashion Show',
+                // TODO: add the exact date if it is known (this reads "NYFW Fall 2023").
+                date: 'NYFW Fall 2023',
+                location: 'High Bar, DoubleTree Hotel, New York',
+                type: 'Show',
+                image: 'assets/events/stardust/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/stardust/01-main.webp',
+                        thumb: 'assets/events/stardust/thumb-01.webp',
+                        ratio: 1,
+                        alt: 'The Stardust poster: a close-up of hands with long chrome nails and silver rings on a black knit top. High Bar atop the DoubleTree Hotel. Heavensgate, Naarak, Future Treasure. Stardust in chrome script. Runway + after party.',
+                    },
+                    {
+                        src: 'assets/events/stardust/02-designers.webp',
+                        thumb: 'assets/events/stardust/thumb-02.webp',
+                        ratio: 1,
+                        label: 'Designers',
+                        alt: 'The second Stardust poster: a model seen from behind in a brown knit top with a studded cream bag, in a dark room full of guests filming. Chrome script names: Grace Gui, Zemeta, Cydney Sherman, Future Treasure, Twiggy Moore, Te Chin, Meg Beck.',
+                    },
+                ],
+                // From the posters. The bio, the credits and the link to the photos
+                // come from the project with this slug.
+                details: [
+                    { role: 'Date', names: ['New York Fashion Week, Fall 2023'] },
+                    { role: 'Venue', names: ['High Bar atop the DoubleTree Hotel'] },
+                    { role: 'Format', names: ['Runway + after party'] },
+                    { role: 'On the poster', names: ['Grace Gui', 'Zemeta', 'Cydney Sherman', 'Future Treasure', 'Twiggy Moore', 'Te Chin', 'Meg Beck'] },
+                ],
+                project: 'stardust-fashion-show',
+            },
+            {
+                slug: 'love-bug',
+                tag: 'Past',
+                title: 'Love Bug Pop-Up',
+                // TODO: add the year of this edition (a monthly series, 2022\u20132025).
+                date: 'Jan 26\u201328',
+                location: '123 Bowery, 5th floor',
+                type: 'Pop-up',
+                image: 'assets/events/love-bug/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/love-bug/01-poster.webp',
+                        thumb: 'assets/events/love-bug/thumb-01.webp',
+                        ratio: 1,
+                        alt: 'The Love Bug pop-up poster: a heart-shaped red ladybird with black heart spots on a grey grainy background, with red script lettering. 123 Bowery, 5th floor. 1/26 to 1/28, 1:00 to 8:00. The faint line at the top reads: I never thought that I\u2019d catch this.',
+                    },
+                ],
+                summary: 'Love Bug was a monthly pop-up, from 2022 to 2025.',
+                details: [
+                    { role: 'Series', names: ['Monthly pop-ups, 2022\u20132025'] },
+                    { role: 'This edition', names: ['January 26\u201328'] },
+                    { role: 'Hours', names: ['1:00\u20138:00 PM'] },
+                    { role: 'Venue', names: ['123 Bowery, 5th floor'] },
+                ],
+            },
             { tag: 'Upcoming', title: 'SS27 Presentation', date: 'March 2027', location: 'Paris', type: 'Show' },
             { tag: 'Upcoming', title: 'HEAVENSGATE × Archive Pop-Up', date: 'Nov 2026', location: 'Tokyo', type: 'Exhibition' },
             { tag: 'Past', title: 'FW26 Runway Show', date: 'Sep 2026', location: 'New York', type: 'Show' },
