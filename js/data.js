@@ -175,6 +175,43 @@
                 ],
             },
             {
+                slug: 'miss-conduct',
+                title: 'MISS CONDUCT',
+                category: 'Fashion Show & Rave',
+                year: '2025',
+                image: 'assets/projects/miss-conduct/cover.webp',
+                ratio: 0.8,
+                images: [
+                    {
+                        src: 'assets/projects/miss-conduct/01.webp',
+                        alt: 'A performer in a grey blazer swings a chair overhead above smashed monitors and scattered paper, while seated guests film on their phones. A sheet on the floor reads \u201cYou\u2019re fired\u201d.',
+                    },
+                    {
+                        src: 'assets/projects/miss-conduct/02.webp',
+                        alt: 'In black and white, a performer in white lace tights balances on one leg with the other raised high and an arm stretched up, while two performers in grey blazers lie on the paper-covered floor holding the standing leg.',
+                    },
+                    {
+                        src: 'assets/projects/miss-conduct/03.webp',
+                        alt: 'A performer with black-framed glasses, pale makeup and dark glossy lips holds the lapels of an oversized grey blazer over a black vinyl dress, with a lace collar and lace tights.',
+                    },
+                    {
+                        src: 'assets/projects/miss-conduct/04.webp',
+                        alt: 'In black and white, a performer in lace tights arches back over an office chair holding a monitor overhead, while another performer in glasses sits at a desk, paper scattered across the floor.',
+                    },
+                ],
+                summary:
+                    'MISS CONDUCT is a fashion show, performance, and techno rave by Techno Boy x Heavensgate NYC\u2014where dystopian officewear meets immersive dance and chaos.\n\n' +
+                    'It kicks off on a circular runway with Techno Boy\u2019s latest collection, featuring choreography by Cassidy Grady & Beatriz Castro\u2014power plays and breakdowns in motion. Then the rave takes over. The runway turns into a dancefloor.\n\n' +
+                    'Come dressed for the boardroom\u2014or the breakdown.',
+                credits: [
+                    { role: 'Presented by', names: ['Techno Boy', 'HEAVENSGATE NYC', 'Cassidy Grady', 'Beatriz Castro'] },
+                    { role: 'Collection', names: ['Techno Boy'] },
+                    { role: 'Choreography', names: ['Cassidy Grady', 'Beatriz Castro'] },
+                    { role: 'The performance + the rave', names: ['Lethal Trip', 'Stealthy', 'MIA', 'S7IK', 'Ludite', 'Ghoulina', 'Lucy La Dusk'] },
+                    { role: 'Poster design', names: ['@stealthy00'] },
+                ],
+            },
+            {
                 slug: 'stardust-fashion-show',
                 title: 'Stardust Fashion Show',
                 category: 'Fashion Show',
@@ -355,6 +392,31 @@
                     { role: 'On the posters', names: ['Bailey Prado', 'When The Xu Fits', 'Moore', '3399'] },
                     { role: 'Music', names: ['Glam rock live performance'] },
                 ],
+            },
+            {
+                slug: 'miss-conduct',
+                tag: 'Past',
+                title: 'MISS CONDUCT',
+                date: 'May 10, 2025',
+                location: '360 Jefferson St, Brooklyn',
+                type: 'Show',
+                image: 'assets/events/miss-conduct/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/miss-conduct/01-poster.webp',
+                        thumb: 'assets/events/miss-conduct/thumb-01.webp',
+                        alt: 'Poster in red, purple and black over an illustration of office cubicles: Techno Boy, Heavens Gate, Cassidy Grady and Beatriz Castro present MISS CONDUCT. The performance + the rave: Lethal Trip, Stealthy, MIA, S7IK, Ludite, Ghoulina, Lucy La Dusk. May 10 2025, 9 PM to 5 AM, 360 Jefferson St Brkln NY.',
+                    },
+                ],
+                // From the poster. The bio, the credits and the link to the photos
+                // come from the project with this slug.
+                details: [
+                    { role: 'Date', names: ['Saturday, May 10, 2025'] },
+                    { role: 'Time', names: ['9 PM\u20135 AM'] },
+                    { role: 'Venue', names: ['360 Jefferson St, Brooklyn, NY'] },
+                    { role: 'Format', names: ['Fashion show, performance and techno rave'] },
+                ],
+                project: 'miss-conduct',
             },
             {
                 slug: 'artifice-003',
