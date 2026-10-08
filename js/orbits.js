@@ -6,7 +6,7 @@
  * draw with (js/ribbon.js).
  *
  * They move: a pen travels round each ring, drawing it. With all the rings in
- * place they are left up for a couple of seconds, then each is rubbed out (its
+ * place they are left up for a moment, then each is rubbed out (its
  * tail runs along it) and the page is clear to draw on, which is the point.
  *
  * Nothing starts until the page has loaded and is on screen, so the drawing is
@@ -41,11 +41,11 @@
     // Seconds. Ring number n starts n * STAGGER after the first and takes DRAW to go
     // round. Once the last is drawn they stay HOLD, then ring n starts to be rubbed
     // out n * STAGGER_OUT after the first, taking RUB.
-    var STAGGER = 0.3
-    var DRAW = 1.4
-    var HOLD = 1.8
-    var STAGGER_OUT = 0.12
-    var RUB = 1.1
+    var STAGGER = 0.12
+    var DRAW = 1.0
+    var HOLD = 1.0
+    var STAGGER_OUT = 0.06
+    var RUB = 0.7
 
     var SAMPLES = 240 // points round one ring
 

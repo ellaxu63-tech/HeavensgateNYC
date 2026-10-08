@@ -154,7 +154,7 @@ Once the home page has loaded and is on screen, four big white rings are drawn
 across it one after another, in the same stroke you draw with: long ellipses at
 different tilts that cross each other and run off the edges of the window,
 arranged like the rings on the "the sin : vanish" poster. A pen travels round
-each ring. With all four in place they are left up for about two seconds, then
+each ring. With all four in place they are left up for about a second, then
 each is rubbed out along its length and the page is clear to draw on (the
 draw-here flourish follows). They sit over the images but under the sentence,
 and never take clicks or hovers. It is `js/orbits.js` + the "orbits" block in
