@@ -21,6 +21,49 @@
         return [project.category, project.year].filter(Boolean).join(' — ')
     }
 
+    /*
+     * The name is always written in capitals, even inside the lowercase serif
+     * text: wraps every "HEAVENSGATE" / "HEAVENSGATE NYC" under `root` in
+     * <span class="caps"> (see styles.css). "@heavensgatenyc" handles are left
+     * alone. Safe to run again on the same content.
+     */
+    HG.capsBrand = function (root) {
+        var pattern = /(^|[^@\w])(heavensgate(?:\s+nyc)?)(?!\w)/gi
+        var skip = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, TEXTAREA: 1 }
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode: function (node) {
+                var parent = node.parentNode
+                if (!parent || skip[parent.nodeName] || (parent.classList && parent.classList.contains('caps'))) {
+                    return NodeFilter.FILTER_REJECT
+                }
+                return /heavensgate/i.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT
+            },
+        })
+        var nodes = []
+        while (walker.nextNode()) nodes.push(walker.currentNode)
+
+        nodes.forEach(function (node) {
+            var text = node.nodeValue
+            var fragment = document.createDocumentFragment()
+            var last = 0
+            var found = false
+            text.replace(pattern, function (match, before, name, offset) {
+                var start = offset + before.length
+                if (start > last) fragment.appendChild(document.createTextNode(text.slice(last, start)))
+                var span = document.createElement('span')
+                span.className = 'caps'
+                span.textContent = name
+                fragment.appendChild(span)
+                last = start + name.length
+                found = true
+                return match
+            })
+            if (!found) return
+            if (last < text.length) fragment.appendChild(document.createTextNode(text.slice(last)))
+            node.parentNode.replaceChild(fragment, node)
+        })
+    }
+
     // Turns every @handle in a (plain) string into an Instagram link.
     HG.linkHandles = function (text) {
         return HG.esc(text).replace(/@([A-Za-z0-9._]*[A-Za-z0-9_])/g, function (match, handle) {

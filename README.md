@@ -91,6 +91,16 @@ Fonts are self-hosted in `assets/fonts/` (no external requests):
 **Instrument Serif** for big text and the wordmark, **Geist Mono** for
 everything small (uppercase labels, captions, body copy).
 
+The logo is `assets/logo.png` (white artwork on a transparent background, so it
+works on any colour; square, always shown with width = height). It is also used,
+on black, for the favicon and touch icon. To swap it, replace those three files
+and keep them square.
+
+The name is always written in capitals: HEAVENSGATE / HEAVENSGATE NYC stays
+uppercase even inside the lowercase serif text (`HG.capsBrand` in
+`js/components.js` wraps it in `.caps`). `@heavensgatenyc` handles are left as
+they are.
+
 Knobs at the top of `css/styles.css`:
 
 | Variable           | What it does                                                         |

@@ -42,7 +42,10 @@
         var header = document.createElement('header')
         header.className = 'site-header'
         header.innerHTML =
-            '<a class="brand" href="index.html">' + esc(data.siteName) + '</a>' +
+            '<a class="brand" href="index.html">' +
+                '<img class="brand-logo" src="assets/logo.png" width="44" height="44" alt="">' +
+                '<span class="brand-name">' + esc(data.siteName) + '</span>' +
+            '</a>' +
             '<div class="site-nav" data-nav-collapse>' +
                 '<nav class="pill-links" aria-label="Press and events">' + pillLinks(data.headerPills) + '</nav>' +
                 '<button type="button" class="pill pill--accent menu-toggle" aria-expanded="false" aria-controls="menu-overlay">MENU</button>' +
@@ -189,4 +192,5 @@
     document.body.appendChild(buildFooter())
     if (isHome) initMotionToggle(document.getElementById('motion-toggle'))
     initNavCollapse()
+    HG.capsBrand(document.body)
 })()

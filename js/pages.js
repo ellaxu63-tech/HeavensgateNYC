@@ -152,4 +152,7 @@
             fillContactEmail()
             break
     }
+
+    // Content was just rendered: keep the name in capitals there too.
+    HG.capsBrand(main)
 })()
