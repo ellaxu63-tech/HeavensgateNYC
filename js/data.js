@@ -35,9 +35,9 @@
         nav: [
             { label: 'GALLERY', href: 'gallery.html' },
             { label: 'STUDIO', href: 'studio.html' },
-            { label: 'CONNECT', href: 'connect.html' },
             { label: 'PRESS', href: 'press.html' },
             { label: 'EVENTS', href: 'events.html' },
+            { label: 'CONNECT', href: 'connect.html' },
         ],
 
         // Links in the right half of the header, left of MENU (up to three fit
