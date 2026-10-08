@@ -41,14 +41,39 @@
         var next = data.projects[(index + 1) % data.projects.length]
         document.title = project.title + ' — ' + data.siteName
 
+        var images = project.images && project.images.length ? project.images : [project.image]
+        var bio = String(project.summary)
+            .split(/\n\s*\n/)
+            .map(function (paragraph) {
+                return '<p class="page-lede">' + esc(paragraph.trim()) + '</p>'
+            })
+            .join('')
+        var credits = (project.credits || [])
+            .map(function (credit) {
+                return (
+                    '<div class="credit">' +
+                        '<dt>' + esc(credit.role) + '</dt>' +
+                        '<dd>' + credit.names.map(function (name) { return '<span>' + HG.linkHandles(name) + '</span>' }).join('') + '</dd>' +
+                    '</div>'
+                )
+            })
+            .join('')
+
         holder.innerHTML =
             '<a class="back-link" href="gallery.html">← Gallery</a>' +
             '<div class="project-layout">' +
-                '<img class="project-hero" src="' + esc(project.image) + '" alt="' + esc(project.title) + '">' +
+                '<div class="project-images">' +
+                    images
+                        .map(function (src) {
+                            return '<img class="project-hero" src="' + esc(src) + '" alt="' + esc(project.title) + '">'
+                        })
+                        .join('') +
+                '</div>' +
                 '<div class="project-info">' +
-                    '<p class="eyebrow">' + esc(project.category) + ' — ' + esc(project.year) + '</p>' +
+                    '<p class="eyebrow">' + esc(HG.projectMeta(project)) + '</p>' +
                     '<h1 class="page-title">' + esc(project.title) + '</h1>' +
-                    '<p class="page-lede">' + esc(project.summary) + '</p>' +
+                    bio +
+                    (credits ? '<dl class="credits">' + credits + '</dl>' : '') +
                 '</div>' +
             '</div>' +
             '<nav class="project-pager" aria-label="More projects">' +

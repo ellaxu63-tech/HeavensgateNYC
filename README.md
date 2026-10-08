@@ -40,8 +40,13 @@ email, menu links, projects, press and events.
 
 To add a project, add an entry to `projects` and drop its image into
 `assets/projects/`. It automatically appears on the home page, in the gallery,
-and gets its own page. Add an `href` to a press item or event to turn it into a
-link.
+and gets its own page. The first entry is the first one in the gallery. Add an
+`href` to a press item or event to turn it into a link.
+
+A project can also have (all optional, see the comment above `projects`):
+`year`, a `summary` (the bio; a blank line starts a new paragraph), `images`
+(every photo for the project page, in order) and `credits` (role + names;
+anything written like `@handle` links to that Instagram profile).
 
 ## How the old Framer overrides map to this site
 

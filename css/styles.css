@@ -620,18 +620,28 @@ html.project-selected [data-nav-collapse] {
 }
 .back-link:hover { opacity: 0.6; }
 .project-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+/* All of a project's images, stacked in the left column. */
+.project-images { display: grid; justify-items: start; gap: 24px; padding: 32px var(--gutter) 64px var(--pad); }
 .project-hero {
     display: block;
     width: auto;
-    max-width: calc(100% - var(--pad) - var(--gutter));
+    max-width: 100%;
     height: auto;
     max-height: calc(100vh - var(--header-h) - 150px);
-    margin: 32px var(--gutter) 64px var(--pad);
     background: rgba(var(--fg-rgb), 0.06);
     box-shadow: 0 0 0 1px var(--grid);
 }
-.project-info { position: sticky; top: var(--header-h); padding: 32px var(--pad) 64px var(--gutter); }
+.project-info { padding: 32px var(--pad) 64px var(--gutter); }
 .project-info .page-title { padding: 18px 0 0; font-size: clamp(48px, 7vw, 120px); }
+.project-info .page-lede + .page-lede { margin-top: 16px; }
+
+/* Who was involved: role on the left, names (linked handles) on the right. */
+.credits { margin: 40px 0 0; border-top: 1px solid var(--grid); }
+.credit { display: grid; grid-template-columns: minmax(110px, 34%) 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--grid); }
+.credit dt { color: var(--muted); font-size: 12px; line-height: 1.6; text-transform: uppercase; }
+.credit dd { display: flex; flex-direction: column; gap: 4px; margin: 0; }
+.credit a { text-decoration: none; }
+.credit a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .project-pager { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--grid); }
 .project-pager a {
     display: flex;
@@ -649,8 +659,10 @@ html.project-selected [data-nav-collapse] {
 
 @media (max-width: 860px) {
     .project-layout { grid-template-columns: 1fr; }
-    .project-hero { margin: 24px var(--pad); max-width: calc(100% - var(--pad) * 2); max-height: none; }
-    .project-info { position: static; padding: 0 var(--pad) 48px; }
+    .project-images { padding: 24px var(--pad); }
+    .project-hero { width: 100%; max-height: none; }
+    .project-info { padding: 0 var(--pad) 48px; }
+    .credit { grid-template-columns: 1fr; gap: 6px; }
     .project-pager { grid-template-columns: 1fr; }
     .project-pager a,
     .project-pager a:last-child { padding: 24px var(--pad); border-top: 1px solid var(--grid); }

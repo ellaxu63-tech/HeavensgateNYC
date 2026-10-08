@@ -53,8 +53,39 @@
          *   image     – path to the cover image (any jpg / png / webp / svg)
          *   ratio     – image width ÷ height. Only used until the image loads,
          *               then the real size is read from the image itself.
+         *   year      – optional
+         *   summary   – the bio on the project page; a blank line starts a
+         *               new paragraph
+         *   images    – optional: every image to show on the project page, in
+         *               order (defaults to just `image`)
+         *   credits   – optional: [{ role, names: ['@handle', …] }]. Anything
+         *               that looks like @handle becomes a link to Instagram.
+         *
+         * The first project is also the first in the gallery.
          */
         projects: [
+            {
+                slug: 'sound-form',
+                title: 'SOUND / FORM',
+                category: 'Fashion Performance',
+                // PLACEHOLDER cover: replace with the real photos, e.g.
+                //   image:  'assets/projects/sound-form/01.jpg',
+                //   images: ['assets/projects/sound-form/01.jpg', 'assets/projects/sound-form/02.jpg', …],
+                image: 'assets/projects/sound-form-placeholder.svg',
+                ratio: 0.8,
+                summary:
+                    'SOUND / FORM was a fashion event hosted by HEAVENSGATE NYC, staged as performances and installations instead of a traditional runway. Fashion can be expressed through movement, vulnerability and fluidity, and here it was.\n\n' +
+                    'Spread across two floors, it danced, sprawled, and occasionally made you wonder where to look first.',
+                credits: [
+                    { role: 'Hosted by', names: ['@heavensgatenyc'] },
+                    {
+                        role: 'Fashion performances + installations',
+                        names: ['@lakras.co + @amehl.world', '@nostylguh.co', '@annielian.love', '@theindigofay', '@wet._market', '@caboclo.bad'],
+                    },
+                    { role: 'Sound', names: ['@cultivatedsound'] },
+                    { role: 'DJs', names: ['@chamberlainz', '@sploofi', '@elladotnet'] },
+                ],
+            },
             { slug: 'runway-01', title: 'Runway 01', category: 'Runway', year: '2026', image: 'assets/projects/project-01.svg', ratio: 0.8 },
             { slug: 'presentation-01', title: 'Presentation 01', category: 'Live Presentation', year: '2026', image: 'assets/projects/project-02.svg', ratio: 1.25 },
             { slug: 'experience-01', title: 'Experience 01', category: 'Creative Experience', year: '2026', image: 'assets/projects/project-03.svg', ratio: 1 },
@@ -67,6 +98,7 @@
             { slug: 'runway-04', title: 'Runway 04', category: 'Runway', year: '2024', image: 'assets/projects/project-10.svg', ratio: 0.8 },
         ].map(function (p) {
             p.summary =
+                p.summary ||
                 'Placeholder project. Replace this entry in js/data.js with the real title, description and images.'
             return p
         }),
