@@ -45,7 +45,7 @@
         var bio = String(project.summary)
             .split(/\n\s*\n/)
             .map(function (paragraph) {
-                return '<p class="page-lede">' + esc(paragraph.trim()) + '</p>'
+                return '<p class="page-lede">' + HG.linkHandles(paragraph.trim()) + '</p>'
             })
             .join('')
         var credits = (project.credits || [])

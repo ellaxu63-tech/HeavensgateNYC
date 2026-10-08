@@ -67,7 +67,9 @@
     // Turns every @handle in a (plain) string into an Instagram link.
     HG.linkHandles = function (text) {
         return HG.esc(text).replace(/@([A-Za-z0-9._]*[A-Za-z0-9_])/g, function (match, handle) {
-            return '<a href="https://www.instagram.com/' + handle + '/" target="_blank" rel="noopener">' + match + '</a>'
+            // The name is always shown in capitals, handles included (they aren't case-sensitive).
+            var caps = /^heavensgate/i.test(handle) ? ' class="caps"' : ''
+            return '<a' + caps + ' href="https://www.instagram.com/' + handle + '/" target="_blank" rel="noopener">' + match + '</a>'
         })
     }
 

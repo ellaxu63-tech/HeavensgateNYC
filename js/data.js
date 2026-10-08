@@ -108,6 +108,46 @@
                     { role: 'DJs', names: ['@chamberlainz', '@sploofi', '@elladotnet'] },
                 ],
             },
+            {
+                slug: 'stardust-fashion-show',
+                title: 'Stardust Fashion Show',
+                category: 'Fashion Show',
+                year: '2023',
+                image: 'assets/projects/stardust-fashion-show/cover.jpg',
+                ratio: 0.751,
+                images: [
+                    {
+                        src: 'assets/projects/stardust-fashion-show/01.jpg',
+                        alt: 'A model with metallic blue lips in a black lace-trimmed satin corset dress with ruffled shoulders and brown fleece arm warmers.',
+                    },
+                    {
+                        src: 'assets/projects/stardust-fashion-show/02.jpg',
+                        alt: 'A model with long red hair in a black faux-leather bralette, black cut-out trousers, a chain necklace and a tan crescent shoulder bag.',
+                    },
+                    {
+                        src: 'assets/projects/stardust-fashion-show/03.jpg',
+                        alt: 'A model walks past seated guests in an orange and red gingham jacket with shaggy red fur, a feathered leopard-print hat and a tartan wrap skirt.',
+                    },
+                    {
+                        src: 'assets/projects/stardust-fashion-show/04.jpg',
+                        alt: 'Close-up of a model in white crochet lace sleeves and ruffles, a lace bonnet, long braids and a ribbon choker.',
+                    },
+                    {
+                        src: 'assets/projects/stardust-fashion-show/05.jpg',
+                        alt: 'Close-up of a hand with chunky rings and a pink-faced watch, against orange and red gingham taffeta and shaggy red fur.',
+                    },
+                ],
+                summary:
+                    'The Stardust Fashion Show took place during New York Fashion Week, Fall 2023, presented by @FutureTreasureNY, @HeavensgateNYC and @NaarakNYC.\n\n' +
+                    'After dark, the looks ranged from black lace corsetry and glossy leather to shaggy red fur, tartan and white crochet.',
+                credits: [
+                    { role: 'Presented by', names: ['@FutureTreasureNY', '@HeavensgateNYC', '@NaarakNYC'] },
+                    {
+                        role: 'Featuring',
+                        names: ['@twiggy.moore', '@zemeta_official', '@techin_underground', '@megbeckstudio', '@cydn3yyy', '@grace__gui', '@hole.xyz'],
+                    },
+                ],
+            },
             { slug: 'runway-01', title: 'Runway 01', category: 'Runway', year: '2026', image: 'assets/projects/project-01.svg', ratio: 0.8 },
             { slug: 'presentation-01', title: 'Presentation 01', category: 'Live Presentation', year: '2026', image: 'assets/projects/project-02.svg', ratio: 1.25 },
             { slug: 'experience-01', title: 'Experience 01', category: 'Creative Experience', year: '2026', image: 'assets/projects/project-03.svg', ratio: 1 },
