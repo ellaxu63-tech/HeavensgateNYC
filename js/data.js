@@ -250,6 +250,31 @@
                 ],
             },
             {
+                slug: 'the-treasure',
+                title: 'The Treasure',
+                category: 'Fashion Show',
+                // TODO: add `year` once it is known.
+                image: 'assets/projects/the-treasure/cover.webp',
+                ratio: 0.5625,
+                video: {
+                    src: 'assets/projects/the-treasure/the-treasure.mp4',
+                    poster: 'assets/projects/the-treasure/poster.webp',
+                    ratio: 0.5625,
+                    title: 'The Treasure, video by @ronperaltax, featured by Vogue Thailand',
+                },
+                summary:
+                    '\u2018The Treasure\u2019 \u2013 a multi-brand fashion show collaboration between Thai Trade Center New York (DITP) and Future Treasure (@futuretreasureny) during New York Fashion Week. Models cast by @heavensgatenyc.\n\n' +
+                    'First time in Vogue: thank you @voguethailand for featuring this show and @ronperaltax for the video!',
+                credits: [
+                    { role: 'Presented by', names: ['Thai Trade Center New York (DITP)', '@futuretreasureny'] },
+                    { role: 'Models cast by', names: ['@heavensgatenyc'] },
+                    { role: 'Clothing', names: ['@vinnpatararin', '@boonlearnewyork', '@leisureprojects', '@merge.official_', '@techin_underground', '@sc_sculpture'] },
+                    { role: 'Jewelry', names: ['@studiocult.co', '@w0dd.bangkok', '@maddyhopper.sneakers', '@travel___agency', '@77thofficial', '@billybeamo'] },
+                    { role: 'Video', names: ['@ronperaltax'] },
+                    { role: 'Featured by', names: ['@voguethailand'] },
+                ],
+            },
+            {
                 slug: 'stardust-fashion-show',
                 title: 'Stardust Fashion Show',
                 category: 'Fashion Show',
@@ -308,6 +333,13 @@
 
         // PLACEHOLDER press. Add an `href` to make a row a link.
         press: [
+            {
+                pub: 'Vogue Thailand',
+                title: 'First time in Vogue: The Treasure',
+                // TODO: add the year (`date: '2025'`) once it is known.
+                date: '',
+                href: 'project.html?slug=the-treasure',
+            },
             { pub: 'Vogue', title: 'The Platform Redefining Contemporary Fashion', date: '2026' },
             { pub: 'Dazed', title: 'HEAVENSGATE NYC: Where Art Meets Wearable Culture', date: '2025' },
             { pub: 'AnOther', title: 'Inside the World of HEAVENSGATE NYC', date: '2025' },
@@ -330,6 +362,9 @@
         //   project  – slug of a project to take the summary and credits from
         //              (and to link to for its photos)
         //   details  – extra rows shown before the credits, same shape as credits
+        //   video / videos – a clip shown first on the event page (same as for
+        //              projects); an event also shows its project's video
+        //   projectLabel – wording of the link to the project (default "See the photos")
         events: [
             {
                 slug: 'the-last-human-fashion-show',
@@ -545,6 +580,18 @@
                     { role: 'Presented by', names: ['@studio_dem', '@heavensgatenyc'] },
                     { role: 'Featuring', names: ['10+ independent designers and artists'] },
                 ],
+            },
+            {
+                slug: 'the-treasure',
+                tag: 'Past',
+                title: 'The Treasure',
+                // TODO: replace with the real date once it is known.
+                date: 'New York Fashion Week',
+                location: 'New York',
+                type: 'Show',
+                // The bio, credits and video come from the project with this slug.
+                project: 'the-treasure',
+                projectLabel: 'See it in the gallery',
             },
             { tag: 'Upcoming', title: 'SS27 Presentation', date: 'March 2027', location: 'Paris', type: 'Show' },
             { tag: 'Upcoming', title: 'HEAVENSGATE × Archive Pop-Up', date: 'Nov 2026', location: 'Tokyo', type: 'Exhibition' },

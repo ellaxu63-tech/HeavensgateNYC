@@ -88,8 +88,10 @@
         var next = data.projects[(index + 1) % data.projects.length]
         document.title = project.title + ' — ' + data.siteName
 
-        var images = project.images && project.images.length ? project.images : [project.image]
         var videoItems = project.videos || (project.video ? [project.video] : [])
+        // The cover repeats the video's poster, so a project with a video and no
+        // photos shows only the video.
+        var images = project.images && project.images.length ? project.images : videoItems.length ? [] : [project.image]
         var videos = videoItems
             .map(function (item) {
                 return HG.videoHtml(item, project.title)
@@ -192,13 +194,19 @@
               })[0]
             : null
         var photosLink = proj
-            ? '<p class="page-lede"><a class="text-link" href="' + esc(HG.projectUrl(proj)) + '">See the photos →</a></p>'
+            ? '<p class="page-lede"><a class="text-link" href="' + esc(HG.projectUrl(proj)) + '">' + esc(ev.projectLabel || 'See the photos') + ' →</a></p>'
             : ''
         var images = ev.images && ev.images.length ? ev.images : ev.image ? [ev.image] : []
+        var videoItems = ev.videos || (ev.video ? [ev.video] : proj ? proj.videos || (proj.video ? [proj.video] : []) : [])
+        var videos = videoItems
+            .map(function (item) {
+                return HG.videoHtml(item, ev.title)
+            })
+            .join('')
         holder.innerHTML =
             '<a class="back-link" href="events.html">← Events</a>' +
             '<div class="project-layout">' +
-                '<div class="project-images">' + imagesHtml(images, ev.title) + '</div>' +
+                '<div class="project-images">' + videos + imagesHtml(images, ev.title) + '</div>' +
                 '<div class="project-info">' +
                     '<p class="eyebrow">' + esc([ev.type, ev.date, ev.location].filter(Boolean).join(' — ')) + '</p>' +
                     '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
@@ -207,6 +215,8 @@
                     creditsHtml((ev.details || []).concat(ev.credits || (proj && proj.credits) || [])) +
                 '</div>' +
             '</div>'
+
+        initVideos(holder)
     }
 
     // ------------------------------------------------------ events / shows
