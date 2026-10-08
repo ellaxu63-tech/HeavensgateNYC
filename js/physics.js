@@ -1,7 +1,8 @@
 /*
  * Home page: floating project cards.
  *
- *  - Cards are created from HG.data.projects and arranged around the centered
+ *  - Cards are created from HG.homeCards() (the projects, plus the posters of
+ *    events that have a page) and arranged around the centered
  *    intro text (they never cover it), then drift with light physics.
  *  - Hover / focus: the card scales up, shows its caption and every other card
  *    fades out; the navigation fades out too (via HG.motion.projectActive).
@@ -1365,7 +1366,7 @@
 
     // -------------------------------------------------------------- start
     host.appendChild(dragSvg)
-    cards = HG.data.projects.map(createCard)
+    cards = HG.homeCards().map(createCard)
     layoutCards()
     ready = true
     startLoop()

@@ -235,7 +235,9 @@
         //   slug     – gives the event its own page (event.html?slug=...)
         //   image    – poster / photo shown on the card (keep it small)
         //   images   – everything shown on the event page, main one first; each
-        //              a path or { src, alt }
+        //              a path or { src, alt, thumb, label }. Every one also floats
+        //              on the home page (as `thumb`, a small version, if given,
+        //              captioned with `label` if given) and links to the event.
         //   summary  – the text on the event page (blank line = new paragraph)
         //   credits  – [{ role, names: [...] }], same as for projects
         events: [
@@ -246,26 +248,35 @@
                 date: 'Feb 14, 2026',
                 location: 'Stone Circle Theater, New York',
                 type: 'Show',
-                image: 'assets/events/velvet-playground-nyfw-2026/cover.webp',
+                image: 'assets/events/velvet-playground-nyfw-2026/thumb-01.webp',
                 images: [
                     {
                         src: 'assets/events/velvet-playground-nyfw-2026/01-main.webp',
+                        thumb: 'assets/events/velvet-playground-nyfw-2026/thumb-01.webp',
                         alt: 'Main poster: Velvet Playground NYFW 2026 Collective Runway, 2/14/26 8 PM, Stone Circle Theater, glam rock live performance. Two women in a rocky cave, one in a red mesh dress with a pale snake across her.',
                     },
                     {
                         src: 'assets/events/velvet-playground-nyfw-2026/02-bailey-prado.webp',
+                        thumb: 'assets/events/velvet-playground-nyfw-2026/thumb-02.webp',
+                        label: 'Bailey Prado',
                         alt: 'Poster for Bailey Prado: a model in a white crochet top and layered lace skirt stands against a white wall with a ladder, the name signed beside her.',
                     },
                     {
                         src: 'assets/events/velvet-playground-nyfw-2026/03-when-the-xu-fits.webp',
+                        thumb: 'assets/events/velvet-playground-nyfw-2026/thumb-03.webp',
+                        label: 'When The Xu Fits',
                         alt: 'Poster for When The Xu Fits: four models in beaded and corseted tops pose close together.',
                     },
                     {
                         src: 'assets/events/velvet-playground-nyfw-2026/04-moore.webp',
+                        thumb: 'assets/events/velvet-playground-nyfw-2026/thumb-04.webp',
+                        label: 'Moore',
                         alt: 'Poster for Moore: a performer in a lilac bob wig and silver bracelets, in a black fuzzy bandeau and shorts, poses against a dark green background.',
                     },
                     {
                         src: 'assets/events/velvet-playground-nyfw-2026/05-3399.webp',
+                        thumb: 'assets/events/velvet-playground-nyfw-2026/thumb-05.webp',
+                        label: '3399',
                         alt: 'Poster for 3399: eight models in striped dresses, bright tights and caps pose on a graffiti-covered concrete ledge.',
                     },
                 ],

@@ -36,6 +36,32 @@
         return 'event.html?slug=' + encodeURIComponent(event.slug)
     }
 
+    /*
+     * Everything that floats on the home page: the projects, plus every poster
+     * (image) of the events that have a page, each linking to its event. The
+     * items are project-shaped (slug, title, image, ratio) with an optional
+     * `href` and `meta` line. An event image can have a `label` (its caption,
+     * e.g. a designer's name) and a `thumb` (a small version, used here).
+     */
+    HG.homeCards = function () {
+        var cards = HG.data.projects.slice()
+        HG.data.events.forEach(function (ev) {
+            if (!ev.slug || !ev.images) return
+            ev.images.forEach(function (item, i) {
+                var img = typeof item === 'string' ? { src: item } : item
+                cards.push({
+                    slug: 'event-' + ev.slug + '-' + (i + 1),
+                    title: img.label || ev.title,
+                    meta: img.label ? ev.title : [ev.type, ev.date].filter(Boolean).join(' — '),
+                    image: img.thumb || img.src,
+                    ratio: img.ratio || 0.8,
+                    href: HG.eventUrl(ev),
+                })
+            })
+        })
+        return cards
+    }
+
     // "Category — Year"; the year is optional.
     HG.projectMeta = function (project) {
         return [project.category, project.year].filter(Boolean).join(' — ')
@@ -140,9 +166,9 @@
     HG.createProjectCard = function (project) {
         var card = document.createElement('a')
         card.className = 'project-card'
-        card.href = HG.projectUrl(project)
+        card.href = project.href || HG.projectUrl(project)
         card.setAttribute('data-cursor', 'open')
-        card.setAttribute('aria-label', [project.title, project.category, project.year].filter(Boolean).join(', '))
+        card.setAttribute('aria-label', project.meta ? project.title + ', ' + project.meta : [project.title, project.category, project.year].filter(Boolean).join(', '))
         card.draggable = false
 
         var cover = document.createElement('span')
@@ -160,7 +186,7 @@
         caption.className = 'project-caption'
         caption.innerHTML =
             '<span class="project-title">' + HG.esc(project.title) + '</span>' +
-            '<span class="project-meta">' + HG.esc(HG.projectMeta(project)) + '</span>'
+            '<span class="project-meta">' + HG.esc(project.meta || HG.projectMeta(project)) + '</span>'
 
         card.appendChild(cover)
         card.appendChild(caption)

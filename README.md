@@ -53,7 +53,9 @@ anything written like `@handle` links to that Instagram profile).
 
 Events work the same way: add one to `events`. Give it a `slug`, an `image` (the
 poster shown on its card) and `images` (all the posters, main one first) and
-the card links to its own page; `summary` and `credits` fill that page.
+the card links to its own page; `summary` and `credits` fill that page. Every
+poster in `images` also floats on the home page with the projects (use `thumb`
+for a small version and `label` for its caption) and links to the event.
 
 ## How the old Framer overrides map to this site
 
