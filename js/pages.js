@@ -171,7 +171,7 @@
                     : ''
                 return (
                     '<' + tag + ' class="press-item' + (thumb || item.logo ? ' press-item--thumb' : '') + '"' + href + '>' +
-                        '<span class="press-item-title">' + esc(item.title) + deckHtml(item) + '</span>' +
+                        '<span class="press-item-title"' + (item.lang ? ' lang="' + esc(item.lang) + '"' : '') + '>' + esc(item.title) + deckHtml(item) + '</span>' +
                         '<span class="press-item-pub">' + thumb +
                             (item.logo
                                 ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '" loading="lazy" decoding="async">' +

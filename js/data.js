@@ -385,10 +385,11 @@
             {
                 pub: 'Vogue China',
                 logo: 'assets/press/vogue-china.webp',
-                // PLACEHOLDER title: replace it with the article's headline (and
-                // add the year in `date`) once it is known.
-                title: 'Featured in Vogue China',
-                date: '',
+                // The headline is in Chinese on purpose (not translated).
+                title: 'THE LAST HUMAN FASHION SHOW\uff1a\u5f53\u65f6\u88c5\u91cd\u65b0\u56de\u5230\u201c\u4eba\u201d\u672c\u8eab',
+                lang: 'zh-Hans',
+                // The year is taken from the show it covers (Sep 12, 2026).
+                date: '2026',
                 href: 'https://www.vogue.com.cn/fashion/brand_news/news_11113279578722b8.html',
             },
             {

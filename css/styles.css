@@ -45,7 +45,7 @@
     --accent-fg: #000;
     --upcoming: #ff4b5c;
 
-    --serif: "Instrument Serif", "Times New Roman", Times, serif;
+    --serif: "Instrument Serif", "Times New Roman", Times, "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
     --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     /* Serif headlines are lowercase. Set to `none` to keep the text as typed. */
     --display-case: lowercase;
