@@ -116,10 +116,29 @@
                         src: 'assets/projects/sound-form/05.jpg',
                         alt: 'Four performers draped head to toe in clear plastic sheeting on a wooden deck at night.',
                     },
+                    {
+                        src: 'assets/projects/sound-form/06.webp',
+                        alt: 'Guests crowd together at the event. A person in a cream T-shirt reading \u201ci post therefore i am\u201d has an arm around a smiling person in a white lace top holding an orange and pink woven bag. Overlaid in yellow: Totem, \u201cLakras / Amehl: the girls shaking up Brooklyn\u2019s migrant fashion scene\u201d.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/07.webp',
+                        alt: 'Two performers strike dramatic poses at a tilt: one in a light pink top, black shorts and a braided headpiece with feather trim, the other in a cream crocheted dress with pink fringe and pink hair.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/08.webp',
+                        alt: 'A line of performers in pink hoodies with gold embroidered hoods, fringe skirts, a red lace mini skirt and knee-high boots all raise their arms over their heads, in front of a projection reading Amehl.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/09.webp',
+                        alt: 'A performer with pink hair and gold lipstick in a cream crocheted dress poses with hands at their shoulders, surrounded by other performers in pink and gold hoods. The projection behind them reads Amehl x Lakras.',
+                    },
                 ],
                 summary:
                     'SOUND / FORM was a fashion event hosted by HEAVENSGATE NYC, staged as performances and installations instead of a traditional runway. Fashion can be expressed through movement, vulnerability and fluidity, and here it was.\n\n' +
-                    'Spread across two floors, it danced, sprawled, and occasionally made you wonder where to look first.',
+                    'Spread across two floors, it danced, sprawled, and occasionally made you wonder where to look first.\n\n' +
+                    'At Brooklyn fashion week at Honeys, Colombian label @lakras.co and Argentinian label @amehl.world brought \u201cDo u love me or do u love my avatar?\u201d to Brooklyn with @heavensgatenyc.\n\n' +
+                    'Seven girls, handmade clothes, choreography, phones, a little Black Eyed Peas and a room where conversations bounced between Spanish, English and Chinese.\n\n' +
+                    'It was weird, intimate and a little chaotic. Spanish, English and Chinese all in the same room, with designers and creatives from different places finding each other in Brooklyn. It felt like its own little world for the night.',
                 credits: [
                     { role: 'Hosted by', names: ['@heavensgatenyc'] },
                     {
@@ -128,6 +147,7 @@
                     },
                     { role: 'Sound', names: ['@cultivatedsound'] },
                     { role: 'DJs', names: ['@chamberlainz', '@sploofi', '@elladotnet'] },
+                    { role: 'Photos, Totem feature', names: ['@wired_kim'] },
                 ],
             },
             {
@@ -356,6 +376,14 @@
 
         // PLACEHOLDER press. Add an `href` to make a row a link.
         press: [
+            {
+                pub: 'Totem',
+                title: 'Lakras / Amehl: The Girls Shaking Up Brooklyn\u2019s Migrant Fashion Scene',
+                // The year is taken from the date of the Instagram post.
+                date: '2026',
+                href: 'https://www.instagram.com/p/Dd9GEgVEbr4/',
+                image: 'assets/press/totem.webp',
+            },
             {
                 pub: 'Fashion Week Daily',
                 // The title is taken from the web address; replace it with the
