@@ -372,6 +372,26 @@
                 href: 'https://www.instagram.com/p/Dd9GEgVEbr4/',
             },
             {
+                pub: 'Vogue China',
+                logo: 'assets/press/vogue-china.webp',
+                // The headline is in Chinese on purpose (not translated).
+                title: 'THE LAST HUMAN FASHION SHOW\uff1a\u5f53\u65f6\u88c5\u91cd\u65b0\u56de\u5230\u201c\u4eba\u201d\u672c\u8eab',
+                lang: 'zh-Hans',
+                // The year is taken from the show it covers (Sep 12, 2026).
+                date: '2026',
+                href: 'https://www.vogue.com.cn/fashion/brand_news/news_11113279578722b8.html',
+            },
+            {
+                pub: 'Bazaar',
+                // No logo yet (send one and add `logo:`). The reel is an Instagram link.
+                title: 'Velvet Playground',
+                deck: 'Instagram reel',
+                // The date is taken from when the reel was posted (late Feb 2026, just after
+                // the show on Feb 14, 2026).
+                date: 'Feb 2026',
+                href: 'https://www.instagram.com/reels/DVMp-WwiTBo/',
+            },
+            {
                 pub: 'The Daily Front Row',
                 // `logo` is shown instead of the name (white on transparent).
                 logo: 'assets/press/the-daily-front-row.webp',
@@ -381,16 +401,6 @@
                 by: 'Tom White',
                 date: 'Sep 29, 2025',
                 href: 'https://fashionweekdaily.com/the-elephant-in-the-room-heavensgate-nycs-runway-that-refuses-to-whisper/',
-            },
-            {
-                pub: 'Vogue China',
-                logo: 'assets/press/vogue-china.webp',
-                // The headline is in Chinese on purpose (not translated).
-                title: 'THE LAST HUMAN FASHION SHOW\uff1a\u5f53\u65f6\u88c5\u91cd\u65b0\u56de\u5230\u201c\u4eba\u201d\u672c\u8eab',
-                lang: 'zh-Hans',
-                // The year is taken from the show it covers (Sep 12, 2026).
-                date: '2026',
-                href: 'https://www.vogue.com.cn/fashion/brand_news/news_11113279578722b8.html',
             },
             {
                 pub: 'Vogue Thailand',
