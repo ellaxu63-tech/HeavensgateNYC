@@ -575,6 +575,36 @@
                 ],
             },
             {
+                slug: 'kin-holiday-market',
+                tag: 'Past',
+                title: 'KIN Holiday Market',
+                // The year (2025) is worked out from the caption: Dec 6 & 7 was a weekend.
+                date: 'Dec 6\u20137, 2025',
+                location: '355 Bowery',
+                type: 'Market',
+                image: 'assets/events/kin-holiday-market/thumb.webp',
+                video: {
+                    src: 'assets/events/kin-holiday-market/kin-holiday-market.mp4',
+                    poster: 'assets/events/kin-holiday-market/poster.webp',
+                    ratio: 0.5625,
+                    autoplay: true,
+                    title: 'KIN holiday market promo: Lettonne x Heavensgate, Dec 6\u20137, 11\u20137 PM, 355 Bowery',
+                },
+                summary:
+                    'A holiday market hosted by @heavensgatenyc and @lettonne.dance, December 6 & 7 at 355 Bowery, from 11 AM\u20137 PM.\n\n' +
+                    '10+ local fashion designers, jewelry makers, and record dealers, plus vinyl-only DJs and free hot chocolate & sparkling water.\n\n' +
+                    'Come hang out, friends.',
+                details: [
+                    { role: 'Dates', names: ['December 6 & 7, 2025'] },
+                    { role: 'Hours', names: ['11 AM\u20137 PM'] },
+                    { role: 'Venue', names: ['355 Bowery'] },
+                    { role: 'Featuring', names: ['10+ local fashion designers, jewelry makers and record dealers', 'Vinyl-only DJs', 'Free hot chocolate & sparkling water'] },
+                ],
+                credits: [
+                    { role: 'Hosted by', names: ['@heavensgatenyc', '@lettonne.dance'] },
+                ],
+            },
+            {
                 slug: 'miss-conduct',
                 tag: 'Past',
                 title: 'MISS CONDUCT',
