@@ -205,8 +205,7 @@
                     'TABLE MANNERS served performance, tension, and beautiful chaos. Thanks to everyone who came hungry.',
                 credits: [
                     { role: 'Presented by', names: ['@rume_atelier', '@heavensgatenyc'] },
-                    { role: 'Performance', names: ['@cassidyangelgrady', '@skyekita'] },
-                    { role: 'With', names: ['@withlovefromjack', '@amarivadhan'] },
+                    { role: 'Performance', names: ['@cassidyangelgrady', '@skyekita', '@withlovefromjack', '@amarivadhan'] },
                     { role: 'Designers', names: ['@peilinccc', '@amorydinero.newyork'] },
                     { role: 'Producers', names: ['@anniielian', '@elladotnet'] },
                     { role: 'Makeup', names: ['@insidiousgirl.mp4'] },
@@ -469,8 +468,44 @@
                 date: 'Sep 7, 2024',
                 location: '305 Ten Eyck St.',
                 type: 'Show',
-                // TODO: add `image` (card) and `images` (posters, main first) and
-                // `video` once the files are in assets/events/artifice-003/.
+                image: 'assets/events/artifice-003/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/artifice-003/01-main.webp',
+                        thumb: 'assets/events/artifice-003/thumb-01.webp',
+                        alt: 'Main poster: Artifice 003, NYFW Showcase, 09 07 2024, 8 PM to late, F/W 2024, RSVP required, Chem Creative, 305 Ten Eyck St. A performer seen from behind in a sculptural white headpiece and spine ornament and a ruffled white skirt, against a dark grey background. White Box: material, culture lounge, Heavensgate x Hub. Black Box: media, Black Box film, Kevin Peter He x Petal Supply.',
+                    },
+                    {
+                        src: 'assets/events/artifice-003/02-schedule.webp',
+                        thumb: 'assets/events/artifice-003/thumb-02.webp',
+                        label: 'Schedule',
+                        alt: 'Schedule poster on black: 8:30 doors open; 9:30 NYFW show, White Box; 10:30 film screening plus Bobi x Fliko, Black Box; 11:00 Kevin Peter He x Petal Supply, Black Box; 11:30 Derek x Rob x Antide, Black Box; 12 AM NYFW aftershow, Black Box; 2 AM doors close.',
+                    },
+                    {
+                        src: 'assets/events/artifice-003/03-white-box-show.webp',
+                        thumb: 'assets/events/artifice-003/thumb-03.webp',
+                        label: 'White Box show',
+                        alt: 'Poster on black: 9:30 NYFW show, White Box: Janice Liu, Evanna, Aguirrrre, Nostylguh, Jobi. Presented by Heavensgate x Hub.',
+                    },
+                ],
+                // From the posters.
+                details: [
+                    { role: 'Date', names: ['September 7, 2024'] },
+                    { role: 'Time', names: ['8 PM\u2013late'] },
+                    { role: 'Venue', names: ['305 Ten Eyck St.'] },
+                    {
+                        role: 'Schedule',
+                        names: [
+                            '8:30 \u2014 Doors open',
+                            '9:30 \u2014 NYFW show, White Box',
+                            '10:30 \u2014 Film screening + Bobi x Fliko, Black Box',
+                            '11:00 \u2014 Kevin Peter He x Petal Supply, Black Box',
+                            '11:30 \u2014 Derek x Rob x Antide, Black Box',
+                            '12 AM \u2014 NYFW aftershow, Black Box',
+                            '2 AM \u2014 Doors close',
+                        ],
+                    },
+                ],
                 summary:
                     'Artifice 003 was a night for NYFW FW24 on September 7, 2024, from 8 PM until late at 305 Ten Eyck St.: a White Box NYFW show, work on screen and two performances in the Black Box, and a culture lounge by @discipline.systems.\n\n' +
                     'Made possible by @artifice.nyc, @heavensgatenyc, @HUB.mode, @discipline.systems and @chemistrycreative.',
@@ -505,7 +540,7 @@
                     'Bring your friends to find the most unique pieces. There were also Sip & Shop events on two Fridays during the run, for the ultimate shopping experience.',
                 credits: [
                     { role: 'Dates', names: ['March 4\u201324, 2024'] },
-                    { role: 'Hours', names: ['1:00\u20136:00 PM'] },
+                    { role: 'Hours', names: ['Tuesday to Sunday, 1:00\u20136:00 PM'] },
                     { role: 'Venue', names: ['241 Wythe Ave, Brooklyn, NY'] },
                     { role: 'Presented by', names: ['@studio_dem', '@heavensgatenyc'] },
                     { role: 'Featuring', names: ['10+ independent designers and artists'] },
