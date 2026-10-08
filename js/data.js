@@ -256,6 +256,26 @@
                 // once the files are in assets/events/the-last-human-fashion-show/.
             },
             {
+                slug: 'table-manners',
+                tag: 'Past',
+                title: 'Table Manners',
+                date: 'Jul 18, 2026',
+                location: '61 Wyckoff Ave, Brooklyn',
+                type: 'Show',
+                // TODO: add `image` (card) and `images` (the poster, main first)
+                // once the file is in assets/events/table-manners/.
+                summary:
+                    'TABLE MANNERS was an immersive evening of live performance, fashion, and beautifully controlled chaos.\n\n' +
+                    '\u201cNo one leaves the table the way they arrived.\u201d',
+                credits: [
+                    { role: 'Date', names: ['July 18, 2026'] },
+                    { role: 'Time slots', names: ['7:00\u20138:30 PM', '9:00\u201310:30 PM'] },
+                    { role: 'Venue', names: ['61 Wyckoff Ave, Brooklyn, NY 11237'] },
+                    { role: 'Performers', names: ['@cassidyangelgrady', '@skyekita'] },
+                    { role: 'Designers', names: ['@peilinccc', '@amorydinero.newyork'] },
+                ],
+            },
+            {
                 slug: 'nyfw-2026-collective-runway',
                 tag: 'Past',
                 title: 'NYFW 2026 Collective Runway',
