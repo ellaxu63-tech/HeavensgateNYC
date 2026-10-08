@@ -185,6 +185,15 @@
         }
 
         document.title = ev.title + ' — ' + data.siteName
+        // An event can borrow its text from a project (the same night, shown in both places).
+        var proj = ev.project
+            ? data.projects.filter(function (p) {
+                  return p.slug === ev.project
+              })[0]
+            : null
+        var photosLink = proj
+            ? '<p class="page-lede"><a class="text-link" href="' + esc(HG.projectUrl(proj)) + '">See the photos →</a></p>'
+            : ''
         var images = ev.images && ev.images.length ? ev.images : ev.image ? [ev.image] : []
         holder.innerHTML =
             '<a class="back-link" href="events.html">← Events</a>' +
@@ -193,8 +202,9 @@
                 '<div class="project-info">' +
                     '<p class="eyebrow">' + esc([ev.type, ev.date, ev.location].filter(Boolean).join(' — ')) + '</p>' +
                     '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
-                    bioHtml(ev.summary) +
-                    creditsHtml(ev.credits) +
+                    bioHtml(ev.summary || (proj && proj.summary)) +
+                    photosLink +
+                    creditsHtml(ev.credits || (proj && proj.credits)) +
                 '</div>' +
             '</div>'
     }

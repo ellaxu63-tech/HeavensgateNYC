@@ -240,7 +240,21 @@
         //              captioned with `label` if given) and links to the event.
         //   summary  – the text on the event page (blank line = new paragraph)
         //   credits  – [{ role, names: [...] }], same as for projects
+        //   project  – slug of a project to take the summary and credits from
+        //              (and to link to for its photos)
         events: [
+            {
+                slug: 'the-last-human-fashion-show',
+                tag: 'Past',
+                title: 'The Last Human Fashion Show',
+                date: 'Sep 12, 2026',
+                location: 'Brooklyn',
+                type: 'Show',
+                // Bio, credits and a link to the photos come from this project.
+                project: 'the-last-human-fashion-show',
+                // TODO: add `image` (card) and `images` (the posters, main first)
+                // once the files are in assets/events/the-last-human-fashion-show/.
+            },
             {
                 slug: 'nyfw-2026-collective-runway',
                 tag: 'Past',
