@@ -175,6 +175,45 @@
                 ],
             },
             {
+                slug: 'table-manners',
+                title: 'TABLE MANNERS',
+                category: 'Performance & Fashion',
+                year: '2026',
+                image: 'assets/projects/table-manners/cover.webp',
+                ratio: 0.75,
+                images: [
+                    {
+                        src: 'assets/projects/table-manners/01.webp',
+                        alt: 'Two performers at a black bar counter in a white kitchen. One, in a white pleated shirt with smudged dark eye makeup, pours red liquid from a bottle into a goblet. The other, in a grey vest top with red feathered eye makeup and a long braid, leans on the counter looking down.',
+                    },
+                    {
+                        src: 'assets/projects/table-manners/02.webp',
+                        alt: 'A performer in a black vinyl bra top, a chained collar and a chain belt stands behind a black table fixed to their waist with chains. Small cups of pasta salad sit on the table, and guests photograph the scene behind them.',
+                    },
+                    {
+                        src: 'assets/projects/table-manners/03.webp',
+                        alt: 'A performer with graphic black eyeliner, hoop earrings and a spiked, chained leather collar and bra top carries a silver tray of cups of pasta salad past guests holding cameras and phones.',
+                    },
+                    {
+                        src: 'assets/projects/table-manners/04.webp',
+                        alt: 'Two side-by-side shots of performers dancing in a white kitchen: on the left one in a white pleated shirt with smudged eye makeup lifts an arm; on the right one in a grey vest top with a long braid and red eye makeup turns away.',
+                    },
+                ],
+                summary:
+                    'TABLE MANNERS was an immersive evening of live performance, fashion, and beautifully controlled chaos.\n\n' +
+                    '\u201cNo one leaves the table the way they arrived.\u201d\n\n' +
+                    'TABLE MANNERS served performance, tension, and beautiful chaos. Thanks to everyone who came hungry.',
+                credits: [
+                    { role: 'Presented by', names: ['@rume_atelier', '@heavensgatenyc'] },
+                    { role: 'Performance', names: ['@cassidyangelgrady', '@skyekita'] },
+                    { role: 'With', names: ['@withlovefromjack', '@amarivadhan'] },
+                    { role: 'Designers', names: ['@peilinccc', '@amorydinero.newyork'] },
+                    { role: 'Producers', names: ['@anniielian', '@elladotnet'] },
+                    { role: 'Makeup', names: ['@insidiousgirl.mp4'] },
+                    { role: 'Photos', names: ['@malicemincer', '@abstractarchivemag'] },
+                ],
+            },
+            {
                 slug: 'miss-conduct',
                 title: 'MISS CONDUCT',
                 category: 'Fashion Show & Rave',
@@ -330,18 +369,23 @@
                 date: 'Jul 18, 2026',
                 location: '61 Wyckoff Ave, Brooklyn',
                 type: 'Show',
-                // TODO: add `image` (card) and `images` (the poster, main first)
-                // once the file is in assets/events/table-manners/.
-                summary:
-                    'TABLE MANNERS was an immersive evening of live performance, fashion, and beautifully controlled chaos.\n\n' +
-                    '\u201cNo one leaves the table the way they arrived.\u201d',
-                credits: [
+                image: 'assets/events/table-manners/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/table-manners/01-poster.webp',
+                        thumb: 'assets/events/table-manners/thumb-01.webp',
+                        alt: 'Poster in red, black and grey panels: Table Manners, The Performance, July 18th, 7:00\u20138:30 pm and 9:00\u201310:30 pm, Light Bites + Drinks. A silver serving platter holds a fish and a silver high-heeled sandal. 61 Wyckoff Ave. Brooklyn, NY 11237. The Performers: Cassidy Grady, Skye Kita. HEAVENSGATE \u00d7 R\u00dcME.',
+                    },
+                ],
+                // From the poster. The bio, the credits and the link to the photos
+                // come from the project with this slug.
+                details: [
                     { role: 'Date', names: ['July 18, 2026'] },
                     { role: 'Time slots', names: ['7:00\u20138:30 PM', '9:00\u201310:30 PM'] },
                     { role: 'Venue', names: ['61 Wyckoff Ave, Brooklyn, NY 11237'] },
-                    { role: 'Performers', names: ['@cassidyangelgrady', '@skyekita'] },
-                    { role: 'Designers', names: ['@peilinccc', '@amorydinero.newyork'] },
+                    { role: 'Food & drink', names: ['Light bites + drinks'] },
                 ],
+                project: 'table-manners',
             },
             {
                 slug: 'nyfw-2026-collective-runway',
