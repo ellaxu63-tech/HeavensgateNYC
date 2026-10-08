@@ -253,7 +253,7 @@
                 slug: 'the-treasure',
                 title: 'The Treasure',
                 category: 'Fashion Show',
-                // TODO: add `year` once it is known.
+                year: '2023',
                 image: 'assets/projects/the-treasure/cover.webp',
                 ratio: 0.5625,
                 video: {
@@ -283,12 +283,16 @@
                 ],
                 summary:
                     '\u2018The Treasure\u2019 \u2013 a multi-brand fashion show collaboration between Thai Trade Center New York (DITP) and Future Treasure (@futuretreasureny) during New York Fashion Week. Models cast by @heavensgatenyc.\n\n' +
+                    'A runway and after party featuring \u201cThe Treasure\u201d by DITP and Future Treasure during New York Fashion Week, September 2023.\n\n' +
+                    'Special thanks to the Thai Trade Center New York for giving us the opportunity to bring all Thai designers to this show.\n\n' +
                     'First time in Vogue: thank you @voguethailand for featuring this show and @ronperaltax for the video!',
                 credits: [
                     { role: 'Presented by', names: ['Thai Trade Center New York (DITP)', '@futuretreasureny'] },
                     { role: 'Models cast by', names: ['@heavensgatenyc'] },
                     { role: 'Clothing', names: ['@vinnpatararin', '@boonlearnewyork', '@leisureprojects', '@merge.official_', '@techin_underground', '@sc_sculpture'] },
                     { role: 'Jewelry', names: ['@studiocult.co', '@w0dd.bangkok', '@maddyhopper.sneakers', '@travel___agency', '@77thofficial', '@billybeamo'] },
+                    { role: 'Also featured', names: ['Charites'] },
+                    { role: 'Special thanks', names: ['Thai Trade Center New York'] },
                     { role: 'Video', names: ['@ronperaltax'] },
                     { role: 'Featured by', names: ['@voguethailand'] },
                 ],
@@ -355,8 +359,7 @@
             {
                 pub: 'Vogue Thailand',
                 title: 'First time in Vogue: The Treasure',
-                // TODO: add the year (`date: '2025'`) once it is known.
-                date: '',
+                date: '2023',
                 href: 'project.html?slug=the-treasure',
                 // A thumbnail on the row; `video: true` adds a play button.
                 image: 'assets/projects/the-treasure/cover.webp',
@@ -607,10 +610,13 @@
                 slug: 'the-treasure',
                 tag: 'Past',
                 title: 'The Treasure',
-                // TODO: replace with the real date once it is known.
-                date: 'New York Fashion Week',
+                date: 'Sep 2023',
                 location: 'New York',
                 type: 'Show',
+                details: [
+                    { role: 'Date', names: ['New York Fashion Week, September 2023'] },
+                    { role: 'Format', names: ['Runway + after party'] },
+                ],
                 // The bio, credits and video come from the project with this slug.
                 project: 'the-treasure',
                 projectLabel: 'See it in the gallery',
