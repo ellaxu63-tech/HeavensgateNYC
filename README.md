@@ -45,7 +45,7 @@ and gets its own page. The first entry is the first one in the gallery. Add an
 
 A project can also have (all optional, see the comment above `projects`):
 `year`, a `summary` (the bio; a blank line starts a new paragraph), `images`
-(every photo for the project page, in order) and `credits` (role + names;
+(every photo for the project page, in order; each a path or `{ src, alt }`) and `credits` (role + names;
 anything written like `@handle` links to that Instagram profile).
 
 ## How the old Framer overrides map to this site

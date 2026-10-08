@@ -64,8 +64,13 @@
             '<div class="project-layout">' +
                 '<div class="project-images">' +
                     images
-                        .map(function (src) {
-                            return '<img class="project-hero" src="' + esc(src) + '" alt="' + esc(project.title) + '">'
+                        .map(function (item, i) {
+                            var src = typeof item === 'string' ? item : item.src
+                            var alt = (typeof item === 'string' ? '' : item.alt) || project.title
+                            return (
+                                '<img class="project-hero" src="' + esc(src) + '" alt="' + esc(alt) + '"' +
+                                (i > 0 ? ' loading="lazy"' : '') + ' decoding="async">'
+                            )
                         })
                         .join('') +
                 '</div>' +

@@ -50,14 +50,17 @@
          * tile in the gallery, and gets its own page (project.html?slug=...).
          *
          *   slug      – used in the URL, must be unique
-         *   image     – path to the cover image (any jpg / png / webp / svg)
+         *   image     – path to the cover image used on the home page and in
+         *               the gallery (any jpg / png / webp / svg). Keep it small
+         *               (about 1000px on the long side).
          *   ratio     – image width ÷ height. Only used until the image loads,
          *               then the real size is read from the image itself.
          *   year      – optional
          *   summary   – the bio on the project page; a blank line starts a
          *               new paragraph
          *   images    – optional: every image to show on the project page, in
-         *               order (defaults to just `image`)
+         *               order (defaults to just `image`). Each one is either a
+         *               path or { src, alt } with a short description.
          *   credits   – optional: [{ role, names: ['@handle', …] }]. Anything
          *               that looks like @handle becomes a link to Instagram.
          *
@@ -68,11 +71,30 @@
                 slug: 'sound-form',
                 title: 'SOUND / FORM',
                 category: 'Fashion Performance',
-                // PLACEHOLDER cover: replace with the real photos, e.g.
-                //   image:  'assets/projects/sound-form/01.jpg',
-                //   images: ['assets/projects/sound-form/01.jpg', 'assets/projects/sound-form/02.jpg', …],
-                image: 'assets/projects/sound-form-placeholder.svg',
-                ratio: 0.8,
+                image: 'assets/projects/sound-form/cover.jpg',
+                ratio: 0.667,
+                images: [
+                    {
+                        src: 'assets/projects/sound-form/01.jpg',
+                        alt: 'Two performers in white mesh, lace and ruched cotton hold hands and lean away from each other against a dark concrete wall.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/02.jpg',
+                        alt: 'Three performers in hand-made knit, mesh, fringe and hooded looks, mid-movement in a dimly lit space.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/03.jpg',
+                        alt: 'A performer in a crystal-beaded top arches back with one arm raised, a second performer behind them, photographed from a tilted angle.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/04.jpg',
+                        alt: 'Performers in crocheted, mesh and fringe looks strike a pose together while a photographer works behind them.',
+                    },
+                    {
+                        src: 'assets/projects/sound-form/05.jpg',
+                        alt: 'Four performers draped head to toe in clear plastic sheeting on a wooden deck at night.',
+                    },
+                ],
                 summary:
                     'SOUND / FORM was a fashion event hosted by HEAVENSGATE NYC, staged as performances and installations instead of a traditional runway. Fashion can be expressed through movement, vulnerability and fluidity, and here it was.\n\n' +
                     'Spread across two floors, it danced, sprawled, and occasionally made you wonder where to look first.',
