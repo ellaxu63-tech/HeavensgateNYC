@@ -156,10 +156,13 @@
             .map(function (item) {
                 var tag = item.href ? 'a' : 'div'
                 var href = item.href ? ' href="' + esc(item.href) + '"' : ''
+                var thumb = item.image
+                    ? '<span class="press-item-thumb' + (item.video ? ' is-video' : '') + '"><img src="' + esc(item.image) + '" alt="" loading="lazy" decoding="async"></span>'
+                    : ''
                 return (
-                    '<' + tag + ' class="press-item"' + href + '>' +
+                    '<' + tag + ' class="press-item' + (thumb ? ' press-item--thumb' : '') + '"' + href + '>' +
                         '<span class="press-item-title">' + esc(item.title) + '</span>' +
-                        '<span class="press-item-pub">' + esc(item.pub) + '</span>' +
+                        '<span class="press-item-pub">' + thumb + '<span>' + esc(item.pub) + (item.video ? ' \u00b7 video' : '') + '</span></span>' +
                         '<span class="press-item-right">' +
                             '<span class="press-item-date">' + esc(item.date) + '</span>' +
                             (item.href ? '<span class="press-item-arrow" aria-hidden="true">↗</span>' : '') +

@@ -262,6 +262,25 @@
                     ratio: 0.5625,
                     title: 'The Treasure, video by @ronperaltax, featured by Vogue Thailand',
                 },
+                // The photos, shown under the video.
+                images: [
+                    {
+                        src: 'assets/projects/the-treasure/01.webp',
+                        alt: 'A model with white metallic eyeshadow in a white shirt-dress with a light denim corset panel, star-shaped metal buttons down the sleeves and a chunky chain necklace with a metal star pendant, on a rooftop with the city skyline behind.',
+                    },
+                    {
+                        src: 'assets/projects/the-treasure/02.webp',
+                        alt: 'A model with short red hair and a moustache in a pale panelled shirt with cut-out white sleeves, an orange tie and wide dark denim jeans, on a rooftop above the city.',
+                    },
+                    {
+                        src: 'assets/projects/the-treasure/03.webp',
+                        alt: 'A low-angle portrait of a model with long black hair, dark blue lipstick and silver eyeshadow in a beige trench coat over an olive shirt, with a blue cut-out tie, blue trousers and silver rings.',
+                    },
+                    {
+                        src: 'assets/projects/the-treasure/04.webp',
+                        alt: 'A model in silver wraparound sunglasses, a red work jacket and cropped top with a chain necklace, and a long beige skirt with blue script lettering, with black glossy boots, on a rooftop with the city skyline behind.',
+                    },
+                ],
                 summary:
                     '\u2018The Treasure\u2019 \u2013 a multi-brand fashion show collaboration between Thai Trade Center New York (DITP) and Future Treasure (@futuretreasureny) during New York Fashion Week. Models cast by @heavensgatenyc.\n\n' +
                     'First time in Vogue: thank you @voguethailand for featuring this show and @ronperaltax for the video!',
@@ -339,6 +358,9 @@
                 // TODO: add the year (`date: '2025'`) once it is known.
                 date: '',
                 href: 'project.html?slug=the-treasure',
+                // A thumbnail on the row; `video: true` adds a play button.
+                image: 'assets/projects/the-treasure/cover.webp',
+                video: true,
             },
             { pub: 'Vogue', title: 'The Platform Redefining Contemporary Fashion', date: '2026' },
             { pub: 'Dazed', title: 'HEAVENSGATE NYC: Where Art Meets Wearable Culture', date: '2025' },

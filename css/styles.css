@@ -762,7 +762,22 @@ a.press-item:hover { background: rgba(var(--fg-rgb), 0.05); }
     letter-spacing: -0.015em;
     text-transform: var(--display-case);
 }
-.press-item-pub { padding-left: var(--gutter); color: var(--muted); text-transform: uppercase; }
+.press-item-pub { display: flex; align-items: center; gap: 14px; padding-left: var(--gutter); color: var(--muted); text-transform: uppercase; }
+/* A row with a thumbnail (e.g. a video): everything lines up on the middle. */
+.press-item--thumb { align-items: center; padding-block: 18px; }
+.press-item-thumb { position: relative; flex: none; width: 46px; box-shadow: 0 0 0 1px var(--grid); background: rgba(var(--fg-rgb), 0.06); }
+.press-item-thumb img { display: block; width: 100%; height: auto; }
+.press-item-thumb.is-video::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -7px 0 0 -4px;
+    border-style: solid;
+    border-width: 7px 0 7px 11px;
+    border-color: transparent transparent transparent #fff;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
+}
 .press-item-right { display: flex; align-items: baseline; gap: 20px; padding-right: var(--pad); color: var(--muted); text-transform: uppercase; }
 .press-item-arrow { font-size: 18px; opacity: 0.6; }
 a.press-item:hover .press-item-arrow { opacity: 1; }
