@@ -382,8 +382,8 @@
                 href: 'https://www.vogue.com.cn/fashion/brand_news/news_11113279578722b8.html',
             },
             {
-                pub: 'Bazaar',
-                // No logo yet (send one and add `logo:`). The reel is an Instagram link.
+                pub: 'Harper\u2019s Bazaar China',
+                // No logo file yet (add `logo:` when it is sent). The reel is an Instagram link.
                 title: 'Velvet Playground',
                 deck: 'Instagram reel',
                 // The date is taken from when the reel was posted (late Feb 2026, just after

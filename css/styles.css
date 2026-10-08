@@ -93,6 +93,23 @@ body {
 
 /* Side + centre lines, behind everything. (The page background lives on
    <html> so these can sit at z-index -1 and still be visible.) */
+/* ---------------------------------------------------------------- the grid draws in
+   On load the vertical lines draw themselves down the page and the horizontal
+   rules sweep across after them. --draw-y is how far down the lines have got
+   (each line layer animates its own copy, all with the same timing). Without
+   the animation, or where @property is unsupported, the lines are just there.
+   Tweak the timings here (and the delays on the three `rule-in` rules). */
+@property --draw-y { syntax: "<length>"; inherits: false; initial-value: 100000px; }
+@keyframes draw-lines { from { --draw-y: 0px; } to { --draw-y: calc(100dvh + 240px); } }
+@keyframes rule-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* The dividers between rows (press items, credits, events...) fade in once the frame lines are in. */
+@property --rule { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@keyframes rules-fade { from { --rule: transparent; } to { --rule: var(--grid); } }
+:root { --rule: var(--grid); animation: rules-fade 0.9s ease 0.85s both; }
+body::before,
+.site-header::before,
+.site-footer--fixed::before { animation: draw-lines 1.5s cubic-bezier(0.65, 0, 0.2, 1) 0.15s both; }
+
 body::before {
     content: "";
     position: fixed;
@@ -100,6 +117,7 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background: var(--grid-edges), var(--grid-mid);
+    clip-path: inset(0 0 max(0px, calc(100% - var(--draw-y))) 0);
 }
 /* On the home page the centre line only runs through the header. */
 .page-home::before { background: var(--grid-edges); }
@@ -165,9 +183,32 @@ main:focus { outline: none; }
     grid-template-columns: 1fr 1fr;
     align-items: center;
     height: var(--header-h);
-    border-bottom: 1px solid var(--grid);
-    background: var(--grid-edges), var(--grid-mid), var(--bg);
+    border-bottom: 1px solid transparent; /* the rule itself is ::after, so it can animate */
+    background: var(--bg);
 }
+.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--grid-edges), var(--grid-mid);
+    clip-path: inset(0 0 max(0px, calc(100% - var(--draw-y))) 0);
+}
+.site-header::after,
+.site-footer--fixed::after,
+.page-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--grid);
+    pointer-events: none;
+    transform-origin: left center;
+    animation: rule-in 1s cubic-bezier(0.65, 0, 0.2, 1) both;
+}
+.site-header::after { bottom: -1px; animation-delay: 0.35s; }
 
 /* Logo mark: a square the full height of the header, locked into the corner of
    the grid so it touches the top edge, the left line and the rule under the
@@ -261,7 +302,7 @@ html.menu-open { overflow: hidden; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
     text-decoration: none;
 }
 .menu-item-left { display: contents; }
@@ -309,7 +350,7 @@ html.menu-open { overflow: hidden; }
     gap: 8px 24px;
     min-height: var(--footer-h);
     padding: 0 calc(var(--pad) - var(--pill-pad));
-    border-top: 1px solid var(--grid);
+    border-top: 1px solid var(--rule);
     font: 400 13px/1 var(--mono);
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -319,8 +360,20 @@ html.menu-open { overflow: hidden; }
     inset: auto 0 0 0;
     z-index: 50;
     height: var(--footer-h);
-    background: var(--grid-edges), var(--bg);
+    border-top-color: transparent;
+    background: var(--bg);
 }
+.site-footer--fixed::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--grid-edges);
+    /* Only the part of the lines the drawing has reached (the footer is at the bottom). */
+    clip-path: inset(0 0 calc(100% - clamp(0px, calc(var(--draw-y) - 100dvh + var(--footer-h)), 100%)) 0);
+}
+.site-footer--fixed::after { top: -1px; animation-delay: 0.6s; }
 .footer-copy { padding: 0 var(--pill-pad); color: var(--muted); }
 .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 
@@ -564,11 +617,13 @@ html.project-selected [data-nav-collapse] {
 
 /* Title in the left half, subtitle in the right half, a rule underneath. */
 .page-header {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: end;
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid transparent;
 }
+.page-header::after { bottom: -1px; animation-duration: 1.2s; animation-delay: 0.5s; }
 .page-title {
     padding: clamp(40px, 7vw, 96px) var(--gutter) 24px var(--pad);
     font: 400 clamp(64px, 11vw, 192px) / 0.86 var(--serif);
@@ -599,7 +654,7 @@ html.project-selected [data-nav-collapse] {
 /* Big sentences live in the right half, next to the centre line. */
 .statement {
     padding: clamp(36px, 5vw, 64px) var(--pad) clamp(44px, 6vw, 80px) calc(50% + var(--gutter));
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
     font: 400 clamp(28px, 3.2vw, 56px) / 1.04 var(--serif);
     letter-spacing: -0.015em;
     text-transform: var(--display-case);
@@ -615,7 +670,7 @@ html.project-selected [data-nav-collapse] {
 .offer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
 }
 .offer-num { grid-column: 1; grid-row: 1; padding: 28px 0 0 var(--pad); color: var(--muted); font: 400 12px/1 var(--mono); }
 .offer h2 {
@@ -647,7 +702,7 @@ html.project-selected [data-nav-collapse] {
 /* Connect */
 .connect-body {
     padding: clamp(36px, 5vw, 64px) var(--pad) clamp(44px, 6vw, 80px) calc(50% + var(--gutter));
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
 }
 .connect-email {
     display: inline-block;
@@ -676,7 +731,7 @@ html.project-selected [data-nav-collapse] {
     align-items: center;
     height: 56px;
     padding: 0 var(--pad);
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
     font-size: 12px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -710,13 +765,13 @@ html.project-selected [data-nav-collapse] {
 .project-info .page-lede + .page-lede { margin-top: 16px; }
 
 /* Who was involved: role on the left, names (linked handles) on the right. */
-.credits { margin: 40px 0 0; border-top: 1px solid var(--grid); }
-.credit { display: grid; grid-template-columns: minmax(110px, 34%) 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--grid); }
+.credits { margin: 40px 0 0; border-top: 1px solid var(--rule); }
+.credit { display: grid; grid-template-columns: minmax(110px, 34%) 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .credit dt { color: var(--muted); font-size: 12px; line-height: 1.6; text-transform: uppercase; }
 .credit dd { display: flex; flex-direction: column; gap: 4px; margin: 0; }
 .credit a { text-decoration: none; }
 .credit a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.project-pager { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--grid); }
+.project-pager { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
 .project-pager a {
     display: flex;
     flex-direction: column;
@@ -740,7 +795,7 @@ html.project-selected [data-nav-collapse] {
     .credit { grid-template-columns: 1fr; gap: 6px; }
     .project-pager { grid-template-columns: 1fr; }
     .project-pager a,
-    .project-pager a:last-child { padding: 24px var(--pad); border-top: 1px solid var(--grid); }
+    .project-pager a:last-child { padding: 24px var(--pad); border-top: 1px solid var(--rule); }
     .project-pager a:first-child { border-top: 0; }
 }
 
@@ -750,7 +805,7 @@ html.project-selected [data-nav-collapse] {
     grid-template-columns: 50% minmax(0, 1fr) auto;
     align-items: baseline;
     padding: 24px 0 26px;
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
     color: var(--fg);
     text-decoration: none;
     transition: background 150ms ease;
@@ -799,7 +854,7 @@ a.press-item:hover .press-item-arrow { opacity: 1; }
     gap: 14px;
     min-height: 280px;
     padding: 30px var(--gutter) 30px var(--pad);
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--rule);
     color: var(--fg);
     text-decoration: none;
     transition: background 150ms ease;
@@ -851,6 +906,13 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
 
 /* ---------------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
+    :root { animation: none !important; }
+    body::before,
+    .site-header::before,
+    .site-footer--fixed::before,
+    .site-header::after,
+    .site-footer--fixed::after,
+    .page-header::after { animation: none !important; }
     #hg-cursor,
     .menu-overlay,
     .menu-label,
