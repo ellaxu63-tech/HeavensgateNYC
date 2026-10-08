@@ -45,6 +45,19 @@
      */
     HG.homeCards = function () {
         var cards = HG.data.projects.slice()
+        var v = HG.data.homeVideo
+        // The video goes first, so it gets a good spot.
+        if (v) {
+            cards.unshift({
+                slug: 'home-video',
+                title: v.title,
+                meta: v.meta,
+                image: v.poster,
+                ratio: v.ratio || 0.5625,
+                href: '#',
+                video: true,
+            })
+        }
         HG.data.events.forEach(function (ev) {
             if (!ev.slug || !ev.images) return
             ev.images.forEach(function (item, i) {
@@ -167,8 +180,12 @@
         var card = document.createElement('a')
         card.className = 'project-card'
         card.href = project.href || HG.projectUrl(project)
-        card.setAttribute('data-cursor', 'open')
-        card.setAttribute('aria-label', project.meta ? project.title + ', ' + project.meta : [project.title, project.category, project.year].filter(Boolean).join(', '))
+        card.setAttribute('data-cursor', project.video ? 'play' : 'open')
+        if (project.video) {
+            card.setAttribute('data-video', '')
+            card.setAttribute('role', 'button')
+        }
+        card.setAttribute('aria-label', (project.video ? 'Play video: ' : '') + (project.meta ? project.title + ', ' + project.meta : [project.title, project.category, project.year].filter(Boolean).join(', ')))
         card.draggable = false
 
         var cover = document.createElement('span')
@@ -181,6 +198,7 @@
         img.draggable = false
         img.decoding = 'async'
         cover.appendChild(img)
+        if (project.video) cover.insertAdjacentHTML('beforeend', '<span class="project-play" aria-hidden="true"></span>')
 
         var caption = document.createElement('span')
         caption.className = 'project-caption'

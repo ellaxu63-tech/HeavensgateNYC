@@ -403,6 +403,48 @@ html:not(.is-dragging) #hg-cursor.project-hover { mix-blend-mode: normal; }
 html:not(.is-dragging) #hg-cursor.project-hover .cursor-star { display: none; }
 html:not(.is-dragging) #hg-cursor.project-hover .cursor-open { display: flex; }
 
+/* ------------------------------------------------------------ video player
+   The floating thumbnail of the home page video opens this. */
+.project-cover { position: relative; }
+.project-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border-radius: 50%;
+    background: rgba(var(--bg-rgb), 0.55);
+    box-shadow: 0 0 0 1px rgba(var(--fg-rgb), 0.7);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+.project-play::after {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 10px;
+    border-style: solid;
+    border-width: 7px 0 7px 11px;
+    border-color: transparent transparent transparent #fff;
+}
+html.lightbox-open { overflow: hidden; }
+html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 72px var(--pad) 24px;
+    background: rgba(var(--bg-rgb), 0.94);
+}
+.lightbox-close { position: absolute; top: 16px; right: var(--pad); }
+.lightbox-figure { display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: 100%; margin: 0; }
+.lightbox .project-video { width: min(100%, calc((100vh - 170px) * var(--ratio, 0.5625))); }
+.lightbox figcaption { max-width: 60ch; color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; text-transform: uppercase; }
+
 /* -------------------------------------------------------- project cards */
 .project-card {
     display: block;

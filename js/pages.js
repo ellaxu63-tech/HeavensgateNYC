@@ -204,7 +204,7 @@
                     '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
                     bioHtml(ev.summary || (proj && proj.summary)) +
                     photosLink +
-                    creditsHtml(ev.credits || (proj && proj.credits)) +
+                    creditsHtml((ev.details || []).concat(ev.credits || (proj && proj.credits) || [])) +
                 '</div>' +
             '</div>'
     }

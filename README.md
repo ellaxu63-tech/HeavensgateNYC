@@ -57,6 +57,14 @@ the card links to its own page; `summary` and `credits` fill that page. Every
 poster in `images` also floats on the home page with the projects (use `thumb`
 for a small version and `label` for its caption) and links to the event.
 
+## The video on the home page
+
+`homeVideo` in `js/data.js` is the clip that floats on the home page as a
+thumbnail (its poster image, with a play button). Clicking it opens a full-screen
+player; Esc, CLOSE or a click outside closes it. The cursor says PLAY over it.
+Replace `src` / `poster` / `caption`, or delete the block to remove it. Keep the
+file small (an MP4 under about 15 MB is safe).
+
 ## How the old Framer overrides map to this site
 
 | Framer override                         | Now                                                                 |

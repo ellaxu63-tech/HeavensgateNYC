@@ -1,7 +1,7 @@
 /*
  * Custom cursor: a star (the one in the reference, see HG.STAR_PATH) that
  * inverts against whatever is under it, turning into a white OPEN pill over
- * anything marked data-cursor="open" (project cards). On the home page the star
+ * anything marked data-cursor="open" (project cards; "play" for the video). On the home page the star
  * slowly spins over the stage with a tiny DRAG TO DRAW label beside it, to say
  * "you can draw here". Only on devices with a real mouse; touch devices and
  * keyboard users are unaffected.
@@ -27,6 +27,7 @@
     document.body.appendChild(cursor)
     root.classList.add('cursor-enabled')
 
+    var openLabel = cursor.querySelector('.cursor-open')
     var x = 0
     var y = 0
     var frame = null
@@ -45,7 +46,13 @@
         y = event.clientY
         cursor.classList.add('active')
         var target = event.target
-        var overProject = !!(target && target.closest && target.closest('[data-cursor="open"]'))
+        var marked = target && target.closest ? target.closest('[data-cursor]') : null
+        var overProject = !!marked
+        // OPEN over a project, PLAY over the video.
+        if (marked) {
+            var word = (marked.getAttribute('data-cursor') || 'open').toUpperCase()
+            if (openLabel.textContent !== word) openLabel.textContent = word
+        }
         cursor.classList.toggle('project-hover', overProject)
         cursor.classList.toggle('over-stage', !overProject && !!(target && target.closest && target.closest('.stage')))
         // Near the right edge the little label goes on the left of the star.

@@ -22,6 +22,18 @@
         // Replace with the real address before launch.
         contactEmail: 'hello@example.com',
 
+        // The video on the home page: a floating thumbnail (the poster image) that
+        // opens a player when clicked. Remove this block to take it off.
+        homeVideo: {
+            title: 'Artifice Showcase',
+            meta: 'Deus, Sex, Machina \u2014 June 8',
+            src: 'assets/video/artifice-showcase.mp4',
+            poster: 'assets/video/artifice-showcase-poster.webp',
+            ratio: 0.5625, // width \u00f7 height (the clip is vertical)
+            // Shown under the video, from the clip itself.
+            caption: 'Artifice Showcase \u00b7 Deus, Sex, Machina \u00b7 June 8 \u00b7 1329 Willoughby Ave \u00b7 7 PM\u2013late \u00b7 HEAVENSGATE pop-up market open 1\u20136 PM',
+        },
+
         // Main menu (the full-screen overlay).
         nav: [
             { label: 'GALLERY', href: 'gallery.html' },
@@ -242,18 +254,37 @@
         //   credits  – [{ role, names: [...] }], same as for projects
         //   project  – slug of a project to take the summary and credits from
         //              (and to link to for its photos)
+        //   details  – extra rows shown before the credits, same shape as credits
         events: [
             {
                 slug: 'the-last-human-fashion-show',
                 tag: 'Past',
                 title: 'The Last Human Fashion Show',
                 date: 'Sep 12, 2026',
-                location: 'Brooklyn',
+                location: 'Bogart House, Brooklyn',
                 type: 'Show',
-                // Bio, credits and a link to the photos come from this project.
+                image: 'assets/events/the-last-human-fashion-show/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/the-last-human-fashion-show/01-red.webp',
+                        thumb: 'assets/events/the-last-human-fashion-show/thumb-01.webp',
+                        alt: 'Poster in red: a woman\u2019s face with black lipstick repeated four times in red tones, with a white panel reading Saturday September 12 2026, The Last Human Fashion Show, Runway + Afterparty, Bogart House, 5\u20139 PM, 230 Bogart St.',
+                    },
+                    {
+                        src: 'assets/events/the-last-human-fashion-show/02-black-white.webp',
+                        thumb: 'assets/events/the-last-human-fashion-show/thumb-02.webp',
+                        alt: 'The same poster in black and white with red lettering: New York City, NYFW 26, Who will you be?',
+                    },
+                ],
+                // From the poster. The bio, the rest of the credits and the link to
+                // the photos come from the project with this slug.
+                details: [
+                    { role: 'Date', names: ['Saturday, September 12, 2026'] },
+                    { role: 'Time', names: ['5\u20139 PM'] },
+                    { role: 'Venue', names: ['Bogart House, 230 Bogart St, Brooklyn'] },
+                    { role: 'Format', names: ['Runway + afterparty'] },
+                ],
                 project: 'the-last-human-fashion-show',
-                // TODO: add `image` (card) and `images` (the posters, main first)
-                // once the files are in assets/events/the-last-human-fashion-show/.
             },
             {
                 slug: 'table-manners',
@@ -345,6 +376,33 @@
                     { role: 'Culture lounge by', names: ['@discipline.systems'] },
                     { role: 'Work shown', names: ['@e__xu', '@zao.zzz', '@xueman9511', '@qiaosenstudio'] },
                     { role: 'Made possible by', names: ['@artifice.nyc', '@heavensgatenyc', '@HUB.mode', '@discipline.systems', '@chemistrycreative'] },
+                ],
+            },
+            {
+                slug: 'studio-dem-heavensgate-popup',
+                tag: 'Past',
+                title: 'Studio Dem \u00d7 HEAVENSGATE Pop-Up',
+                date: 'Mar 4\u201324, 2024',
+                location: '241 Wythe Ave, Brooklyn',
+                type: 'Pop-up',
+                image: 'assets/events/studio-dem-heavensgate-popup/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/studio-dem-heavensgate-popup/01-poster.webp',
+                        thumb: 'assets/events/studio-dem-heavensgate-popup/thumb-01.webp',
+                        ratio: 1,
+                        alt: 'Poster: Studio Dem + Heavensgate pop-up, 2024 March 4 to 24, 1:00 to 6:00 PM, Tuesday to Sunday, 241 Wythe Ave, Brooklyn NY. Black script lettering on white with pink gradient flower shapes.',
+                    },
+                ],
+                summary:
+                    'A curated fashion and art shop for 10+ independent designers and artists, by @studio_dem and @heavensgatenyc: a new selection of clothing, accessories, jewelry, art, and more.\n\n' +
+                    'Bring your friends to find the most unique pieces. There were also Sip & Shop events on two Fridays during the run, for the ultimate shopping experience.',
+                credits: [
+                    { role: 'Dates', names: ['March 4\u201324, 2024'] },
+                    { role: 'Hours', names: ['1:00\u20136:00 PM'] },
+                    { role: 'Venue', names: ['241 Wythe Ave, Brooklyn, NY'] },
+                    { role: 'Presented by', names: ['@studio_dem', '@heavensgatenyc'] },
+                    { role: 'Featuring', names: ['10+ independent designers and artists'] },
                 ],
             },
             { tag: 'Upcoming', title: 'SS27 Presentation', date: 'March 2027', location: 'Paris', type: 'Show' },
