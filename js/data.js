@@ -61,6 +61,16 @@
          *   images    – optional: every image to show on the project page, in
          *               order (defaults to just `image`). Each one is either a
          *               path or { src, alt } with a short description.
+         *   video     – optional: a video clip, shown first on the project
+         *               page. A path to a file (mp4 is safest; keep it under
+         *               about 15 MB), a YouTube or Vimeo link, or
+         *               { src, poster, ratio, autoplay, title }:
+         *                 poster   – still image shown before it plays
+         *                 ratio    – width ÷ height (16/9 is assumed; files fix
+         *                            themselves once they load)
+         *                 autoplay – true: plays silently on a loop while on
+         *                            screen (people can still unmute)
+         *               Use `videos: [ … ]` for more than one.
          *   credits   – optional: [{ role, names: ['@handle', …] }]. Anything
          *               that looks like @handle becomes a link to Instagram.
          *

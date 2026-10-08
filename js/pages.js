@@ -48,6 +48,12 @@
                 return '<p class="page-lede">' + HG.linkHandles(paragraph.trim()) + '</p>'
             })
             .join('')
+        var videoItems = project.videos || (project.video ? [project.video] : [])
+        var videos = videoItems
+            .map(function (item) {
+                return HG.videoHtml(item, project.title)
+            })
+            .join('')
         var credits = (project.credits || [])
             .map(function (credit) {
                 return (
@@ -63,6 +69,7 @@
             '<a class="back-link" href="gallery.html">← Gallery</a>' +
             '<div class="project-layout">' +
                 '<div class="project-images">' +
+                    videos +
                     images
                         .map(function (item, i) {
                             var src = typeof item === 'string' ? item : item.src
@@ -85,6 +92,36 @@
                 '<a href="' + esc(HG.projectUrl(prev)) + '" data-cursor="open"><span>Previous</span>' + esc(prev.title) + '</a>' +
                 '<a href="' + esc(HG.projectUrl(next)) + '" data-cursor="open"><span>Next</span>' + esc(next.title) + '</a>' +
             '</nav>'
+
+        initVideos(holder)
+    }
+
+    // Video files: take the real shape from the file, and keep clips that
+    // autoplay (silently) running only while they are on screen.
+    function initVideos(root) {
+        var observer =
+            'IntersectionObserver' in window
+                ? new IntersectionObserver(
+                      function (entries) {
+                          entries.forEach(function (entry) {
+                              if (entry.isIntersecting) entry.target.play().catch(function () {})
+                              else entry.target.pause()
+                          })
+                      },
+                      { threshold: 0.25 }
+                  )
+                : null
+        root.querySelectorAll('.project-video video').forEach(function (video) {
+            video.addEventListener('loadedmetadata', function () {
+                if (video.videoWidth && video.videoHeight) {
+                    video.parentNode.style.setProperty('--ratio', (video.videoWidth / video.videoHeight).toFixed(4))
+                }
+            })
+            if (video.hasAttribute('autoplay') && observer) {
+                video.pause()
+                observer.observe(video)
+            }
+        })
     }
 
     // --------------------------------------------------------------- press

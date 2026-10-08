@@ -653,6 +653,16 @@ html.project-selected [data-nav-collapse] {
     background: rgba(var(--fg-rgb), 0.06);
     box-shadow: 0 0 0 1px var(--grid);
 }
+/* A video: as wide as the column, but never taller than the screen (a vertical
+   clip is narrower, like the portrait photos). --ratio is width / height. */
+.project-video {
+    width: min(100%, calc((100vh - var(--header-h) - 150px) * var(--ratio, 1.7778)));
+    aspect-ratio: var(--ratio, 1.7778);
+    background: #000;
+    box-shadow: 0 0 0 1px var(--grid);
+}
+.project-video video,
+.project-video iframe { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; background: #000; }
 .project-info { padding: 32px var(--pad) 64px var(--gutter); }
 .project-info .page-title { padding: 18px 0 0; font-size: clamp(48px, 7vw, 120px); }
 .project-info .page-lede + .page-lede { margin-top: 16px; }
@@ -683,6 +693,7 @@ html.project-selected [data-nav-collapse] {
     .project-layout { grid-template-columns: 1fr; }
     .project-images { padding: 24px var(--pad); }
     .project-hero { width: 100%; max-height: none; }
+    .project-video { width: 100%; }
     .project-info { padding: 0 var(--pad) 48px; }
     .credit { grid-template-columns: 1fr; gap: 6px; }
     .project-pager { grid-template-columns: 1fr; }

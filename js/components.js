@@ -80,6 +80,45 @@
         })
     }
 
+    /*
+     * A video for a project page. `item` is a path to a video file (mp4 / webm /
+     * mov), a YouTube or Vimeo link, or an object:
+     *   { src, poster, ratio, autoplay, title }
+     * `ratio` is width ÷ height (default 16:9; 9:16 for YouTube Shorts). For
+     * files it is corrected from the video itself once it loads. `autoplay`
+     * plays the clip silently on a loop while it is on screen (the viewer can
+     * still unmute and use the controls).
+     */
+    HG.videoHtml = function (item, projectTitle) {
+        var v = typeof item === 'string' ? { src: item } : item || {}
+        var src = String(v.src || '')
+        var label = HG.esc(v.title || projectTitle + ' (video)')
+        var youtube = src.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/)
+        var vimeo = src.match(/vimeo\.com\/(?:video\/)?(\d+)/)
+        var vertical = /youtube\.com\/shorts\//.test(src)
+        var ratio = Number(v.ratio) || (vertical ? 9 / 16 : 16 / 9)
+        var box = '<div class="project-video" style="--ratio:' + ratio.toFixed(4) + '">'
+
+        if (youtube || vimeo) {
+            var url = youtube
+                ? 'https://www.youtube-nocookie.com/embed/' + youtube[1] + '?rel=0'
+                : 'https://player.vimeo.com/video/' + vimeo[1]
+            return (
+                box +
+                '<iframe src="' + url + '" title="' + label + '" loading="lazy" allowfullscreen ' +
+                'allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
+                '</div>'
+            )
+        }
+        return (
+            box +
+            '<video src="' + HG.esc(src) + '" controls playsinline preload="metadata" aria-label="' + label + '"' +
+            (v.poster ? ' poster="' + HG.esc(v.poster) + '"' : '') +
+            (v.autoplay ? ' autoplay muted loop' : '') +
+            '></video></div>'
+        )
+    }
+
     // Turns every @handle in a (plain) string into an Instagram link.
     HG.linkHandles = function (text) {
         return HG.esc(text).replace(/@([A-Za-z0-9._]*[A-Za-z0-9_])/g, function (match, handle) {
