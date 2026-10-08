@@ -132,9 +132,12 @@ Knobs at the top of `css/styles.css`:
 
 ## Drawing on the home page
 
-Dragging anywhere on the home page nudges the images and draws a ribbon of
-silver chrome: thick where you move slowly, thin where you move fast, pointed
-at both ends. It fades a second after you let go.
+Dragging anywhere on the home page nudges the images and draws a flat white
+ribbon with a soft shadow under it, like the white swooshes on the "the sin :
+vanish" poster: thick where you move slowly, thin where you move fast, pointed
+at both ends. It fades a second after you let go. The look of the stroke (its
+colour and shadow) is `STYLE` at the top of [`js/ribbon.js`](js/ribbon.js); the
+same stroke is used by the opening rings and the self-drawing flourish.
 
 To make that obvious: the cursor is a star that spins slowly over the page (and
 faster while drawing) with a tiny DRAG TO DRAW label beside it, and until
@@ -147,16 +150,18 @@ image); the cursor uses it.
 
 ## The orbits (page open)
 
-When the home page opens, four big thin white rings are drawn across it one
-after another, like the white swooshes on the "the sin : vanish" poster: long
-ellipses at different tilts that run off the edges of the window, each with a
-soft shadow beside the line. They sit over the images but never take clicks or
-hovers, and they stay once drawn. It is `js/orbits.js` + the "orbits" block in
+When the home page opens, four big white rings are drawn across it one after
+another, in the same stroke you draw with: long ellipses at different tilts that
+run off the edges of the window, thick on one side and thin on the other. They
+move: each ring is a stroke whose pen travels round it while its tail is rubbed
+out behind, so about two seconds after a ring starts it is gone, and once the
+last has gone the page is clear to draw on. They sit over the images but never
+take clicks or hovers. It is `js/orbits.js` + the "orbits" block in
 `css/styles.css`. At the top of the script, `RINGS` sets each ring (where, how
-big, how tilted, where the pen starts, when it starts and how long it takes)
-and `LINE` sets how thick the line and its shadow are. The rings are placed so
-they pass around the intro sentence rather than through it. With reduced motion
-they are simply there, already drawn.
+big, how tilted, where the pen starts and which way it goes, when it starts)
+and `DRAW` / `LAG` / `RUB` set the timing. The rings are placed so they pass
+around the intro sentence rather than through it. With reduced motion nothing is
+drawn.
 
 ## The fall
 
@@ -173,7 +178,7 @@ the writing just fades out.
 
 The home page feel is controlled by the `PHYSICS`, `DRAG` and `GHOST` objects at
 the top of [`js/physics.js`](js/physics.js): drift, friction, hover scale, and
-for the drawing the ribbon width, taper, chrome colours, fade time
+for the drawing the ribbon width, taper, fade time
 and the self-drawing demo's timing.
 
 ## Accessibility

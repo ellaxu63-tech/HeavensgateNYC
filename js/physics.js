@@ -6,7 +6,7 @@
  *    intro text (they never cover it), then drift with light physics.
  *  - Hover / focus: the card scales up, shows its caption and every other card
  *    fades out; the navigation fades out too (via HG.motion.projectActive).
- *  - Drag anywhere: draws a ribbon of silver chrome and nudges the cards with
+ *  - Drag anywhere: draws a flat white ribbon with a soft shadow (js/ribbon.js) and nudges the cards with
  *    parallax. A normal click on a card still opens it. Until someone has
  *    drawn, a flourish draws itself every few seconds to show what to do.
  *  - PAUSE / RESUME (HG.motion.paused), reduced-motion and hidden tabs stop
@@ -39,21 +39,10 @@
         // The line is a ribbon: thick where you move slowly, thin where you move
         // fast, pointed at both ends.
         lineWidth: 12, // widest part, px
-        minWidth: 2.6, // thinnest part, px
+        minWidth: 3, // thinnest part, px
         fastSpeed: 1.5, // px per ms that counts as "fast"
         taperTail: 48, // length of the pointed start, px
         taperHead: 30, // length of the pointed end (at the pointer), px
-        // Silver chrome: dark steel edge, a metal body with bands of light and
-        // dark, a white highlight on one side and a shaded side.
-        edge: '#3f4147',
-        shade: '#6e7179',
-        chrome: [
-            ['0', '#f6f7f9'],
-            ['0.25', '#bfc2c8'],
-            ['0.5', '#ffffff'],
-            ['0.75', '#989ba3'],
-            ['1', '#e3e5e9'],
-        ],
         // Keeps normal clicks from being mistaken for a drag.
         threshold: 10,
         sampleDistance: 12,
@@ -64,7 +53,7 @@
     }
 
     // The flourish that draws itself until someone has drawn (see playGhost).
-    var GHOST = { firstDelay: 4400, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
+    var GHOST = { firstDelay: 3800, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
 
     // -------------------------------------------------------------- helpers
     function hashString(input) {
@@ -166,10 +155,11 @@
         window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches
 
     // ------------------------------------------------------------ drag trail
-    // What you draw is a ribbon of polished silver chrome, like the swirls on the
-    // poster: a dark edge, a metal body, a white highlight on one side and a
-    // shaded side. All plain SVG inside one overlay; only its attributes change
-    // while you drag.
+    // What you draw is a flat white band, like the white swooshes on the poster:
+    // thick where you move slowly, thin where you move fast, pointed at both
+    // ends, with a soft shadow under it so it looks pressed into the page. The
+    // band itself is built in js/ribbon.js; here it is plain SVG inside one
+    // overlay, and only its attributes change while you drag.
     var SVG_NS = 'http://www.w3.org/2000/svg'
 
     function svgEl(tag, attrs) {
@@ -183,58 +173,7 @@
     var dragSvg = svgEl('svg', { 'aria-hidden': 'true' })
     dragSvg.setAttribute('class', 'drag-trail')
     dragSvg.style.transition = 'opacity ' + DRAG.fadeMs + 'ms ease'
-
-    var chromeGradient = svgEl('linearGradient', {
-        id: 'hg-chrome',
-        gradientUnits: 'userSpaceOnUse',
-        x1: '0',
-        y1: '0',
-        x2: '380',
-        y2: '380',
-        spreadMethod: 'reflect',
-    })
-    DRAG.chrome.forEach(function (stop) {
-        chromeGradient.appendChild(svgEl('stop', { offset: stop[0], 'stop-color': stop[1] }))
-    })
-    var defs = svgEl('defs')
-    defs.append(chromeGradient)
-
-    var ribbonBody = svgEl('polygon', {
-        fill: 'url(#hg-chrome)',
-        stroke: DRAG.edge,
-        'stroke-width': '1.1',
-        'stroke-linejoin': 'round',
-    })
-    var ribbonShade = svgEl('polygon', { fill: DRAG.shade, opacity: '0.5' })
-    var ribbonShine = svgEl('polygon', { fill: '#ffffff', opacity: '0.92' })
-    dragSvg.append(defs, ribbonBody, ribbonShade, ribbonShine)
-
-    function smoothstep(t) {
-        t = clamp(t, 0, 1)
-        return t * t * (3 - 2 * t)
-    }
-
-    // Offset outline of the centre line: `factor` scales the width, `shift`
-    // moves the centre towards the light (up-left) when positive.
-    function ribbonOutline(path, factor, shift) {
-        var left = []
-        var right = []
-        for (var i = 0; i < path.length; i++) {
-            var a = path[Math.max(0, i - 1)]
-            var b = path[Math.min(path.length - 1, i + 1)]
-            var tx = b.x - a.x
-            var ty = b.y - a.y
-            var len = Math.hypot(tx, ty) || 1
-            var nx = -ty / len
-            var ny = tx / len
-            var half = (path[i].w * factor) / 2
-            var cx = path[i].x - shift * path[i].w * 0.7
-            var cy = path[i].y - shift * path[i].w * 0.7
-            left.push((cx + nx * half).toFixed(1) + ',' + (cy + ny * half).toFixed(1))
-            right.push((cx - nx * half).toFixed(1) + ',' + (cy - ny * half).toFixed(1))
-        }
-        return left.concat(right.reverse()).join(' ')
-    }
+    var brush = HG.ribbon.create(dragSvg)
 
     // points: [{ x, y, t }] with t in ms. Draws the ribbon through them.
     function renderRibbon(points) {
@@ -253,51 +192,11 @@
             return before * 0.25 + w * 0.5 + after * 0.25
         })
 
-        // Smooth centre line (Catmull-Rom spline through the points).
-        var STEPS = 6
-        var path = []
-        for (var i = 0; i < points.length - 1; i++) {
-            var p0 = points[Math.max(0, i - 1)]
-            var p1 = points[i]
-            var p2 = points[i + 1]
-            var p3 = points[Math.min(points.length - 1, i + 2)]
-            for (var k = 0; k < STEPS; k++) {
-                var t = k / STEPS
-                var t2 = t * t
-                var t3 = t2 * t
-                path.push({
-                    x: 0.5 * (2 * p1.x + (p2.x - p0.x) * t + (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 + (3 * p1.x - p0.x - 3 * p2.x + p3.x) * t3),
-                    y: 0.5 * (2 * p1.y + (p2.y - p0.y) * t + (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 + (3 * p1.y - p0.y - 3 * p2.y + p3.y) * t3),
-                    w: widths[i] + (widths[i + 1] - widths[i]) * t,
-                })
-            }
-        }
-        var tail = points[points.length - 1]
-        path.push({ x: tail.x, y: tail.y, w: widths[widths.length - 1] })
-
-        // Point both ends.
-        var total = 0
-        path[0].s = 0
-        for (var j = 1; j < path.length; j++) {
-            total += Math.hypot(path[j].x - path[j - 1].x, path[j].y - path[j - 1].y)
-            path[j].s = total
-        }
-        var tailLen = Math.max(1, Math.min(DRAG.taperTail, total * 0.5))
-        var headLen = Math.max(1, Math.min(DRAG.taperHead, total * 0.5))
-        path.forEach(function (p) {
-            p.w = Math.max(0.6, p.w * smoothstep(p.s / tailLen) * smoothstep((total - p.s) / headLen))
-        })
-
-        ribbonBody.setAttribute('points', ribbonOutline(path, 1, 0))
-        ribbonShade.setAttribute('points', ribbonOutline(path, 0.42, -0.2))
-        ribbonShine.setAttribute('points', ribbonOutline(path, 0.26, 0.2))
-
+        brush.set(HG.ribbon.taper(HG.ribbon.spline(points, widths, 6), DRAG.taperTail, DRAG.taperHead))
     }
 
     function clearRibbon() {
-        ;[ribbonBody, ribbonShade, ribbonShine].forEach(function (el) {
-            el.setAttribute('points', '')
-        })
+        brush.clear()
     }
 
     function clearDragGeometry() {
