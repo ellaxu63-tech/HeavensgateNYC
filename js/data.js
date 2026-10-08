@@ -291,6 +291,28 @@
                     { role: 'Music', names: ['Glam rock live performance'] },
                 ],
             },
+            {
+                slug: 'artifice-003',
+                tag: 'Past',
+                title: 'Artifice 003',
+                date: 'Sep 7, 2024',
+                location: '305 Ten Eyck St.',
+                type: 'Show',
+                // TODO: add `image` (card) and `images` (posters, main first) and
+                // `video` once the files are in assets/events/artifice-003/.
+                summary:
+                    'Artifice 003 was a night for NYFW FW24 on September 7, 2024, from 8 PM until late at 305 Ten Eyck St.: a White Box NYFW show, work on screen and two performances in the Black Box, and a culture lounge by @discipline.systems.\n\n' +
+                    'Made possible by @artifice.nyc, @heavensgatenyc, @HUB.mode, @discipline.systems and @chemistrycreative.',
+                credits: [
+                    { role: 'White Box NYFW show', names: ['@janicezhimeng', '@__evanc__', '@aguirrrre__', '@nostylguh.co', '@cloudiejobi'] },
+                    { role: 'Black Box on screen', names: ['@sunwanw', '@williamwillsey', '@dirkkoy', '@kat__bot', '@ssarahbankss', '@maximilianprag'] },
+                    { role: 'Black Box performance: \u201cBLOOM\u201d', names: ['@kevinpeterhe', '@petalsupplyco'] },
+                    { role: 'Black Box performance: \u201cDRY\u201d', names: ['@robruthco', '@elkkkk_____', '@antide_xx'] },
+                    { role: 'Culture lounge by', names: ['@discipline.systems'] },
+                    { role: 'Work shown', names: ['@e__xu', '@zao.zzz', '@xueman9511', '@qiaosenstudio'] },
+                    { role: 'Made possible by', names: ['@artifice.nyc', '@heavensgatenyc', '@HUB.mode', '@discipline.systems', '@chemistrycreative'] },
+                ],
+            },
             { tag: 'Upcoming', title: 'SS27 Presentation', date: 'March 2027', location: 'Paris', type: 'Show' },
             { tag: 'Upcoming', title: 'HEAVENSGATE × Archive Pop-Up', date: 'Nov 2026', location: 'Tokyo', type: 'Exhibition' },
             { tag: 'Past', title: 'FW26 Runway Show', date: 'Sep 2026', location: 'New York', type: 'Show' },
