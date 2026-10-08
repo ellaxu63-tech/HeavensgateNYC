@@ -115,23 +115,24 @@ Knobs at the top of `css/styles.css`:
 ## Drawing on the home page
 
 Dragging anywhere on the home page nudges the images and draws a ribbon of
-pink chrome: thick where you move slowly, thin where you move fast, pointed at
-both ends, with sparkles dropped along it. It fades a second after you let go.
+silver chrome: thick where you move slowly, thin where you move fast, pointed
+at both ends. It fades a second after you let go.
 
 To make that obvious: the cursor is a star that spins slowly over the page (and
-faster while drawing), a pulsing DRAG TO DRAW & MOVE pill sits above the intro
-text, and until someone has drawn, a flourish draws itself every few seconds
-(up to four times, never with reduced motion). The pill and the demo stop for
-the rest of the visit as soon as someone draws.
+faster while drawing) with a tiny DRAG TO DRAW label beside it, a pulsing DRAG TO
+DRAW & MOVE pill sits above the intro text, and until someone has drawn, a
+flourish draws itself every few seconds (up to four times, never with reduced
+motion). The pill and the demo stop for the rest of the visit as soon as someone
+draws; the cursor label stays.
 
 The star is `HG.STAR_PATH` in `js/components.js` (traced from the reference
-image); the cursor, the sparkles and the hint all use it.
+image); the cursor and the hint use it.
 
 ## Tuning
 
 The home page feel is controlled by the `PHYSICS`, `DRAG` and `GHOST` objects at
 the top of [`js/physics.js`](js/physics.js): drift, friction, hover scale, and
-for the drawing the ribbon width, taper, chrome colours, sparkle rate, fade time
+for the drawing the ribbon width, taper, chrome colours, fade time
 and the self-drawing demo's timing.
 
 ## Accessibility

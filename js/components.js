@@ -18,7 +18,7 @@
 
     /*
      * The star: an eight-pointed sparkle, traced from the reference image. Used
-     * for the cursor, the sparkles in the drawing and the DRAG hint. Normalised:
+     * for the cursor and the DRAG hint. Normalised:
      * the points are 1 unit from the centre (0,0), so draw it in a
      * viewBox="-1 -1 2 2".
      */

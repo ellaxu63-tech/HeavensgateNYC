@@ -5,7 +5,7 @@
  *    intro text (they never cover it), then drift with light physics.
  *  - Hover / focus: the card scales up, shows its caption and every other card
  *    fades out; the navigation fades out too (via HG.motion.projectActive).
- *  - Drag anywhere: draws a ribbon of pink chrome and nudges the cards with
+ *  - Drag anywhere: draws a ribbon of silver chrome and nudges the cards with
  *    parallax. A normal click on a card still opens it. Until someone has
  *    drawn, a flourish draws itself every few seconds to show what to do.
  *  - PAUSE / RESUME (HG.motion.paused), reduced-motion and hidden tabs stop
@@ -43,18 +43,17 @@
         fastSpeed: 1.5, // px per ms that counts as "fast"
         taperTail: 48, // length of the pointed start, px
         taperHead: 30, // length of the pointed end (at the pointer), px
-        // Chrome: dark edge, pink body with a metal sheen, white highlight on one
-        // side, shaded side (colours sampled from the reference poster).
-        edge: '#683f4d',
-        shade: '#b04a70',
+        // Silver chrome: dark steel edge, a metal body with bands of light and
+        // dark, a white highlight on one side and a shaded side.
+        edge: '#3f4147',
+        shade: '#6e7179',
         chrome: [
-            ['0', '#fedbe8'],
-            ['0.28', '#e891a7'],
-            ['0.5', '#fff4f8'],
-            ['0.74', '#d9769a'],
-            ['1', '#f4a2b3'],
+            ['0', '#f6f7f9'],
+            ['0.25', '#bfc2c8'],
+            ['0.5', '#ffffff'],
+            ['0.75', '#989ba3'],
+            ['1', '#e3e5e9'],
         ],
-        sparkleEvery: 4, // a little star every N samples while drawing
         // Keeps normal clicks from being mistaken for a drag.
         threshold: 10,
         sampleDistance: 12,
@@ -144,8 +143,6 @@
         lastX: 0,
         lastY: 0,
         points: [],
-        samples: 0,
-        sparkles: [],
         suppressClickUntil: 0,
         fadeTimer: null,
     }
@@ -169,10 +166,10 @@
         window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches
 
     // ------------------------------------------------------------ drag trail
-    // What you draw is a ribbon of polished pink chrome, like the swirls on the
-    // poster: a dark edge, a pink metal body, a white highlight on one side, a
-    // shaded side, and a few sparkles. All plain SVG inside one overlay; only
-    // its attributes change while you drag.
+    // What you draw is a ribbon of polished silver chrome, like the swirls on the
+    // poster: a dark edge, a metal body, a white highlight on one side and a
+    // shaded side. All plain SVG inside one overlay; only its attributes change
+    // while you drag.
     var SVG_NS = 'http://www.w3.org/2000/svg'
 
     function svgEl(tag, attrs) {
@@ -199,9 +196,8 @@
     DRAG.chrome.forEach(function (stop) {
         chromeGradient.appendChild(svgEl('stop', { offset: stop[0], 'stop-color': stop[1] }))
     })
-    var starShape = svgEl('path', { id: 'hg-star', d: HG.STAR_PATH })
     var defs = svgEl('defs')
-    defs.append(chromeGradient, starShape)
+    defs.append(chromeGradient)
 
     var ribbonBody = svgEl('polygon', {
         fill: 'url(#hg-chrome)',
@@ -211,11 +207,7 @@
     })
     var ribbonShade = svgEl('polygon', { fill: DRAG.shade, opacity: '0.5' })
     var ribbonShine = svgEl('polygon', { fill: '#ffffff', opacity: '0.92' })
-    var sparkleLayer = svgEl('g', { fill: '#ffffff' })
-    // A star at the pen tip: on touch screens there is no cursor to show where
-    // you are.
-    var headStar = svgEl('use', { href: '#hg-star', fill: '#ffffff', opacity: '0' })
-    dragSvg.append(defs, ribbonBody, ribbonShade, ribbonShine, sparkleLayer, headStar)
+    dragSvg.append(defs, ribbonBody, ribbonShade, ribbonShine)
 
     function smoothstep(t) {
         t = clamp(t, 0, 1)
@@ -300,25 +292,17 @@
         ribbonShade.setAttribute('points', ribbonOutline(path, 0.42, -0.2))
         ribbonShine.setAttribute('points', ribbonOutline(path, 0.26, 0.2))
 
-        if (touchLike) {
-            headStar.setAttribute('transform', 'translate(' + tail.x.toFixed(1) + ' ' + tail.y.toFixed(1) + ') scale(11)')
-            headStar.setAttribute('opacity', '1')
-        }
     }
 
     function clearRibbon() {
         ;[ribbonBody, ribbonShade, ribbonShine].forEach(function (el) {
             el.setAttribute('points', '')
         })
-        headStar.setAttribute('opacity', '0')
     }
 
     function clearDragGeometry() {
         clearRibbon()
-        while (sparkleLayer.firstChild) sparkleLayer.removeChild(sparkleLayer.firstChild)
         drag.points = []
-        drag.sparkles = []
-        drag.samples = 0
         ribbonHead = null
     }
 
@@ -332,21 +316,6 @@
             ribbonRaf = null
             if (ribbonHead && drag.active) renderRibbon(drag.points.concat([ribbonHead]))
         })
-    }
-
-    // A little star dropped near the line every few samples.
-    function addSparkle(x, y) {
-        var el = svgEl('use', { href: '#hg-star' })
-        var size = 4 + Math.random() * 6
-        el.setAttribute(
-            'transform',
-            'translate(' + (x + (Math.random() - 0.5) * 22).toFixed(1) + ' ' + (y + (Math.random() - 0.5) * 22).toFixed(1) +
-                ') rotate(' + (Math.random() * 45).toFixed(0) + ') scale(' + size.toFixed(1) + ')'
-        )
-        el.setAttribute('opacity', (0.55 + Math.random() * 0.45).toFixed(2))
-        sparkleLayer.appendChild(el)
-        drag.sparkles.push(el)
-        if (drag.sparkles.length > 36) sparkleLayer.removeChild(drag.sparkles.shift())
     }
 
     // -------------------------------------------------- "draw here" demo
@@ -1279,8 +1248,6 @@
         if (!last || Math.hypot(p.x - last.x, p.y - last.y) >= DRAG.sampleDistance) {
             drag.points.push({ x: p.x, y: p.y, t: performance.now() })
             if (drag.points.length > 120) drag.points.shift()
-            drag.samples++
-            if (drag.samples % DRAG.sparkleEvery === 0) addSparkle(p.x, p.y)
         }
         drag.lastX = p.x
         drag.lastY = p.y

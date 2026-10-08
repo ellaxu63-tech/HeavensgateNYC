@@ -2,12 +2,13 @@
  * Custom cursor: a star (the one in the reference, see HG.STAR_PATH) that
  * inverts against whatever is under it, turning into a white OPEN pill over
  * anything marked data-cursor="open" (project cards). On the home page the star
- * slowly spins over the stage, to say "you can draw here". Only on devices with
- * a real mouse; touch devices and keyboard users are unaffected.
+ * slowly spins over the stage with a tiny DRAG TO DRAW label beside it, to say
+ * "you can draw here". Only on devices with a real mouse; touch devices and
+ * keyboard users are unaffected.
  *
  * The home page physics adds the class `is-dragging` to <html> while the
- * stage is being dragged: the star grows and spins faster, and the OPEN pill is
- * hidden (see styles.css).
+ * stage is being dragged: the star grows and spins faster, the label goes away
+ * and the OPEN pill is hidden (see styles.css).
  */
 (function () {
     'use strict'
@@ -19,7 +20,10 @@
     var cursor = document.createElement('div')
     cursor.id = 'hg-cursor'
     cursor.setAttribute('aria-hidden', 'true')
-    cursor.innerHTML = '<div class="cursor-star">' + HG.starSvg('star') + '</div><div class="cursor-open">OPEN</div>'
+    cursor.innerHTML =
+        '<div class="cursor-star">' + HG.starSvg('star') + '</div>' +
+        '<div class="cursor-label">DRAG TO DRAW</div>' +
+        '<div class="cursor-open">OPEN</div>'
     document.body.appendChild(cursor)
     root.classList.add('cursor-enabled')
 
@@ -44,6 +48,8 @@
         var overProject = !!(target && target.closest && target.closest('[data-cursor="open"]'))
         cursor.classList.toggle('project-hover', overProject)
         cursor.classList.toggle('over-stage', !overProject && !!(target && target.closest && target.closest('.stage')))
+        // Near the right edge the little label goes on the left of the star.
+        cursor.classList.toggle('label-left', x > window.innerWidth - 120)
         if (frame === null) frame = window.requestAnimationFrame(place)
     })
 
