@@ -64,7 +64,7 @@
     }
 
     // The flourish that draws itself until someone has drawn (see playGhost).
-    var GHOST = { firstDelay: 1800, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
+    var GHOST = { firstDelay: 4400, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
 
     // -------------------------------------------------------------- helpers
     function hashString(input) {

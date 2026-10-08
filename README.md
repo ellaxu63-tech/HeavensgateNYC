@@ -145,6 +145,19 @@ someone draws; the cursor label stays.
 The star is `HG.STAR_PATH` in `js/components.js` (traced from the reference
 image); the cursor uses it.
 
+## The orbits (page open)
+
+When the home page opens, four big thin white rings are drawn across it one
+after another, like the white swooshes on the "the sin : vanish" poster: long
+ellipses at different tilts that run off the edges of the window, each with a
+soft shadow beside the line. They sit over the images but never take clicks or
+hovers, and they stay once drawn. It is `js/orbits.js` + the "orbits" block in
+`css/styles.css`. At the top of the script, `RINGS` sets each ring (where, how
+big, how tilted, where the pen starts, when it starts and how long it takes)
+and `LINE` sets how thick the line and its shadow are. The rings are placed so
+they pass around the intro sentence rather than through it. With reduced motion
+they are simply there, already drawn.
+
 ## The fall
 
 Hovering (or focusing) an image on the home page makes the writing around it drop
