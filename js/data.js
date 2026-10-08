@@ -357,6 +357,22 @@
         // PLACEHOLDER press. Add an `href` to make a row a link.
         press: [
             {
+                pub: 'Fashion Week Daily',
+                // The title is taken from the web address; replace it with the
+                // article's exact headline if it differs. Add the year (`date`).
+                title: 'The Elephant in the Room: HEAVENSGATE NYC\u2019s Runway That Refuses to Whisper',
+                date: '',
+                href: 'https://fashionweekdaily.com/the-elephant-in-the-room-heavensgate-nycs-runway-that-refuses-to-whisper/',
+            },
+            {
+                pub: 'Vogue China',
+                // PLACEHOLDER title: replace it with the article's headline (and
+                // add the year in `date`) once it is known.
+                title: 'Featured in Vogue China',
+                date: '',
+                href: 'https://www.vogue.com.cn/fashion/brand_news/news_11113279578722b8.html',
+            },
+            {
                 pub: 'Vogue Thailand',
                 title: 'First time in Vogue: The Treasure',
                 date: '2023',

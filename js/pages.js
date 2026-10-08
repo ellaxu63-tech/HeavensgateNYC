@@ -155,7 +155,11 @@
         main.querySelector('.press-list').innerHTML = data.press
             .map(function (item) {
                 var tag = item.href ? 'a' : 'div'
-                var href = item.href ? ' href="' + esc(item.href) + '"' : ''
+                // Links to other sites open in a new tab.
+                var external = /^https?:\/\//i.test(item.href || '')
+                var href = item.href
+                    ? ' href="' + esc(item.href) + '"' + (external ? ' target="_blank" rel="noopener"' : '')
+                    : ''
                 var thumb = item.image
                     ? '<span class="press-item-thumb' + (item.video ? ' is-video' : '') + '"><img src="' + esc(item.image) + '" alt="" loading="lazy" decoding="async"></span>'
                     : ''
