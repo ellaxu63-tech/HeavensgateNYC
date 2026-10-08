@@ -760,6 +760,15 @@
                     { role: 'Date', names: ['New York Fashion Week, September 2023'] },
                     { role: 'Format', names: ['Runway + after party'] },
                 ],
+                image: 'assets/events/the-treasure/thumb.webp',
+                images: [
+                    {
+                        src: 'assets/events/the-treasure/poster.webp',
+                        thumb: 'assets/events/the-treasure/thumb.webp',
+                        ratio: 0.8,
+                        alt: 'The Treasure logo: a glowing white outline of a wolf\u2019s head around the words THE TREASURE in yellow-white lettering, lit up against a city street at night with a bus and billboards.',
+                    },
+                ],
                 // The bio, credits and video come from the project with this slug.
                 project: 'the-treasure',
                 projectLabel: 'See it in the gallery',
