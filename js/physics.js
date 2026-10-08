@@ -19,8 +19,7 @@
     if (!host || document.body.getAttribute('data-page') !== 'home') return
 
     var intro = host.querySelector('.stage-intro')
-    var hint = host.querySelector('.drag-hint')
-    if (!intro || !hint) return
+    if (!intro) return
 
     var PHYSICS = {
         frictionPerSec: 0.18,
@@ -326,7 +325,6 @@
     try {
         hasDrawn = window.sessionStorage.getItem('hg-drawn') === '1'
     } catch (e) {}
-    if (hasDrawn) document.documentElement.classList.add('has-drawn')
 
     var ghost = { timer: null, raf: null, running: false, plays: 0 }
 
@@ -434,11 +432,10 @@
         ghost.raf = window.requestAnimationFrame(frame)
     }
 
-    // The first real drag: the demo and the hint have done their job.
+    // The first real drag: the demo has done its job.
     function markDrawn() {
         if (hasDrawn) return
         hasDrawn = true
-        document.documentElement.classList.add('has-drawn')
         try {
             window.sessionStorage.setItem('hg-drawn', '1')
         } catch (e) {}
@@ -447,16 +444,14 @@
 
     // ----------------------------------------------------- intro obstacle
     // The rectangle (in stage coordinates) that cards must stay out of: the
-    // intro text plus the drag hint above it. (The hint fades away while a
-    // project is selected, so the selected card is only kept off the text.)
-    function getIntroObstacle(hostRect, withHint) {
+    // intro text plus some breathing room.
+    function getIntroObstacle(hostRect) {
         var textRect = intro.getBoundingClientRect()
-        var hintRect = withHint === false ? textRect : hint.getBoundingClientRect()
         var padding = hostRect.width <= 520 ? 12 : 26
         return {
-            left: Math.max(0, Math.min(textRect.left, hintRect.left) - hostRect.left - padding),
-            top: Math.max(0, Math.min(textRect.top, hintRect.top) - hostRect.top - padding),
-            right: Math.min(hostRect.width, Math.max(textRect.right, hintRect.right) - hostRect.left + padding),
+            left: Math.max(0, textRect.left - hostRect.left - padding),
+            top: Math.max(0, textRect.top - hostRect.top - padding),
+            right: Math.min(hostRect.width, textRect.right - hostRect.left + padding),
             bottom: Math.min(hostRect.height, textRect.bottom - hostRect.top + padding),
         }
     }
@@ -601,8 +596,7 @@
         var margin = hostW <= 520 ? 14 : 26
         var friction = Math.pow(PHYSICS.frictionPerSec, dt)
         var dtNorm = clamp(dt * 60, 0, 2.2)
-        var obstacle = getIntroObstacle(rect, true)
-        var textObstacle = getIntroObstacle(rect, false)
+        var obstacle = getIntroObstacle(rect)
         var animate = shouldAnimate()
         var reduced = reducedMotionMedia.matches
         var stillEasing = false
@@ -741,7 +735,7 @@
                 }
             }
 
-            protectIntro(card, rect, margin, interactive ? textObstacle : obstacle)
+            protectIntro(card, rect, margin, obstacle)
 
             // Compare with the previous frame *after* the walls / text have had
             // their say, so a card held at a smaller size doesn't count as easing.

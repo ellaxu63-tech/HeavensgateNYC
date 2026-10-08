@@ -76,7 +76,6 @@ Behaviour you may notice compared with the Framer version:
   smaller screens every card ended up in the one strip tall enough for it.
 - A hovered card now stays where it is and shrinks to fit rather than jumping to
   another part of the screen, and it keeps growing after PAUSE.
-- The DRAG TO DRAW & MOVE pill fades while a project is selected, and for good once someone has drawn.
 
 ## Look: grid and fonts
 
@@ -108,7 +107,7 @@ Knobs at the top of `css/styles.css`:
 | `--gutter`         | How far the side lines sit from the screen edge (text starts at 2×)  |
 | `--grid`           | Colour / strength of the grid lines                                  |
 | `--display-case`   | `lowercase` (default) or `none` for serif text exactly as typed      |
-| `--accent`         | The pink (from the reference poster): MENU pill, drag hint, star     |
+| `--accent`         | The pink (from the reference poster): the MENU pill                  |
 | `--bg` / `--fg`    | Background and text colour (with `--bg-rgb` / `--fg-rgb`)            |
 | `--serif`, `--mono`| The two font stacks                                                  |
 
@@ -119,14 +118,13 @@ silver chrome: thick where you move slowly, thin where you move fast, pointed
 at both ends. It fades a second after you let go.
 
 To make that obvious: the cursor is a star that spins slowly over the page (and
-faster while drawing) with a tiny DRAG TO DRAW label beside it, a pulsing DRAG TO
-DRAW & MOVE pill sits above the intro text, and until someone has drawn, a
-flourish draws itself every few seconds (up to four times, never with reduced
-motion). The pill and the demo stop for the rest of the visit as soon as someone
-draws; the cursor label stays.
+faster while drawing) with a tiny DRAG TO DRAW label beside it, and until
+someone has drawn, a flourish draws itself every few seconds (up to four times,
+never with reduced motion). The demo stops for the rest of the visit as soon as
+someone draws; the cursor label stays.
 
 The star is `HG.STAR_PATH` in `js/components.js` (traced from the reference
-image); the cursor and the hint use it.
+image); the cursor uses it.
 
 ## Tuning
 

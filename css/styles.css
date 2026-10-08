@@ -498,40 +498,6 @@ html:not(.is-dragging) #hg-cursor.project-hover .cursor-open { display: flex; }
     pointer-events: none;
 }
 
-.drag-hint {
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 22px);
-    z-index: 101;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 18px 11px 14px;
-    transform: translateX(-50%);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    background: rgba(var(--bg-rgb), 0.78);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    color: #fff;
-    font: 400 12px/1 var(--mono);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    text-wrap: nowrap;
-    animation: hint-pulse 2.6s ease-out infinite;
-    transition: opacity 180ms ease;
-}
-html.project-selected .drag-hint,
-html.has-drawn .drag-hint,
-html.is-dragging .drag-hint { opacity: 0; animation: none; }
-.hint-star { display: block; width: 18px; height: 18px; flex: none; }
-.hint-star .star { display: block; width: 100%; height: 100%; fill: var(--accent); animation: star-spin 5s linear infinite; }
-@keyframes hint-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.55); }
-    70%, 100% { box-shadow: 0 0 0 16px rgba(var(--accent-rgb), 0); }
-}
-
 .drag-trail {
     position: absolute;
     inset: 0;
@@ -814,10 +780,7 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
     .project-cover img,
     [data-nav-collapse],
     .stage .project-card,
-    .drag-hint,
     .stage .project-caption { transition: none !important; }
-    .drag-hint,
-    .hint-star .star,
     #hg-cursor .star { animation: none !important; }
 }
 
