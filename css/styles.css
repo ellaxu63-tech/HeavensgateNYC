@@ -591,8 +591,6 @@ html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
     text-transform: var(--display-case);
     text-wrap: balance;
     pointer-events: none;
-    /* A black edge round the letters: where one of the white orbit lines passes behind the sentence it is cut away there, so the words stay clear. */
-    text-shadow: 0 0 3px #000, 0 0 6px #000, 0 0 10px #000;
 }
 
 /* **Bold** words in the intro sentence. Instrument Serif has one weight, so this is the browser's
@@ -609,17 +607,6 @@ html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
     overflow: hidden;
     pointer-events: none;
     opacity: 0;
-}
-
-/* ---------------------------------------------------------------- the orbits
-   The big white rings that sweep across the home page when it opens (js/orbits.js).
-   An overlay inside the stage: above the images, below the sentence, and it never
-   takes the pointer. The script sizes it to the window, draws the strokes in it and
-   removes it when they are gone. */
-.orbits {
-    position: absolute;
-    z-index: 50;
-    pointer-events: none;
 }
 
 /* ------------------------------------------------------------------ the fall

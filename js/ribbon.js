@@ -1,9 +1,9 @@
 /*
  * The stroke. Everything drawn on the home page (what you draw with the pointer,
- * the self-drawing flourish and the rings that sweep across when the page opens)
- * is the same kind of line: a flat white band that is thick in places and thin in
- * others, pointed at both ends, with a soft shadow under it so it looks pressed
- * into the page, like the white swooshes on the "the sin : vanish" poster.
+ * and the self-drawing flourish) is the same kind of line: a flat white band that
+ * is thick in places and thin in others, pointed at both ends, with a soft shadow
+ * under it so it looks pressed into the page, like the white swooshes on the
+ * "the sin : vanish" poster.
  *
  * This file turns a centre line into that band (two SVG polygons: the shadow,
  * blurred, and the white body). The numbers to play with are in STYLE.

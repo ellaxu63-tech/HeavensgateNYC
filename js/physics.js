@@ -53,7 +53,7 @@
     }
 
     // The flourish that draws itself until someone has drawn (see playGhost).
-    var GHOST = { firstDelay: 3800, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
+    var GHOST = { firstDelay: 1800, every: 9000, drawMs: 2300, holdMs: 500, fadeMs: 900, maxPlays: 4 }
 
     // -------------------------------------------------------------- helpers
     function hashString(input) {
@@ -1269,14 +1269,7 @@
     layoutCards()
     ready = true
     startLoop()
-    // The flourish waits for the opening rings (js/orbits.js) to be gone.
-    if (HG.opening && !HG.opening.done) {
-        HG.opening.onDone(function () {
-            scheduleGhost(1200)
-        })
-    } else {
-        scheduleGhost(GHOST.firstDelay)
-    }
+    scheduleGhost(GHOST.firstDelay)
 
     if (typeof ResizeObserver !== 'undefined') {
         var resizeObserver = new ResizeObserver(scheduleRelayout)

@@ -115,7 +115,6 @@
                 node.style.textTransform = style.textTransform
                 node.style.lineHeight = rect.height + 'px' // the box is exactly the text's own height, so the baseline lands where it was
                 node.style.color = style.color
-                node.style.textShadow = style.textShadow
                 place(node, rect)
             }
         }

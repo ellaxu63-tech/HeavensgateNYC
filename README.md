@@ -137,7 +137,7 @@ ribbon with a soft shadow under it, like the white swooshes on the "the sin :
 vanish" poster: thick where you move slowly, thin where you move fast, pointed
 at both ends. It fades a second after you let go. The look of the stroke (its
 colour and shadow) is `STYLE` at the top of [`js/ribbon.js`](js/ribbon.js); the
-same stroke is used by the opening rings and the self-drawing flourish.
+same stroke is used by the self-drawing flourish.
 
 To make that obvious: the cursor is a star that spins slowly over the page (and
 faster while drawing) with a tiny DRAG TO DRAW label beside it, and until
@@ -147,21 +147,6 @@ someone draws; the cursor label stays.
 
 The star is `HG.STAR_PATH` in `js/components.js` (traced from the reference
 image); the cursor uses it.
-
-## The orbits (page open)
-
-Once the home page has loaded and is on screen, four big white rings are drawn
-across it one after another, in the same stroke you draw with: long ellipses at
-different tilts that cross each other and run off the edges of the window,
-arranged like the rings on the "the sin : vanish" poster. A pen travels round
-each ring. With all four in place they are left up for about a second, then
-each is rubbed out along its length and the page is clear to draw on (the
-draw-here flourish follows). They sit over the images but under the sentence,
-and never take clicks or hovers. It is `js/orbits.js` + the "orbits" block in
-`css/styles.css`. At the top of the script, `RINGS` sets each ring (where, how
-big, how tilted, how thick, where the pen starts and which way it goes) and
-`STAGGER` / `DRAW` / `HOLD` / `STAGGER_OUT` / `RUB` set the timing. With
-reduced motion nothing is drawn.
 
 ## The fall
 
