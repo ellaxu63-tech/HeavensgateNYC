@@ -179,6 +179,22 @@
                         src: 'assets/projects/the-last-human-fashion-show/04.jpg',
                         alt: 'Two models on a rooftop against a blue sky and the city skyline: one in a pale green satin cut-out top with a black bow, the other in a cream fur bandeau over a blue sequin dress.',
                     },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/05.jpg',
+                        alt: 'Backstage, a model with auburn hair in lilac rollers and plum smoky eye makeup, wearing a black halter top with gold chains, has mascara applied by a makeup artist in glasses with a black ponytail.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/06.jpg',
+                        alt: 'Backstage, a model with a shaved head and bleached braids, white eyeshadow, several nose and septum piercings and silver ear cuffs, in a white sleeveless zip-up top, has white shadow brushed onto one eye by an artist whose hand has a small tattoo.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/07.jpg',
+                        alt: 'Film photograph of a model with a braided auburn updo, smoky eyes and red lips, leaning against stacked white speakers in a grey polka-dot corset with a folded vintage newspaper-print panel and a white polka-dot skirt.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/08.jpg',
+                        alt: 'On the runway, a model with curly auburn hair and pale blue eyeshadow walks in a black babydoll dress, a white shaggy fringe vest, mint green tights and black platform heels, with the audience seated on white poufs behind her.',
+                    },
                 ],
                 summary:
                     'THE LAST HUMAN FASHION SHOW took place on September 12, 2026 in Brooklyn, during New York Fashion Week: a runway experience celebrating what remains raw, imperfect, emotional, and human.\n\n' +
