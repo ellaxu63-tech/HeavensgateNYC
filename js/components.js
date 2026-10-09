@@ -58,6 +58,21 @@
                 homeVideo: true, // the card that opens the home video player (not just a project that has a video)
             })
         }
+        // Photos of a project marked `home: 'left' | 'right'` float too, beside the sentence, and link to the project.
+        HG.data.projects.forEach(function (project) {
+            ;(project.images || []).forEach(function (img, i) {
+                if (!img || typeof img === 'string' || !img.home) return
+                cards.push({
+                    slug: 'photo-' + project.slug + '-' + (i + 1),
+                    title: project.title,
+                    meta: HG.projectMeta(project),
+                    image: img.thumb || img.src,
+                    ratio: img.ratio || 0.75,
+                    href: HG.projectUrl(project),
+                    side: img.home,
+                })
+            })
+        })
         HG.data.events.forEach(function (ev) {
             var list = ev.images || (ev.image ? [ev.image] : null)
             if (!ev.slug || !list) return

@@ -45,6 +45,13 @@ and gets its own page. Anything you add without real content (an image or a
 video) will look empty, so only add finished entries. The first entry is the first one in the gallery. Add an
 `href` to a press item or event to turn it into a link.
 
+Any photo in a project's `images` can also float on the home page, beside the
+sentence: give it `home: 'left'` or `home: 'right'`, a small `thumb` and its
+`ratio`. Those cards are placed first, in the gap on that side of the text, and
+stay there (the other images are pushed around them). They link to the project
+and appear on windows about 1180px wide or more, where there is room beside the
+sentence; on narrower screens they are left out so it is less crowded.
+
 A project can also have (all optional, see the comment above `projects`):
 `year`, a `summary` (the bio; a blank line starts a new paragraph), `images`
 (every photo for the project page, in order; each a path or `{ src, alt }`),

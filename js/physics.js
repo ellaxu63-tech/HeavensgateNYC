@@ -602,6 +602,17 @@
                 }
             }
 
+            // A card that asked for a side of the sentence stays in its gap beside it (the others get pushed away instead).
+            if (card.band && !interactive) {
+                var sb = getBounds(card.width, card.height, card.rotation, card.scale)
+                var bx0 = card.band.left + sb.halfW
+                var bx1 = card.band.right - sb.halfW
+                var by0 = card.band.top + sb.halfH
+                var by1 = card.band.bottom - sb.halfH
+                if (bx0 <= bx1) card.x = clamp(card.x, bx0, bx1)
+                if (by0 <= by1) card.y = clamp(card.y, by0, by1)
+            }
+
             // Keep inside the stage, bouncing softly off the walls.
             var bounds = getBounds(card.width, card.height, card.rotation, card.scale)
             var minX = margin + bounds.halfW
@@ -717,6 +728,11 @@
                 var maxX = hostRect.width - margin - bounds.halfW
                 var minY = margin + bounds.halfH
                 var maxY = hostRect.height - margin - bounds.halfH
+                if (c.band) {
+                    var rb = getBounds(c.width, c.height, c.baseRotation, c.baseScale)
+                    if (c.band.left + rb.halfW <= c.band.right - rb.halfW) c.x = clamp(c.x, c.band.left + rb.halfW, c.band.right - rb.halfW)
+                    if (c.band.top + rb.halfH <= c.band.bottom - rb.halfH) c.y = clamp(c.y, c.band.top + rb.halfH, c.band.bottom - rb.halfH)
+                }
                 c.x = clamp(c.x, Math.min(minX, maxX), Math.max(minX, maxX))
                 c.y = clamp(c.y, Math.min(minY, maxY), Math.max(minY, maxY))
                 protectIntro(c, hostRect, margin, obstacle)
@@ -802,11 +818,30 @@
         }
 
         // 3. Place cards, one at a time, at the best of many sampled spots.
+        //    Cards that ask for a side of the sentence go first, so they get the gaps beside it.
         var placed = []
-        drafts.forEach(function (d, index) {
+        var placementOrder = drafts.slice().sort(function (a, b) {
+            return (b.card.side ? 1 : 0) - (a.card.side ? 1 : 0)
+        })
+        placementOrder.forEach(function (d, index) {
             var card = d.card
             var rnd = d.rnd
             var prev = card.placed
+            // The gap beside the sentence for a card that asks for one (not on a narrow screen, where the sentence fills the width).
+            var sideBand = null
+            if (card.side) {
+                var bandLeft = card.side === 'left' ? safeMargin : introRect.right + 6
+                var bandRight = card.side === 'left' ? introRect.left - 6 : w - safeMargin
+                if (bandRight - bandLeft >= d.width * 0.9) {
+                    sideBand = {
+                        left: bandLeft,
+                        right: bandRight,
+                        top: introRect.top - d.height * 0.6,
+                        bottom: introRect.bottom + d.height * 0.6,
+                    }
+                }
+            }
+            card.band = sideBand
             var sizeChanged = !prev || Math.abs(card.width - d.width) > 2 || Math.abs(card.height - d.height) > 2
             if (sizeChanged) materialChange = true
             card.width = d.width
@@ -834,6 +869,10 @@
                 var py0 =
                     safeMargin +
                     clamp(halton(hIndex, 3) + jy, 0.03, 0.97) * Math.max(1, hostRect.height - safeMargin * 2)
+                if (sideBand) {
+                    px0 = sideBand.left + clamp(halton(hIndex, 2) + jx, 0, 1) * (sideBand.right - sideBand.left)
+                    py0 = sideBand.top + clamp(halton(hIndex, 3) + jy, 0, 1) * (sideBand.bottom - sideBand.top)
+                }
 
                 var fitScale = card.baseScale
                 var testBounds = getBounds(d.width, d.height, card.baseRotation, fitScale)
@@ -994,6 +1033,7 @@
 
         var card = {
             key: project.slug,
+            side: project.side === 'left' || project.side === 'right' ? project.side : null,
             root: root,
             img: root.querySelector('img'),
             cover: root.querySelector('.project-cover'),
@@ -1265,7 +1305,13 @@
 
     // -------------------------------------------------------------- start
     host.appendChild(dragSvg)
-    cards = HG.homeCards().map(createCard)
+    // Photos that float beside the sentence need a gap there. The sentence is at most 840px wide, so there is room
+    // beside it from about 1180px; on a narrower screen it fills the width and they are left out (less crowded).
+    cards = HG.homeCards()
+        .filter(function (item) {
+            return !item.side || window.innerWidth >= 1180
+        })
+        .map(createCard)
     layoutCards()
     ready = true
     startLoop()

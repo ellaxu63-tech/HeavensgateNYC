@@ -76,6 +76,10 @@
          *   images    – optional: every image to show on the project page, in
          *               order (defaults to just `image`). Each one is either a
          *               path or { src, alt } with a short description.
+         *               An image can also float on the home page: add
+         *               `home: 'left'` or `home: 'right'` (it is placed beside
+         *               the sentence on that side), `thumb` (a small version)
+         *               and `ratio` (width \u00f7 height).
          *   video     – optional: a video clip, shown first on the project
          *               page. A path to a file (mp4 is safest; keep it under
          *               about 15 MB), a YouTube or Vimeo link, or
@@ -197,6 +201,38 @@
                     {
                         src: 'assets/projects/the-last-human-fashion-show/08.jpg',
                         alt: 'On the runway, a model with curly auburn hair and pale blue eyeshadow walks in a black babydoll dress, a white shaggy fringe vest, mint green tights and black platform heels, with the audience seated on white poufs behind her.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/09.jpg',
+                        thumb: 'assets/projects/the-last-human-fashion-show/thumb-09.webp',
+                        home: 'left', // also floats on the home page, to the left of the sentence
+                        ratio: 0.6,
+                        alt: 'On the runway, a model with a shaved head, a nose ring and white eyeshadow poses with both hands on her head, in a sleeveless top and a long skirt with a high slit, both made of layered strands of white cord, and white pointed shoes, in front of a glass garage-style door with spectators behind.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/10.jpg',
+                        thumb: 'assets/projects/the-last-human-fashion-show/thumb-10.webp',
+                        home: 'left',
+                        ratio: 0.666,
+                        alt: 'On the runway, a model in a red floral bucket hat with bold blue eyeshadow and a green and yellow striped scarf collar wears a black fluffy bandeau with a small plush deer head on it, a glossy green printed mini skirt, blue polka-dot and checked sleeves, red and white striped leg warmers and striped platform trainers, and carries a large red tweed bag trimmed in green fur with a doll\u2019s face.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/11.jpg',
+                        alt: 'On the runway, a model with long curly auburn hair and smoky eye makeup wears a white shaggy fringed cape-jacket over a black gathered mini dress with a frayed hem, pale green tights and black platform ankle-strap heels.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/12.jpg',
+                        thumb: 'assets/projects/the-last-human-fashion-show/thumb-12.webp',
+                        home: 'right', // also floats on the home page, to the right of the sentence
+                        ratio: 0.714,
+                        alt: 'On the runway, a model with a low dark ponytail and glitter at the eyes wears a long draped top and cape made of cream cord strands that fade to grey at the hem, over wide cream trousers.',
+                    },
+                    {
+                        src: 'assets/projects/the-last-human-fashion-show/13.jpg',
+                        thumb: 'assets/projects/the-last-human-fashion-show/thumb-13.webp',
+                        home: 'right',
+                        ratio: 0.714,
+                        alt: 'On the runway, a model in a tall blond curled wig with a green fabric and feather headpiece and blue eyeshadow holds a gold newspaper-print glove to her face. She wears a strapless mustard and blue floral towel-fabric mini dress with a newspaper-print bag, neon green socks and navy adidas slides, and has tattoos on her chest and legs.',
                     },
                 ],
                 summary:
