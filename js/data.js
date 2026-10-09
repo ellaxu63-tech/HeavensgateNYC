@@ -22,6 +22,9 @@
         // Shown in the footer and on the Connect page.
         contactEmail: 'info@heavensgateny.com',
 
+        // The Instagram icon at the bottom right of every page.
+        instagramUrl: 'https://www.instagram.com/heavensgatenyc/',
+
         // The video on the home page: a floating thumbnail (the poster image) that
         // opens a player when clicked. Remove this block to take it off.
         homeVideo: {

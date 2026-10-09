@@ -376,6 +376,12 @@ html.menu-open { overflow: hidden; }
 .site-footer--fixed::after { top: -1px; animation-delay: 0.6s; }
 .footer-copy { padding: 0 var(--pill-pad); color: var(--muted); }
 .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+/* Home: PAUSE and the Instagram icon sit together at the right end of the bar. */
+.footer-right { display: flex; align-items: center; gap: 4px; }
+/* The icon is a pill with a glyph instead of text; the glyph sits in the same inset as the text of the other pills, so it lines up with the grid. */
+.pill--icon svg { display: block; width: 18px; height: 18px; }
+/* When the footer wraps on a phone, the icon still goes to the right end of its row. */
+.footer-links .pill--icon { margin-left: auto; }
 
 @media (max-width: 600px) {
     .site-footer { flex-wrap: wrap; padding-block: 10px; }

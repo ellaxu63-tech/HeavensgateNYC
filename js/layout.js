@@ -2,7 +2,7 @@
  * Shared page chrome, built once for every page so the navigation lives in a
  * single place (js/data.js): header (wordmark, link pills, MENU), the
  * full-screen menu and the footer. On the home page the footer is a fixed bar
- * holding the ABOUT / SHOWS links and the PAUSE / RESUME button.
+ * holding the ABOUT / SHOWS links, the PAUSE / RESUME button and the Instagram icon.
  *
  * Also: when a project is hovered / focused on the home page, the navigation
  * fades out and becomes inert (this replaces the old "nav collapse" override).
@@ -121,6 +121,19 @@
         })
     }
 
+    // The Instagram icon, last in the footer on every page (opens in a new tab).
+    function instagramLink(collapse) {
+        return (
+            '<a class="pill pill--icon" href="' + esc(data.instagramUrl) + '" target="_blank" rel="noopener noreferrer" aria-label="HEAVENSGATE NYC on Instagram"' + (collapse ? ' data-nav-collapse' : '') + '>' +
+                '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7">' +
+                    '<rect x="3" y="3" width="18" height="18" rx="5"/>' +
+                    '<circle cx="12" cy="12" r="4.2"/>' +
+                    '<circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" stroke="none"/>' +
+                '</svg>' +
+            '</a>'
+        )
+    }
+
     // ----------------------------------------------------------- footer
     // Home: a fixed bar with ABOUT / SHOWS on the left and PAUSE / RESUME on
     // the right. Other pages: copyright on the left, links on the right.
@@ -132,7 +145,10 @@
                 '<nav class="footer-links" aria-label="About and shows" data-nav-collapse>' +
                     pillLinks(data.secondary) +
                 '</nav>' +
-                '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion" data-nav-collapse>PAUSE</button>'
+                '<div class="footer-right">' +
+                    '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion" data-nav-collapse>PAUSE</button>' +
+                    instagramLink(true) +
+                '</div>'
         } else {
             footer.className = 'site-footer'
             footer.innerHTML =
@@ -140,6 +156,7 @@
                 '<nav class="footer-links" aria-label="Footer">' +
                     pillLinks(data.secondary) +
                     '<a class="pill" href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>' +
+                    instagramLink(false) +
                 '</nav>'
         }
         return footer

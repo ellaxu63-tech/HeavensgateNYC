@@ -34,11 +34,10 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 ## Editing content
 
 **Everything lives in [`js/data.js`](js/data.js)**: the intro sentence, contact
-email, menu links, projects, press and events.
+email, the Instagram link (`instagramUrl`, the icon at the bottom right of every
+page), menu links, projects, press and events.
 
-> Everything on the site is real content now. The one row still waiting on
-> information is Press > Vogue China, whose headline and year are still to
-> come.
+> Everything on the site is real content now.
 
 To add a project, add an entry to `projects` and drop its image into
 `assets/projects/`. It automatically appears on the home page, in the gallery,
