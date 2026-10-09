@@ -168,7 +168,7 @@
                 category: 'Fashion Show',
                 year: '2026',
                 image: 'assets/projects/the-last-human-fashion-show/cover.jpg',
-                ratio: 1.5,
+                ratio: 0.715,
                 images: [
                     {
                         src: 'assets/projects/the-last-human-fashion-show/01.jpg',
@@ -218,6 +218,9 @@
                     },
                     {
                         src: 'assets/projects/the-last-human-fashion-show/11.jpg',
+                        thumb: 'assets/projects/the-last-human-fashion-show/thumb-11.webp',
+                        home: 'right',
+                        ratio: 0.6,
                         alt: 'On the runway, a model with long curly auburn hair and smoky eye makeup wears a white shaggy fringed cape-jacket over a black gathered mini dress with a frayed hem, pale green tights and black platform ankle-strap heels.',
                     },
                     {
@@ -229,9 +232,6 @@
                     },
                     {
                         src: 'assets/projects/the-last-human-fashion-show/13.jpg',
-                        thumb: 'assets/projects/the-last-human-fashion-show/thumb-13.webp',
-                        home: 'right',
-                        ratio: 0.714,
                         alt: 'On the runway, a model in a tall blond curled wig with a green fabric and feather headpiece and blue eyeshadow holds a gold newspaper-print glove to her face. She wears a strapless mustard and blue floral towel-fabric mini dress with a newspaper-print bag, neon green socks and navy adidas slides, and has tattoos on her chest and legs.',
                     },
                 ],
