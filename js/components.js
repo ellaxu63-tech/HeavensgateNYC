@@ -147,11 +147,21 @@
             var url = youtube
                 ? 'https://www.youtube-nocookie.com/embed/' + youtube[1] + '?rel=0'
                 : 'https://player.vimeo.com/video/' + vimeo[1]
+            // A big title that links to the video on its own site, always under the player. If the player can't
+            // be shown (YouTube can't be reached, see HG.checkEmbeds) the title is all that is left.
+            var watch = youtube ? 'https://www.youtube.com/watch?v=' + youtube[1] : 'https://vimeo.com/' + vimeo[1]
+            var site = youtube ? 'YouTube' : 'Vimeo'
             return (
+                '<div class="video-embed" style="--ratio:' + ratio.toFixed(4) + '"' +
+                (youtube ? ' data-probe="https://i.ytimg.com/vi/' + youtube[1] + '/default.jpg"' : '') + '>' +
                 box +
                 '<iframe src="' + url + '" title="' + label + '" loading="lazy" allowfullscreen ' +
                 'allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
-                '</div>'
+                '</div>' +
+                '<a class="video-link" href="' + HG.esc(watch) + '" target="_blank" rel="noopener noreferrer">' +
+                '<span class="video-link-title">' + HG.esc(v.title || projectTitle) + '</span>' +
+                '<span class="video-link-note">Watch on ' + site + ' \u2197</span>' +
+                '</a></div>'
             )
         }
         return (
@@ -161,6 +171,18 @@
             (v.autoplay ? ' autoplay muted loop' : '') +
             '></video></div>'
         )
+    }
+
+    // A YouTube player can't tell us when it is blocked, so check that YouTube can be reached at all (the
+    // video's own thumbnail loads). If not, the player is hidden and only the big title link is left.
+    HG.checkEmbeds = function (root) {
+        root.querySelectorAll('.video-embed[data-probe]').forEach(function (box) {
+            var probe = new Image()
+            probe.onerror = function () {
+                box.classList.add('is-blocked')
+            }
+            probe.src = box.getAttribute('data-probe')
+        })
     }
 
     // Text with **bold** parts: escaped first, then **x** becomes <strong>x</strong>.

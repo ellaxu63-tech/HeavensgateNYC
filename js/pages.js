@@ -125,6 +125,7 @@
     // Video files: take the real shape from the file, and keep clips that
     // autoplay (silently) running only while they are on screen.
     function initVideos(root) {
+        HG.checkEmbeds(root)
         var observer =
             'IntersectionObserver' in window
                 ? new IntersectionObserver(

@@ -49,7 +49,9 @@ A project can also have (all optional, see the comment above `projects`):
 `year`, a `summary` (the bio; a blank line starts a new paragraph), `images`
 (every photo for the project page, in order; each a path or `{ src, alt }`),
 `video` (a clip shown first on the project page: a file in
-`assets/projects/<project>/`, or a YouTube / Vimeo link) and `credits` (role + names;
+`assets/projects/<project>/`, or a YouTube / Vimeo link; a YouTube / Vimeo video also gets a big
+title under the player that links to it on YouTube / Vimeo, and if YouTube can't be reached the
+player is hidden and only that title is left) and `credits` (role + names;
 anything written like `@handle` links to that Instagram profile).
 
 Events work the same way: add one to `events`. Give it a `slug`, an `image` (the

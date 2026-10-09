@@ -778,6 +778,37 @@ html.fall-on .stage-intro { visibility: hidden; }
 .project-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
 /* All of a project's images, stacked in the left column. */
 .project-images { display: grid; justify-items: start; gap: 24px; padding: 32px var(--gutter) 64px var(--pad); }
+/* A YouTube / Vimeo video: the player, then a big title that links to the video on its own site. If the
+   player can't be shown (js/components.js, HG.checkEmbeds) only the title is left. */
+.video-embed { width: min(100%, calc((100vh - var(--header-h) - 150px) * var(--ratio, 1.7778))); }
+.video-embed .project-video { width: 100%; }
+.video-embed.is-blocked .project-video { display: none; }
+.video-link {
+    display: block;
+    padding: 18px 0 20px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    color: inherit;
+    text-decoration: none;
+}
+.video-embed:not(.is-blocked) + .video-link { margin-top: -1px; }
+.video-link-title {
+    display: block;
+    font: 400 clamp(30px, 4vw, 60px) / 1 var(--serif);
+    letter-spacing: -0.012em;
+    text-transform: var(--display-case);
+}
+.video-link-note {
+    display: block;
+    margin-top: 12px;
+    font: 400 13px / 1 var(--mono);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 160ms ease;
+}
+.video-link:hover .video-link-title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.12em; }
+.video-link:hover .video-link-note { color: var(--fg); }
 .project-hero {
     display: block;
     width: auto;
