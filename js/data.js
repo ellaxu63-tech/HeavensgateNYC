@@ -67,10 +67,7 @@
          *   slug      – used in the URL, must be unique
          *   image     – path to the cover image used on the home page and in
          *               the gallery (any jpg / png / webp / svg). Keep it small
-         *               (about 1000px on the long side). A web address works
-         *               too (a YouTube thumbnail, say).
-         *   imageFallback – optional: a second cover to use if `image` can't
-         *               be loaded.
+         *               (about 1000px on the long side).
          *   ratio     – image width ÷ height. Only used until the image loads,
          *               then the real size is read from the image itself.
          *   year      – optional
@@ -318,11 +315,8 @@
                 title: 'THE ELEPHANT IN THE ROOM',
                 category: 'Runway Show',
                 year: '2025',
-                // The cover is the video's own YouTube thumbnail (swap it for a photo from the night
-                // by putting the file in assets/projects/the-elephant-in-the-room/ and pointing here).
-                image: 'https://i.ytimg.com/vi/ovokmEh3wvU/maxresdefault.jpg',
-                imageFallback: 'https://i.ytimg.com/vi/ovokmEh3wvU/mqdefault.jpg',
-                ratio: 1.7778,
+                image: 'assets/projects/the-elephant-in-the-room/cover.jpg',
+                ratio: 1.7544,
                 video: { src: 'https://youtu.be/ovokmEh3wvU', ratio: 16 / 9, title: 'THE ELEPHANT IN THE ROOM' },
                 summary:
                     'HEAVENSGATE NYC presents THE ELEPHANT IN THE ROOM, an independent runway show bringing together emerging designers, models, artists, and creatives in New York City.\n\n' +
@@ -413,6 +407,24 @@
                     { role: 'Special thanks', names: ['Thai Trade Center New York'] },
                     { role: 'Video', names: ['@ronperaltax'] },
                     { role: 'Featured by', names: ['@voguethailand'] },
+                ],
+            },
+            {
+                slug: 'the-treasure-video',
+                title: 'The Treasure (Video)',
+                category: 'Fashion Show',
+                year: '2023',
+                // The cover is one of the photos from the night; swap it for a thumbnail from the video if you like.
+                image: 'assets/projects/the-treasure-video/cover.webp',
+                ratio: 0.8024,
+                video: { src: 'https://youtu.be/wcoRIOOwvTA', ratio: 16 / 9, title: 'The Treasure' },
+                summary:
+                    '\u2018The Treasure\u2019 \u2013 a multi-brand fashion show collaboration between Thai Trade Center New York (DITP) and Future Treasure (@futuretreasureny) @heavensgatenyc.\n\n' +
+                    'A runway and after party featuring \u201cThe Treasure\u201d by DITP and Future Treasure during New York Fashion Week, September 2023.',
+                credits: [
+                    { role: 'Presented by', names: ['Thai Trade Center New York (DITP)', '@futuretreasureny'] },
+                    { role: 'Models cast by', names: ['@heavensgatenyc'] },
+                    { role: 'Date', names: ['New York Fashion Week, September 2023'] },
                 ],
             },
             {

@@ -55,7 +55,7 @@
                 image: v.poster,
                 ratio: v.ratio || 0.5625,
                 href: '#',
-                video: true,
+                homeVideo: true, // the card that opens the home video player (not just a project that has a video)
             })
         }
         HG.data.events.forEach(function (ev) {
@@ -186,12 +186,12 @@
         var card = document.createElement('a')
         card.className = 'project-card'
         card.href = project.href || HG.projectUrl(project)
-        card.setAttribute('data-cursor', project.video ? 'play' : 'open')
-        if (project.video) {
+        card.setAttribute('data-cursor', project.homeVideo ? 'play' : 'open')
+        if (project.homeVideo) {
             card.setAttribute('data-video', '')
             card.setAttribute('role', 'button')
         }
-        card.setAttribute('aria-label', (project.video ? 'Play video: ' : '') + (project.meta ? project.title + ', ' + project.meta : [project.title, project.category, project.year].filter(Boolean).join(', ')))
+        card.setAttribute('aria-label', (project.homeVideo ? 'Play video: ' : '') + (project.meta ? project.title + ', ' + project.meta : [project.title, project.category, project.year].filter(Boolean).join(', ')))
         card.draggable = false
 
         var cover = document.createElement('span')
@@ -200,21 +200,12 @@
 
         var img = document.createElement('img')
         img.src = project.image
-        // An optional second choice, used if the first cover can't be loaded.
-        if (project.imageFallback) {
-            img.addEventListener(
-                'error',
-                function () {
-                    if (img.getAttribute('src') !== project.imageFallback) img.src = project.imageFallback
-                },
-                { once: true }
-            )
-        }
         img.alt = ''
         img.draggable = false
         img.decoding = 'async'
         cover.appendChild(img)
-        if (project.video) cover.insertAdjacentHTML('beforeend', '<span class="project-play" aria-hidden="true"></span>')
+        // A play badge on anything with a video; only the home video card plays it right here.
+        if (project.homeVideo || project.video || project.videos) cover.insertAdjacentHTML('beforeend', '<span class="project-play" aria-hidden="true"></span>')
 
         var caption = document.createElement('span')
         caption.className = 'project-caption'
