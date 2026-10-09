@@ -362,6 +362,37 @@
                 ],
             },
             {
+                slug: 'artifice-media-art-popup',
+                title: 'Artifice \u00d7 HEAVENSGATE: Media Art + Pop-up',
+                category: 'Media Art & Pop-up',
+                year: '2024',
+                image: 'assets/projects/artifice-media-art-popup/cover.jpg',
+                ratio: 1.25,
+                images: [
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/01.jpg',
+                        alt: 'A person in a white shirt and a red bob photographs a projected screen with a phone. The projection is made of coloured dots and reads @bobi.b0b1 + @v10101a, hello artifice <3.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/02.jpg',
+                        alt: 'A hanging sculpture in the corner of a white room: two curved grey-beige forms with bulb ends below a pale blue arched bar, with long clear and orange tubes trailing down to a stone on the floor, a yellow extension cord, a red pipe above and a syringe on the floor.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/03.jpg',
+                        alt: 'Close-up of a clear, rippled glass-like sculpture with three twisted stems in red, purple, orange and green rising from a patch of rust-orange pigment.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/04.jpg',
+                        alt: 'A woman with a black ponytail and a green hair clip, in a black graphic T-shirt, adjusts a clear, crinkled sculpture with coloured stems on a white plinth, beside a white hanging shell-shaped sculpture and a metal stand.',
+                    },
+                ],
+                summary:
+                    'A collaboration between HEAVENSGATE NYC and Artifice (@artifice.nyc): a night of media art and a pop-up, 2024.',
+                credits: [
+                    { role: 'Collaboration', names: ['@artifice.nyc', '@heavensgatenyc'] },
+                ],
+            },
+            {
                 slug: 'the-treasure',
                 title: 'The Treasure',
                 category: 'Fashion Show',
