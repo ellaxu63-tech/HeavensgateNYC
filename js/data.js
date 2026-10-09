@@ -431,6 +431,14 @@
                         src: 'assets/projects/artifice-media-art-popup/04.jpg',
                         alt: 'A woman with a black ponytail and a green hair clip, in a black graphic T-shirt, adjusts a clear, crinkled sculpture with coloured stems on a white plinth, beside a white hanging shell-shaped sculpture and a metal stand.',
                     },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/05.jpg',
+                        alt: 'A table covered in fabric strips printed with collaged magazine images, eyes and faces, with pink and silver beaded pieces laid out at the back, as a hand with tattoos and bracelets holds a glass bottle.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/06.jpg',
+                        alt: 'A clothing rail at the pop-up with printed T-shirts, pastel and satin tops and a patterned slip dress on hangers, while a man in a white polo shirt looks through the rack.',
+                    },
                 ],
                 summary:
                     'A collaboration between HEAVENSGATE NYC and Artifice (@artifice.nyc): a night of media art and a pop-up, 2024.',
