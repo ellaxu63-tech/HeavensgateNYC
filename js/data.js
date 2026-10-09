@@ -264,8 +264,8 @@
                 title: 'Velvet Playground NYFW 2026 Collective Runway',
                 category: 'Fashion Show',
                 year: '2026',
-                image: 'assets/projects/nyfw-2026-collective-runway/cover.jpg',
-                ratio: 0.667,
+                image: 'assets/projects/nyfw-2026-collective-runway/cover-runway.jpg',
+                ratio: 0.75,
                 images: [
                     {
                         src: 'assets/projects/nyfw-2026-collective-runway/01.jpg',
