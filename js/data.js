@@ -408,45 +408,6 @@
                 ],
             },
             {
-                slug: 'artifice-media-art-popup',
-                title: 'Artifice \u00d7 HEAVENSGATE: Media Art + Pop-up',
-                category: 'Media Art & Pop-up',
-                year: '2024',
-                image: 'assets/projects/artifice-media-art-popup/cover.jpg',
-                ratio: 1.25,
-                images: [
-                    {
-                        src: 'assets/projects/artifice-media-art-popup/01.jpg',
-                        alt: 'A person in a white shirt and a red bob photographs a projected screen with a phone. The projection is made of coloured dots and reads @bobi.b0b1 + @v10101a, hello artifice <3.',
-                    },
-                    {
-                        src: 'assets/projects/artifice-media-art-popup/02.jpg',
-                        alt: 'A hanging sculpture in the corner of a white room: two curved grey-beige forms with bulb ends below a pale blue arched bar, with long clear and orange tubes trailing down to a stone on the floor, a yellow extension cord, a red pipe above and a syringe on the floor.',
-                    },
-                    {
-                        src: 'assets/projects/artifice-media-art-popup/03.jpg',
-                        alt: 'Close-up of a clear, rippled glass-like sculpture with three twisted stems in red, purple, orange and green rising from a patch of rust-orange pigment.',
-                    },
-                    {
-                        src: 'assets/projects/artifice-media-art-popup/04.jpg',
-                        alt: 'A woman with a black ponytail and a green hair clip, in a black graphic T-shirt, adjusts a clear, crinkled sculpture with coloured stems on a white plinth, beside a white hanging shell-shaped sculpture and a metal stand.',
-                    },
-                    {
-                        src: 'assets/projects/artifice-media-art-popup/05.jpg',
-                        alt: 'A table covered in fabric strips printed with collaged magazine images, eyes and faces, with pink and silver beaded pieces laid out at the back, as a hand with tattoos and bracelets holds a glass bottle.',
-                    },
-                    {
-                        src: 'assets/projects/artifice-media-art-popup/06.jpg',
-                        alt: 'A clothing rail at the pop-up with printed T-shirts, pastel and satin tops and a patterned slip dress on hangers, while a man in a white polo shirt looks through the rack.',
-                    },
-                ],
-                summary:
-                    'A collaboration between HEAVENSGATE NYC and Artifice (@artifice.nyc): a night of media art and a pop-up, 2024.',
-                credits: [
-                    { role: 'Collaboration', names: ['@artifice.nyc', '@heavensgatenyc'] },
-                ],
-            },
-            {
                 slug: 'the-treasure',
                 title: 'The Treasure',
                 category: 'Fashion Show',
@@ -552,6 +513,45 @@
                     },
                 ],
             },
+            {
+                slug: 'artifice-media-art-popup',
+                title: 'Artifice \u00d7 HEAVENSGATE: Media Art + Pop-up',
+                category: 'Media Art & Pop-up',
+                year: '2024',
+                image: 'assets/projects/artifice-media-art-popup/cover.jpg',
+                ratio: 1.25,
+                images: [
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/01.jpg',
+                        alt: 'A person in a white shirt and a red bob photographs a projected screen with a phone. The projection is made of coloured dots and reads @bobi.b0b1 + @v10101a, hello artifice <3.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/02.jpg',
+                        alt: 'A hanging sculpture in the corner of a white room: two curved grey-beige forms with bulb ends below a pale blue arched bar, with long clear and orange tubes trailing down to a stone on the floor, a yellow extension cord, a red pipe above and a syringe on the floor.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/03.jpg',
+                        alt: 'Close-up of a clear, rippled glass-like sculpture with three twisted stems in red, purple, orange and green rising from a patch of rust-orange pigment.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/04.jpg',
+                        alt: 'A woman with a black ponytail and a green hair clip, in a black graphic T-shirt, adjusts a clear, crinkled sculpture with coloured stems on a white plinth, beside a white hanging shell-shaped sculpture and a metal stand.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/05.jpg',
+                        alt: 'A table covered in fabric strips printed with collaged magazine images, eyes and faces, with pink and silver beaded pieces laid out at the back, as a hand with tattoos and bracelets holds a glass bottle.',
+                    },
+                    {
+                        src: 'assets/projects/artifice-media-art-popup/06.jpg',
+                        alt: 'A clothing rail at the pop-up with printed T-shirts, pastel and satin tops and a patterned slip dress on hangers, while a man in a white polo shirt looks through the rack.',
+                    },
+                ],
+                summary:
+                    'A collaboration between HEAVENSGATE NYC and Artifice (@artifice.nyc): a night of media art and a pop-up, 2024.',
+                credits: [
+                    { role: 'Collaboration', names: ['@artifice.nyc', '@heavensgatenyc'] },
+                ],
+            },
         ],
 
         // Press, newest first. Add an `href` to make a row a link.
@@ -576,7 +576,9 @@
             },
             {
                 pub: 'Harper\u2019s Bazaar China',
-                // No logo file yet (add `logo:` when it is sent). The reel is an Instagram link.
+                // `logo` is shown instead of the name (white on transparent). The reel is an Instagram link.
+                logo: 'assets/press/harpers-bazaar-china.webp',
+                logoHeight: 66, // px; this logo is a two-line lockup, so it needs more height than the 46 px default
                 title: 'Velvet Playground',
                 deck: 'Instagram reel',
                 // The date is taken from when the reel was posted (late Feb 2026, just after

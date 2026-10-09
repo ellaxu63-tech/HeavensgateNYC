@@ -175,7 +175,7 @@
                         '<span class="press-item-title"' + (item.lang ? ' lang="' + esc(item.lang) + '"' : '') + '>' + esc(item.title) + deckHtml(item) + '</span>' +
                         '<span class="press-item-pub">' + thumb +
                             (item.logo
-                                ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '" loading="lazy" decoding="async">' +
+                                ? '<img class="press-item-logo" src="' + esc(item.logo) + '" alt="' + esc(item.pub) + '"' + (item.logoHeight ? ' style="height:' + Number(item.logoHeight) + 'px"' : '') + ' loading="lazy" decoding="async">' +
                                   (item.video ? '<span class="press-item-tag">video</span>' : '')
                                 : '<span>' + esc(item.pub) + (item.video ? ' \u00b7 video' : '') + '</span>') +
                         '</span>' +
