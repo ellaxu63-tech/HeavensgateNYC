@@ -314,9 +314,9 @@
                 slug: 'the-elephant-in-the-room',
                 title: 'THE ELEPHANT IN THE ROOM',
                 category: 'Runway Show',
-                year: '2026',
+                year: '2025',
                 image: 'assets/projects/the-elephant-in-the-room/cover.jpg',
-                ratio: 1.7544,
+                ratio: 0.8,
                 video: { src: 'https://youtu.be/ovokmEh3wvU', ratio: 16 / 9, title: 'THE ELEPHANT IN THE ROOM' },
                 // The photos, shown under the video.
                 images: [
@@ -340,14 +340,34 @@
                         src: 'assets/projects/the-elephant-in-the-room/05.jpg',
                         alt: 'On the runway, a model in a polka-dot headscarf and graphic eye makeup wears a grey puff-sleeved shirt, a structured black polka-dot corset with a peplum, grey gathered trousers and black boots.',
                     },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/06.jpg',
+                        alt: 'On the runway, a model with her hair pinned up wears a white sculptural neoprene cape-coat with a hand-drawn eye and black piping, a black sash with red Japanese lettering down the front, and black platform lace-up boots.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/07.jpg',
+                        alt: 'On the runway, a model in a black pillbox cap and dark lipstick wears a cropped black jacket with pink and yellow embroidered tape down the sleeve, a cream ribbon brooch and a black bow, black shorts over a white broderie ruffle, white lace-trimmed knee socks with small flowers tucked in, and black loafers.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/08.jpg',
+                        alt: 'On the runway, a model in a wide slouched hat with a jeweller\u2019s loupe over one eye and black lipstick wears a grey tweed vest with pins over an olive turtleneck, a black harness, olive balloon trousers, a pale green glove, white lace tights with ribbon bows and silver strappy heels.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/09.jpg',
+                        alt: 'On the runway, a model with long dark braids and purple eyeshadow wears an oversized black denim jacket with a bunch of purple flowers in the pocket over a lilac pleated top with cream ruffles and a layered black lace skirt, with black lace-up boots, holding a doll in a lilac and black dress.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/10.jpg',
+                        alt: 'On the runway, a model in a white bird-cage veil wears a blush mesh corset top with beaded fringe and a matching wrapped skirt that ends in a large, puffed tulle hem, with black pointed slingback heels.',
+                    },
                 ],
                 summary:
-                    'HEAVENSGATE NYC presents THE ELEPHANT IN THE ROOM, a 2026 independent runway show bringing together emerging designers, models, artists, and creatives in New York City.\n\n' +
+                    'HEAVENSGATE NYC presents THE ELEPHANT IN THE ROOM, a 2025 independent runway show bringing together emerging designers, models, artists, and creatives in New York City.\n\n' +
                     'Built around the things we avoid saying out loud, The Elephant in the Room explores tension, identity, discomfort, and self-expression through fashion. The show creates a space for independent designers to present their work outside the traditional fashion system, with a focus on experimentation, community, and creative freedom.\n\n' +
                     'Produced by HEAVENSGATE NYC.',
                 credits: [
                     { role: 'Produced by', names: ['HEAVENSGATE NYC'] },
-                    { role: 'Location', names: ['New York City, 2026'] },
+                    { role: 'Location', names: ['New York City, 2025'] },
                 ],
             },
             {
