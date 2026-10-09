@@ -314,15 +314,41 @@
                 slug: 'the-elephant-in-the-room',
                 title: 'THE ELEPHANT IN THE ROOM',
                 category: 'Runway Show',
-                year: '2025',
+                year: '2026',
                 image: 'assets/projects/the-elephant-in-the-room/cover.jpg',
                 ratio: 1.7544,
                 video: { src: 'https://youtu.be/ovokmEh3wvU', ratio: 16 / 9, title: 'THE ELEPHANT IN THE ROOM' },
+                // The photos, shown under the video.
+                images: [
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/01.jpg',
+                        alt: 'On the runway, a model with slicked-back dark hair and graphic eyeliner wears a cropped grey padded vest with a high zipped collar, a padded mini skirt and padded grey leg pieces open at the knee, with black patent mules, as the audience watches from both sides.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/02.jpg',
+                        alt: 'On the runway, a model with big curly brown hair and dark eye makeup wears a cropped burgundy satin puffer jacket over a matching bandeau, wide gathered burgundy trousers, chain necklaces and black platform shoes.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/03.jpg',
+                        alt: 'On the runway, a model with her hair up wears a black crochet halter top with a white netted band, a black net mini skirt, grey knitted sleeves with trailing cords and black knee-high boots over socks.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/04.jpg',
+                        alt: 'On the runway, a model with a shaved head and soft pink blush, in a grey fuzzy knitted cut-out top and shorts with long tails, carries a pink-strapped white crochet bag, with red thigh straps, dark lace-up crochet leg warmers and red slingback heels.',
+                    },
+                    {
+                        src: 'assets/projects/the-elephant-in-the-room/05.jpg',
+                        alt: 'On the runway, a model in a polka-dot headscarf and graphic eye makeup wears a grey puff-sleeved shirt, a structured black polka-dot corset with a peplum, grey gathered trousers and black boots.',
+                    },
+                ],
                 summary:
-                    'HEAVENSGATE NYC presents THE ELEPHANT IN THE ROOM, an independent runway show bringing together emerging designers, models, artists, and creatives in New York City.\n\n' +
+                    'HEAVENSGATE NYC presents THE ELEPHANT IN THE ROOM, a 2026 independent runway show bringing together emerging designers, models, artists, and creatives in New York City.\n\n' +
                     'Built around the things we avoid saying out loud, The Elephant in the Room explores tension, identity, discomfort, and self-expression through fashion. The show creates a space for independent designers to present their work outside the traditional fashion system, with a focus on experimentation, community, and creative freedom.\n\n' +
-                    'Follow HEAVENSGATE NYC for upcoming runway shows, fashion performances, castings, and creative events.',
-                credits: [{ role: 'Produced by', names: ['HEAVENSGATE NYC'] }],
+                    'Produced by HEAVENSGATE NYC.',
+                credits: [
+                    { role: 'Produced by', names: ['HEAVENSGATE NYC'] },
+                    { role: 'Location', names: ['New York City, 2026'] },
+                ],
             },
             {
                 slug: 'miss-conduct',
