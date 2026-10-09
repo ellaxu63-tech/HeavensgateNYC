@@ -408,6 +408,46 @@
                 ],
             },
             {
+                slug: 'soho-popup-street-runway',
+                title: 'SoHo Pop-up: Street Runway',
+                category: 'Pop-up & Street Runway',
+                year: '2024',
+                image: 'assets/projects/soho-popup-street-runway/cover.jpg',
+                ratio: 0.75,
+                images: [
+                    {
+                        src: 'assets/projects/soho-popup-street-runway/01.jpg',
+                        alt: 'Three models stand side by side in a bright shop with windows onto the street. One has blonde hair and pale blue eyeshadow and wears a pink knitted top over a pleated pink slip. One has a brown bob and wears a blue and magenta striped knit camisole, pink ruffled lace shorts and tall boots. One has copper hair and wears a blue and yellow knit top with flowers over a pale pleated skirt.',
+                    },
+                    {
+                        src: 'assets/projects/soho-popup-street-runway/02.jpg',
+                        alt: 'Close-up of a model with a shaved head and soft pink eyeshadow looking back over her shoulder, in a pink and magenta open-knit top with pink yarn flowers over a sheer black lace bodysuit. Behind her, another model in a teal knitted top looks at her phone.',
+                    },
+                    {
+                        src: 'assets/projects/soho-popup-street-runway/03.jpg',
+                        alt: 'A model with a shaved head leans back against a black door covered in pink and white spray-painted hearts, eyes closed, in a magenta open-knit top with pink ribbon ties, a long sheer black lace skirt and black pointed heels, beside a pink wall and a pink wooden bench.',
+                    },
+                    {
+                        src: 'assets/projects/soho-popup-street-runway/04.jpg',
+                        alt: 'Three models in pastel knitwear walk across a SoHo street. One wears a pink knit top, a pleated skirt and silver shoes and carries a pale green bag. One wears a cream and lime knitted top with fringe, lime tights, white boots with ribbon trim and a pink bow in her hair. One wears a blue-trimmed pastel knit dress with fluffy white leg warmers.',
+                    },
+                    {
+                        src: 'assets/projects/soho-popup-street-runway/05.jpg',
+                        alt: 'Models in pastel knitted and lace looks line up along the pavement beside a shop with a black awning, while passers-by, one of them photographing, watch from across the street.',
+                    },
+                ],
+                summary:
+                    'In spring 2024, we staged a street runway for @minipng right outside our SoHo pop-up: soft tones, spring light.\n\n' +
+                    'Fashion in SoHo doesn\u2019t just sit behind glass. It spills onto the street.\n\n' +
+                    'In collaboration with @futuretreasureny.',
+                credits: [
+                    { role: 'Collaboration', names: ['@futuretreasureny', '@heavensgatenyc'] },
+                    { role: 'Street runway for', names: ['@minipng'] },
+                    { role: 'Location', names: ['SoHo, New York'] },
+                    { role: 'Date', names: ['Spring 2024'] },
+                ],
+            },
+            {
                 slug: 'the-treasure',
                 title: 'The Treasure',
                 category: 'Fashion Show',
