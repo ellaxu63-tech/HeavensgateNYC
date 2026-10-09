@@ -254,6 +254,44 @@
                 ],
             },
             {
+                slug: 'nyfw-2026-collective-runway',
+                title: 'Velvet Playground NYFW 2026 Collective Runway',
+                category: 'Fashion Show',
+                year: '2026',
+                image: 'assets/projects/nyfw-2026-collective-runway/cover.jpg',
+                ratio: 0.667,
+                images: [
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/01.jpg',
+                        alt: 'Backstage close-up of a model in a strapless pink lace bustier with a ruffled pink lace flower at the shoulder, studded with silver beads, over cream crochet lace and a pink and pale blue lace skirt, while hands adjust the waist.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/02.jpg',
+                        alt: 'A model with short spiky black hair and jewelled brow decoration, in a sleeveless black and white striped satin dress with a cowl neck, leans against a pink wall beside a dark wooden stair rail, lit in blue and pink.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/03.jpg',
+                        alt: 'Backstage, a designer in a leopard-print dress kneels and adjusts the outfit of a model in a pale green lace hood, a black fuzzy bra top and a grey knitted skirt with mother-of-pearl discs; a mirror beside them reflects a rail of clothes.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/04.jpg',
+                        alt: 'A model with a pink bob and red-rimmed eyes, in a white cap studded with screws, a white top tied in knots with red and neon yellow strips and black cross-shaped pasties, stands against a stone-tile wall under a warm lamp, holding a small red device.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/05.jpg',
+                        alt: 'Close-up of the model in the white cap marked 3399 and studded with screws, with a pink bob, red face paint and glossy red lips, glancing sideways in a dark room in knotted white shoulders, red knotted cuffs and a neon yellow braid.',
+                    },
+                ],
+                summary:
+                    'Velvet Playground presented the NYFW 2026 Collective Runway on February 14, 2026 at 8 PM at Stone Circle Theater in New York: a group show with a glam rock live performance.\n\n' +
+                    'Photos from the night.',
+                credits: [
+                    { role: 'Presented by', names: ['Velvet Playground'] },
+                    { role: 'Venue', names: ['Stone Circle Theater, New York'] },
+                    { role: 'Date', names: ['February 14, 2026, 8 PM'] },
+                ],
+            },
+            {
                 slug: 'miss-conduct',
                 title: 'MISS CONDUCT',
                 category: 'Fashion Show & Rave',
@@ -578,6 +616,8 @@
                     { role: 'On the posters', names: ['Bailey Prado', 'When The Xu Fits', 'Moore', '3399'] },
                     { role: 'Music', names: ['Glam rock live performance'] },
                 ],
+                project: 'nyfw-2026-collective-runway',
+                projectLabel: 'See it in the gallery',
             },
             {
                 slug: 'kin-holiday-market',
