@@ -444,7 +444,7 @@
                 category: 'Fashion Show',
                 year: '2023',
                 image: 'assets/projects/the-treasure/cover.webp',
-                ratio: 0.5625,
+                ratio: 0.8025,
                 video: {
                     src: 'assets/projects/the-treasure/the-treasure.mp4',
                     poster: 'assets/projects/the-treasure/poster.webp',
@@ -776,6 +776,25 @@
                 credits: [
                     { role: 'Hosted by', names: ['@heavensgatenyc', '@lettonne.dance'] },
                 ],
+            },
+            {
+                slug: 'the-elephant-in-the-room',
+                tag: 'Past',
+                title: 'THE ELEPHANT IN THE ROOM',
+                date: 'NYFW 2025',
+                location: 'Bogart House, Brooklyn',
+                type: 'Show',
+                details: [
+                    { role: 'Date', names: ['NYFW 2025'] },
+                    { role: 'Time', names: ['8:00\u201311:00 PM'] },
+                    { role: 'Venue', names: ['Bogart House, 230 Bogart St, Brooklyn'] },
+                    { role: 'Format', names: ['Group show + afterparty'] },
+                ],
+                credits: [{ role: 'Produced by', names: ['HEAVENSGATE NYC'] }],
+                // The text and the video come from the gallery project with this slug.
+                // (The poster goes here as `image` / `images`, as on the other events.)
+                project: 'the-elephant-in-the-room',
+                projectLabel: 'See it in the gallery',
             },
             {
                 slug: 'miss-conduct',
