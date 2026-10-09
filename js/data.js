@@ -67,7 +67,10 @@
          *   slug      – used in the URL, must be unique
          *   image     – path to the cover image used on the home page and in
          *               the gallery (any jpg / png / webp / svg). Keep it small
-         *               (about 1000px on the long side).
+         *               (about 1000px on the long side). A web address works
+         *               too (a YouTube thumbnail, say).
+         *   imageFallback – optional: a second cover to use if `image` can't
+         *               be loaded.
          *   ratio     – image width ÷ height. Only used until the image loads,
          *               then the real size is read from the image itself.
          *   year      – optional
@@ -293,6 +296,23 @@
                     { role: 'Venue', names: ['Stone Circle Theater, New York'] },
                     { role: 'Date', names: ['February 14, 2026, 8 PM'] },
                 ],
+            },
+            {
+                slug: 'the-elephant-in-the-room',
+                title: 'THE ELEPHANT IN THE ROOM',
+                category: 'Runway Show',
+                year: '2025',
+                // The cover is the video's own YouTube thumbnail (swap it for a photo from the night
+                // by putting the file in assets/projects/the-elephant-in-the-room/ and pointing here).
+                image: 'https://i.ytimg.com/vi/ovokmEh3wvU/maxresdefault.jpg',
+                imageFallback: 'https://i.ytimg.com/vi/ovokmEh3wvU/mqdefault.jpg',
+                ratio: 1.7778,
+                video: { src: 'https://youtu.be/ovokmEh3wvU', ratio: 16 / 9, title: 'THE ELEPHANT IN THE ROOM' },
+                summary:
+                    'HEAVENSGATE NYC presents THE ELEPHANT IN THE ROOM, an independent runway show bringing together emerging designers, models, artists, and creatives in New York City.\n\n' +
+                    'Built around the things we avoid saying out loud, The Elephant in the Room explores tension, identity, discomfort, and self-expression through fashion. The show creates a space for independent designers to present their work outside the traditional fashion system, with a focus on experimentation, community, and creative freedom.\n\n' +
+                    'Follow HEAVENSGATE NYC for upcoming runway shows, fashion performances, castings, and creative events.',
+                credits: [{ role: 'Produced by', names: ['HEAVENSGATE NYC'] }],
             },
             {
                 slug: 'miss-conduct',

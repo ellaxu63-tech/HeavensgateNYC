@@ -200,6 +200,16 @@
 
         var img = document.createElement('img')
         img.src = project.image
+        // An optional second choice, used if the first cover can't be loaded.
+        if (project.imageFallback) {
+            img.addEventListener(
+                'error',
+                function () {
+                    if (img.getAttribute('src') !== project.imageFallback) img.src = project.imageFallback
+                },
+                { once: true }
+            )
+        }
         img.alt = ''
         img.draggable = false
         img.decoding = 'async'
