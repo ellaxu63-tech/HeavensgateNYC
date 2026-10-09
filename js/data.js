@@ -287,6 +287,22 @@
                         src: 'assets/projects/nyfw-2026-collective-runway/05.jpg',
                         alt: 'Close-up of the model in the white cap marked 3399 and studded with screws, with a pink bob, red face paint and glossy red lips, glancing sideways in a dark room in knotted white shoulders, red knotted cuffs and a neon yellow braid.',
                     },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/06.jpg',
+                        alt: 'On the runway, in a hall with an altar and a stained-glass window, a model with long straight dark hair and pale eye makeup walks in a cream knitted halter top with spiral crochet cups and strands of beads, cream knitted and lace puff sleeves, and a tall black knitted skirt made of stacked fluffy rings, with cream moccasin-style shoes.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/07.jpg',
+                        alt: 'On the runway, a model with brown bantu-knot buns, a bright yellow fringe, dark eye makeup and silver lipstick wears a black bra with a khaki knotted jersey sash on one shoulder, a sheer printed grey mini skirt with a white tied wrap, fishnet tights, black knee socks and patent platform heels, holding a small glass lantern in one hand and a dangling black cord with a pale tag in the other.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/08.jpg',
+                        alt: 'On the runway, a model with blonde hair in a high bun, a small black veiled hat, pale eye makeup and grey lipstick wears a black fuzzy off-the-shoulder bandeau with a leather bow, a chunky cream knitted asymmetric skirt flecked with black over a black lace skirt, and black platform sandals, swinging a black feather bag.',
+                    },
+                    {
+                        src: 'assets/projects/nyfw-2026-collective-runway/09.jpg',
+                        alt: 'On the runway, a model with long magenta and violet hair and a silver tiara walks in a ruffled white and pink lace corset top with puffed off-shoulder sleeves, a layered lace mini skirt, white heart-patterned tights and clear platform heels with lilac marabou trim, with the audience seated either side.',
+                    },
                 ],
                 summary:
                     'Velvet Playground presented the NYFW 2026 Collective Runway on February 14, 2026 at 8 PM at Stone Circle Theater in New York: a group show with a glam rock live performance.\n\n' +
