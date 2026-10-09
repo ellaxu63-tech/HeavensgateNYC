@@ -791,8 +791,16 @@
                     { role: 'Format', names: ['Group show + afterparty'] },
                 ],
                 credits: [{ role: 'Produced by', names: ['HEAVENSGATE NYC'] }],
+                image: 'assets/events/the-elephant-in-the-room/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/the-elephant-in-the-room/01-poster.webp',
+                        thumb: 'assets/events/the-elephant-in-the-room/thumb-01.webp',
+                        ratio: 0.8,
+                        alt: 'Poster in red: The Elephant in the Room, group show + afterparty, NYFW 2025, 230 Bogart St, 8:00\u201311:00 PM. Two people stand close together, one in a printed durag with a gold hoop earring and chain, the other in a grey blazer, behind large white NYFW lettering and a cursive 2025. Small print: A fashion show that dares to say what everyone\u2019s thinking but no one will name. Not just a runway \u2014 a confrontation. Garments as metaphors.',
+                    },
+                ],
                 // The text and the video come from the gallery project with this slug.
-                // (The poster goes here as `image` / `images`, as on the other events.)
                 project: 'the-elephant-in-the-room',
                 projectLabel: 'See it in the gallery',
             },
