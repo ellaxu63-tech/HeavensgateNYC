@@ -41,6 +41,60 @@
             success: 'You are on the list. Check your inbox to confirm.',
         },
 
+        // The application form (apply.html): one question at a time, then a thank-you
+        // screen. Nothing shows (no page content, no menu link) until `action` is set.
+        // Answers go to a Google Sheet and your inbox: set it up with the steps in the
+        // README ("Receiving the form"), then paste the web app address here. Until then,
+        // `action: 'preview'` lets you click through the whole form without sending anything.
+        //
+        // Each question:
+        //   id          – the column name in the sheet (letters and numbers, unique)
+        //   label       – the question
+        //   type        – 'text', 'email', 'longtext' or 'choice'
+        //   required    – true to make it compulsory
+        //   hint        – a small line under the question (optional)
+        //   placeholder – the faint text in the empty answer (optional)
+        //   options     – for 'choice': the answers to pick from
+        form: {
+            action: '',
+            label: 'APPLY', // the link in the menu and footer
+            eyebrow: 'Application',
+            title: 'Apply',
+            intro: 'Designers, models, artists and performers: tell us about yourself and what you would like to make with HEAVENSGATE NYC. It takes about two minutes.',
+            start: 'START',
+            questions: [
+                { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
+                { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
+                { id: 'instagram', label: 'What is your Instagram?', type: 'text', placeholder: '@yourhandle' },
+                {
+                    id: 'role',
+                    label: 'How would you like to be part of HEAVENSGATE NYC?',
+                    type: 'choice',
+                    required: true,
+                    options: ['Designer', 'Model', 'Artist or performer', 'Vendor', 'Collaboration', 'Something else'],
+                },
+                {
+                    id: 'portfolio',
+                    label: 'Share a link to your work.',
+                    type: 'text',
+                    required: true,
+                    hint: 'A portfolio, lookbook, Drive folder or video.',
+                    placeholder: 'https://',
+                },
+                {
+                    id: 'about',
+                    label: 'Tell us about yourself and what you have in mind.',
+                    type: 'longtext',
+                    required: true,
+                    placeholder: 'Type your answer here',
+                },
+            ],
+            done: {
+                title: 'Thank you.',
+                text: 'We read every submission and will be in touch if it is a fit.',
+            },
+        },
+
         // The video on the home page: a floating thumbnail (the poster image) that
         // opens a player when clicked. Remove this block to take it off.
         homeVideo: {

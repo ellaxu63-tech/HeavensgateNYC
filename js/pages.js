@@ -300,7 +300,7 @@
         form.addEventListener('submit', function (event) {
             event.preventDefault()
             var email = input.value.trim()
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+            if (!HG.isEmail(email)) {
                 say('Please enter a valid email address.', true)
                 input.focus()
                 return
@@ -310,18 +310,15 @@
                 say(cfg.success)
                 return
             }
-            var body = new URLSearchParams()
-            Object.keys(cfg.fields || {}).forEach(function (name) {
-                body.set(name, cfg.fields[name])
-            })
-            body.set(cfg.emailField || 'email', email)
+            var fields = Object.assign({}, cfg.fields)
+            fields[cfg.emailField || 'email'] = email
 
             button.disabled = true
             say('Sending\u2026')
-            fetch(cfg.action, { method: 'POST', mode: 'no-cors', body: body })
-                .then(function () {
+            HG.post(cfg.action, fields)
+                .then(function (result) {
                     form.reset()
-                    say(cfg.success)
+                    say(cfg.success + (result.preview ? ' (Preview: nothing was sent.)' : ''))
                 })
                 .catch(function () {
                     say('Could not send that. Try again, or email ' + data.contactEmail + '.', true)

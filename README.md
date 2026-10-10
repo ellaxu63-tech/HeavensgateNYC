@@ -24,7 +24,8 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `gallery.html`  | Every project in a grid                                                    |
 | `project.html`  | One project (`project.html?slug=runway-01`)                                |
 | `studio.html`   | What the studio does                                                       |
-| `connect.html`  | Contact                                                                    |
+| `connect.html`  | Contact, and the mailing list sign-up                                      |
+| `apply.html`    | The application form, one question at a time                               |
 | `press.html`    | Press list                                                                 |
 | `events.html`   | Events (upcoming + past)                                                   |
 | `shows.html`    | Events of type "Show"                                                      |
@@ -53,6 +54,36 @@ there, create a sign-up form, copy its embed code and fill in `newsletter` in
 The form posts the address in the background and shows `success` underneath. The
 service sends the confirmation email, and you send your announcements from its
 dashboard. A hidden field catches bots.
+
+## Application form
+
+`apply.html` is a form that shows one question per screen (an intro first, a
+thank-you at the end). The questions, texts and answer choices are in
+[`js/data.js`](js/data.js) under `form`: add, remove or reword them there. Like the
+mailing list, nothing shows (the page says "Not open yet", and there is no APPLY
+link) until `form.action` is set. To click through it without sending anything,
+set `action: 'preview'`.
+
+### Receiving the form
+
+Each submission becomes a **row in a Google Sheet** and is **emailed to
+info@heavensgateny.com**. No account other than Google is needed.
+
+1. Make a new Google Sheet (sheets.new). Name it, e.g., "HEAVENSGATE applications".
+2. In it: **Extensions → Apps Script**. Delete what is there, paste in the whole of
+   [`apps-script/receive-form.gs`](apps-script/receive-form.gs) and save. (Change
+   `NOTIFY_EMAIL` at the top if the emails should go to another address.)
+3. **Deploy → New deployment**. Click the gear next to "Select type" and choose
+   **Web app**. Set **Execute as: Me** and **Who has access: Anyone**, then **Deploy**.
+4. Google asks you to authorise it. Choose your account; if it warns the app is
+   "unverified" (it is your own script), click **Advanced → Go to … (unsafe) → Allow**.
+5. Copy the **Web app URL** (it ends in `/exec`) and paste it into
+   `form.action` in `js/data.js`.
+
+New rows appear in the sheet's `Applications` tab. If you edit the script later:
+**Deploy → Manage deployments → pencil → Version: New version → Deploy** (the
+address stays the same). Submissions that arrive while the script is broken are
+not kept, so test by sending one yourself after any change.
 
 > Everything on the site is real content now.
 

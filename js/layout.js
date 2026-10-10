@@ -16,9 +16,10 @@
     var page = document.body.getAttribute('data-page') || ''
     var isHome = page === 'home'
 
-    // ABOUT / SHOWS, plus MAILING LIST once the mailing list is connected (js/data.js).
+    // ABOUT / SHOWS, plus APPLY and MAILING LIST once those are connected (js/data.js).
     var secondary = data.secondary.concat(
-        data.newsletter && data.newsletter.action ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--list' }] : []
+        data.form && data.form.action ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra' }] : [],
+        data.newsletter && data.newsletter.action ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--extra' }] : []
     )
 
     function currentFile() {

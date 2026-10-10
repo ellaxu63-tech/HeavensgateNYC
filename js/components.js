@@ -12,6 +12,34 @@
         })
     }
 
+    HG.isEmail = function (value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)
+    }
+
+    /*
+     * Sends `fields` ({ name: value }) to a form address (the mailing list and
+     * the application form both use this). The reply of another site can't be
+     * read, so any answer counts as sent; only a network failure rejects.
+     * The address `preview` sends nothing: it lets you try a form before it is
+     * connected (the promise says { preview: true }).
+     */
+    HG.post = function (action, fields) {
+        if (action === 'preview') {
+            return new Promise(function (resolve) {
+                window.setTimeout(function () {
+                    resolve({ preview: true })
+                }, 600)
+            })
+        }
+        var body = new URLSearchParams()
+        Object.keys(fields).forEach(function (name) {
+            body.set(name, fields[name])
+        })
+        return fetch(action, { method: 'POST', mode: 'no-cors', body: body }).then(function () {
+            return { preview: false }
+        })
+    }
+
     HG.projectUrl = function (project) {
         return 'project.html?slug=' + encodeURIComponent(project.slug)
     }

@@ -385,8 +385,8 @@ html.menu-open { overflow: hidden; }
 
 @media (max-width: 600px) {
     .site-footer { flex-wrap: wrap; padding-block: 10px; }
-    /* The home bar has a fixed height and no room for a third link on a phone; MAILING LIST is in the menu there. */
-    .site-footer--fixed .pill--list { display: none; }
+    /* The home bar has a fixed height and no room for more links on a phone; APPLY and MAILING LIST are in the menu there. */
+    .site-footer--fixed .pill--extra { display: none; }
 }
 
 /* --------------------------------------------------------------- cursor */
@@ -757,7 +757,8 @@ html.fall-on .stage-intro { visibility: hidden; }
 /* Mailing list: the address is typed in the big serif, with the same rule under it as the email above. */
 .list-lede { max-width: 44ch; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .list-form { display: flex; align-items: flex-end; gap: 14px; max-width: 760px; margin-top: 22px; }
-.list-input {
+.list-input,
+.apply-input {
     flex: 1 1 auto;
     min-width: 0;
     padding: 0 0 8px;
@@ -773,10 +774,94 @@ html.fall-on .stage-intro { visibility: hidden; }
     -webkit-appearance: none;
     appearance: none;
 }
-.list-input::placeholder { color: var(--faint); opacity: 1; }
-.list-input:focus-visible { border-bottom-width: 2px; margin-bottom: -1px; }
+.list-input::placeholder,
+.apply-input::placeholder { color: var(--faint); opacity: 1; }
+.list-input:focus-visible,
+.apply-input:focus-visible { border-bottom-width: 2px; margin-bottom: -1px; }
 .list-submit { margin-bottom: 8px; }
 .list-submit:disabled { opacity: 0.5; cursor: default; }
+
+/* ------------------------------------------------- application form (apply.html)
+   One question per screen: the question in the left half, the answer in the
+   right half (they meet at the centre line); stacked on a phone. A thin bar
+   above the footer fills as you go. */
+.apply { display: flex; flex-direction: column; }
+.apply-frame { flex: 1 0 auto; display: flex; align-items: center; }
+.apply-step {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    animation: apply-in 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.apply-step[data-dir="back"] { animation-name: apply-in-back; }
+@keyframes apply-in { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes apply-in-back { from { opacity: 0; transform: translateY(-22px); } to { opacity: 1; transform: none; } }
+.apply-q { padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(24px, 4vw, 56px) var(--pad); }
+.apply-title {
+    margin-top: 18px;
+    font: 400 clamp(38px, 5.6vw, 96px) / 0.95 var(--serif);
+    letter-spacing: -0.025em;
+    text-transform: var(--display-case);
+    overflow-wrap: anywhere;
+}
+.apply-title:focus { outline: none; }
+.apply-title--intro { font-size: clamp(64px, 11vw, 192px); line-height: 0.86; }
+.apply-hint { margin-top: 20px; max-width: 44ch; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.apply-a { padding: clamp(24px, 4vw, 56px) var(--pad) clamp(40px, 6vw, 80px) var(--gutter); }
+.apply-text { max-width: 46ch; color: var(--muted); font: 400 13px/1.8 var(--mono); letter-spacing: 0.02em; text-transform: uppercase; }
+.apply-input { display: block; width: 100%; }
+.apply-input--long { min-height: 3.5em; resize: none; overflow: hidden; font-size: clamp(24px, 2.8vw, 44px); line-height: 1.15; }
+.apply-error { min-height: 1.8em; margin-top: 12px; color: var(--upcoming); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.apply-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; }
+.apply-a > .apply-text + .apply-actions { margin-top: 28px; }
+.apply-back { margin-left: calc(var(--pill-pad) * -1); }
+.apply-next:disabled { opacity: 0.5; cursor: default; }
+.apply-keys { margin-left: 6px; color: var(--faint); font: 400 12px/1 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+@media (hover: none) { .apply-keys { display: none; } }
+
+/* Choices: a row each, with the letter that picks it. */
+.apply-choices { border-top: 1px solid var(--rule); }
+.apply-choice {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 8px 12px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 160ms ease;
+}
+.apply-choice:hover { background: var(--hover); }
+.apply-choice input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.apply-key {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--fg);
+    font: 400 12px/1 var(--mono);
+    transition: background 160ms ease, color 160ms ease;
+}
+.apply-choice input:checked + .apply-key { background: var(--fg); color: var(--bg); }
+.apply-choice input:focus-visible + .apply-key { outline: 1px solid var(--fg); outline-offset: 3px; }
+.apply-choice-label { font: 400 clamp(24px, 2.6vw, 40px) / 1.1 var(--serif); letter-spacing: -0.01em; text-transform: var(--display-case); }
+
+.apply-progress { position: relative; height: 2px; }
+.apply-bar { display: block; height: 100%; background: var(--fg); transform: scaleX(0); transform-origin: left center; transition: transform 700ms cubic-bezier(0.65, 0, 0.2, 1); }
+
+@media (max-width: 860px) {
+    .apply-frame { align-items: flex-start; }
+    .apply-step { grid-template-columns: 1fr; }
+    .apply-q { padding: 36px var(--pad) 18px; }
+    .apply-a { padding: 8px var(--pad) 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .apply-step { animation: none; }
+    .apply-bar { transition: none; }
+}
+
 /* A field only bots see. */
 .list-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .list-status { min-height: 1.8em; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
