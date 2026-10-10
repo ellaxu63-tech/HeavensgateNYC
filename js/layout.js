@@ -16,6 +16,11 @@
     var page = document.body.getAttribute('data-page') || ''
     var isHome = page === 'home'
 
+    // ABOUT / SHOWS, plus MAILING LIST once the mailing list is connected (js/data.js).
+    var secondary = data.secondary.concat(
+        data.newsletter && data.newsletter.action ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--list' }] : []
+    )
+
     function currentFile() {
         var file = location.pathname.split('/').pop()
         return file || 'index.html'
@@ -26,13 +31,14 @@
     }
 
     function linkAttrs(item) {
-        return 'href="' + esc(item.href) + '"' + (isCurrent(item.href) ? ' aria-current="page"' : '')
+        // A link to a spot on a page (connect.html#list) is not "the page you are on".
+        return 'href="' + esc(item.href) + '"' + (isCurrent(item.href) && item.href.indexOf('#') === -1 ? ' aria-current="page"' : '')
     }
 
     function pillLinks(items, className) {
         return items
             .map(function (item) {
-                return '<a class="pill ' + (className || '') + '" ' + linkAttrs(item) + '>' + esc(item.label) + '</a>'
+                return '<a class="pill ' + (className || '') + (item.className ? ' ' + item.className : '') + '" ' + linkAttrs(item) + '>' + esc(item.label) + '</a>'
             })
             .join('')
     }
@@ -76,7 +82,7 @@
                     })
                     .join('') +
             '</ol>' +
-            '<div class="menu-secondary">' + pillLinks(data.secondary) + '</div>'
+            '<div class="menu-secondary">' + pillLinks(secondary) + '</div>'
         return menu
     }
 
@@ -107,12 +113,15 @@
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false, true)
         })
-        // Linking to the page you're already on should just close the menu.
+        // Linking to the page you're already on should just close the menu
+        // (and, for a link to a spot on it, scroll there).
         menu.addEventListener('click', function (event) {
             var link = event.target.closest && event.target.closest('a')
             if (link && isCurrent(link.getAttribute('href'))) {
                 event.preventDefault()
                 setOpen(false, true)
+                var spot = link.hash && document.getElementById(link.hash.slice(1))
+                if (spot) spot.scrollIntoView()
             }
         })
         // Coming back via the browser's back button must not show an open menu.
@@ -143,7 +152,7 @@
             footer.className = 'site-footer site-footer--fixed'
             footer.innerHTML =
                 '<nav class="footer-links" aria-label="About and shows" data-nav-collapse>' +
-                    pillLinks(data.secondary) +
+                    pillLinks(secondary) +
                 '</nav>' +
                 '<div class="footer-right">' +
                     '<button type="button" class="pill motion-toggle" id="motion-toggle" aria-pressed="false" aria-label="Pause motion" data-nav-collapse>PAUSE</button>' +
@@ -154,7 +163,7 @@
             footer.innerHTML =
                 '<span class="footer-copy">© ' + new Date().getFullYear() + ' ' + esc(data.siteName) + '</span>' +
                 '<nav class="footer-links" aria-label="Footer">' +
-                    pillLinks(data.secondary) +
+                    pillLinks(secondary) +
                     '<a class="pill" href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>' +
                     instagramLink(false) +
                 '</nav>'

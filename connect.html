@@ -27,6 +27,18 @@
             <!-- The address is set in js/data.js (contactEmail). -->
             <a class="connect-email" data-contact-email href="mailto:info@heavensgateny.com">info@heavensgateny.com</a>
         </section>
+        <!-- The mailing list. Hidden until the form address is set in js/data.js (newsletter). -->
+        <section class="connect-body" id="list" hidden>
+            <p class="eyebrow">Mailing list</p>
+            <p class="list-lede" data-list-lede></p>
+            <form class="list-form" novalidate>
+                <label class="visually-hidden" for="list-email">Email address</label>
+                <input class="list-input" id="list-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="your@email.com" required>
+                <input class="list-trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                <button class="pill pill--accent list-submit" type="submit">JOIN</button>
+            </form>
+            <p class="list-status" role="status" aria-live="polite"></p>
+        </section>
     </main>
     <script src="js/data.js"></script>
     <script src="js/store.js"></script>

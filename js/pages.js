@@ -273,6 +273,65 @@
         })
     }
 
+    // --------------------------------------------------------- mailing list
+    // Posts the address to the mailing service's own sign-up form (js/data.js,
+    // newsletter). The reply can't be read from another site, so any answer
+    // that arrives counts as success; the service sends the confirmation email.
+    function initMailingList() {
+        var cfg = data.newsletter
+        var section = main.querySelector('#list')
+        if (!section || !cfg || !cfg.action) return
+
+        var form = section.querySelector('.list-form')
+        var input = form.querySelector('.list-input')
+        var trap = form.querySelector('.list-trap')
+        var button = form.querySelector('.list-submit')
+        var status = section.querySelector('.list-status')
+        section.querySelector('[data-list-lede]').textContent = cfg.lede || ''
+        section.hidden = false
+        // Arriving via the MAILING LIST link: the section did not exist when the browser looked for it.
+        if (location.hash === '#list') section.scrollIntoView()
+
+        function say(text, isError) {
+            status.textContent = text
+            status.classList.toggle('is-error', !!isError)
+        }
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
+            var email = input.value.trim()
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+                say('Please enter a valid email address.', true)
+                input.focus()
+                return
+            }
+            // Bots fill every field; people never see the extra one.
+            if (trap.value) {
+                say(cfg.success)
+                return
+            }
+            var body = new URLSearchParams()
+            Object.keys(cfg.fields || {}).forEach(function (name) {
+                body.set(name, cfg.fields[name])
+            })
+            body.set(cfg.emailField || 'email', email)
+
+            button.disabled = true
+            say('Sending\u2026')
+            fetch(cfg.action, { method: 'POST', mode: 'no-cors', body: body })
+                .then(function () {
+                    form.reset()
+                    say(cfg.success)
+                })
+                .catch(function () {
+                    say('Could not send that. Try again, or email ' + data.contactEmail + '.', true)
+                })
+                .then(function () {
+                    button.disabled = false
+                })
+        })
+    }
+
     switch (page) {
         case 'gallery':
             renderGallery()
@@ -296,6 +355,7 @@
             break
         case 'connect':
             fillContactEmail()
+            initMailingList()
             break
     }
 

@@ -37,6 +37,23 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 email, the Instagram link (`instagramUrl`, the icon at the bottom right of every
 page), menu links, projects, press and events.
 
+## Mailing list
+
+The Connect page has a sign-up form (and the menu and footer get a MAILING LIST
+link), but it stays hidden until it is connected. A static site can't keep
+emails itself, so the sign-ups go to a mailing service that stores the list and
+sends the emails (Mailchimp, Kit, Buttondown, Brevo, ...). Make a free account
+there, create a sign-up form, copy its embed code and fill in `newsletter` in
+[`js/data.js`](js/data.js):
+
+- `action`: the address in the embed code's `<form action="...">`
+- `emailField`: the `name` of its email input (`EMAIL`, `email_address`, ...)
+- `fields`: any hidden inputs it has, as `{ name: 'value' }`
+
+The form posts the address in the background and shows `success` underneath. The
+service sends the confirmation email, and you send your announcements from its
+dashboard. A hidden field catches bots.
+
 > Everything on the site is real content now.
 
 To add a project, add an entry to `projects` and drop its image into

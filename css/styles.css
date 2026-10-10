@@ -385,6 +385,8 @@ html.menu-open { overflow: hidden; }
 
 @media (max-width: 600px) {
     .site-footer { flex-wrap: wrap; padding-block: 10px; }
+    /* The home bar has a fixed height and no room for a third link on a phone; MAILING LIST is in the menu there. */
+    .site-footer--fixed .pill--list { display: none; }
 }
 
 /* --------------------------------------------------------------- cursor */
@@ -751,6 +753,34 @@ html.fall-on .stage-intro { visibility: hidden; }
     border-bottom: 1px solid var(--fg);
 }
 .connect-email:hover { opacity: 0.6; }
+
+/* Mailing list: the address is typed in the big serif, with the same rule under it as the email above. */
+.list-lede { max-width: 44ch; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.list-form { display: flex; align-items: flex-end; gap: 14px; max-width: 760px; margin-top: 22px; }
+.list-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0 0 8px;
+    border: 0;
+    border-bottom: 1px solid var(--fg);
+    border-radius: 0;
+    background: transparent;
+    color: var(--fg);
+    font: 400 clamp(28px, 4vw, 64px) / 1 var(--serif);
+    letter-spacing: -0.02em;
+    text-transform: none;
+    outline: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.list-input::placeholder { color: var(--faint); opacity: 1; }
+.list-input:focus-visible { border-bottom-width: 2px; margin-bottom: -1px; }
+.list-submit { margin-bottom: 8px; }
+.list-submit:disabled { opacity: 0.5; cursor: default; }
+/* A field only bots see. */
+.list-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.list-status { min-height: 1.8em; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.list-status.is-error { color: var(--upcoming); }
 
 @media (max-width: 860px) {
     .connect-body { padding-left: var(--pad); }

@@ -25,6 +25,22 @@
         // The Instagram icon at the bottom right of every page.
         instagramUrl: 'https://www.instagram.com/heavensgatenyc/',
 
+        // The mailing list: a sign-up form on the Connect page, and a MAILING LIST
+        // link in the menu and footer. Nothing shows until `action` is filled in.
+        // The site can't store emails itself, so they go to a mailing service
+        // (Mailchimp, Kit, Buttondown, Brevo, ...): make a free account there, copy
+        // the embed code of its sign-up form and take three things from it:
+        //   action      – the address in <form action="...">
+        //   emailField  – the name="..." of the email input (e.g. EMAIL or email_address)
+        //   fields      – any hidden inputs it contains, as { name: 'value' }
+        newsletter: {
+            action: '',
+            emailField: 'email',
+            fields: {},
+            lede: 'Runway shows, castings and events, when they happen.',
+            success: 'You are on the list. Check your inbox to confirm.',
+        },
+
         // The video on the home page: a floating thumbnail (the poster image) that
         // opens a player when clicked. Remove this block to take it off.
         homeVideo: {
