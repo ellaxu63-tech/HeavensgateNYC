@@ -53,10 +53,11 @@
             fields: {},
             lede: 'Runway shows, castings and events, when they happen.',
             // The big JOIN THE LIST popup (every page except Connect): it opens when the MAILING LIST
-            // link is clicked, and by itself once on the home page after popupDelay seconds (0 = never
-            // by itself), then not again for popupDays days.
-            popupDelay: 10,
-            popupDays: 7,
+            // link is clicked, and by itself on the home page after popupDelay seconds (0 = never by
+            // itself), then not again for popupDays days. A link ending in #join (for example
+            // https://heavensgate.nyc/#join, handy for Instagram) opens it straight away.
+            popupDelay: 3,
+            popupDays: 1,
             // The line under the sign-up that says what joining means (leave empty to hide it).
             consent: 'By joining you agree to receive emails from HEAVENSGATE NYC about shows, events and castings. Unsubscribe anytime.',
             success: 'You are on the list. Check your inbox to confirm.',

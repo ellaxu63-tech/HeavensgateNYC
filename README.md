@@ -57,8 +57,10 @@ embedded form, copy the code), or keep this site's own form by filling in:
 - `fields`: any hidden inputs it has, as `{ name: 'value' }`
 
 A big **JOIN THE LIST** popup (every page except Connect) opens when someone clicks a
-MAILING LIST link, and by itself once on the home page after `popupDelay` seconds
-(not again for `popupDays` days; `popupDelay: 0` turns the automatic opening off).
+MAILING LIST link, and by itself on the home page after `popupDelay` seconds (not again
+for `popupDays` days; `popupDelay: 0` turns the automatic opening off). A link ending in
+`#join` (for example `https://heavensgate.nyc/#join`, good for Instagram) opens it
+straight away.
 
 The form posts the address in the background and shows `success` underneath. The
 service sends the confirmation email, and you send your announcements from its

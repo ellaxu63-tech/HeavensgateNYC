@@ -206,7 +206,7 @@
 
     // ---------------------------------------------------- the JOIN THE LIST popup
     // A full-screen overlay like the menu, with the mailing list sign-up in big type. It opens from the MAILING
-    // LIST links and, once, by itself on the home page (js/data.js: popupDelay, popupDays). Not on Connect, which
+    // LIST links and, once, by itself on the home page (js/data.js: popupDelay, popupDays, or a link ending in #join). Not on Connect, which
     // already shows the sign-up. It is built before Sender's script loads, so the script finds the form's place.
     function initListPopup() {
         var cfg = data.newsletter
@@ -310,8 +310,13 @@
                 else open()
             }, ms)
         }
-        var delay = cfg.popupDelay === undefined ? 10 : Number(cfg.popupDelay)
-        if (isHome && delay > 0 && !seenRecently()) later(delay * 1000)
+        var delay = cfg.popupDelay === undefined ? 3 : Number(cfg.popupDelay)
+        // A link ending in #join opens it straight away (after the page has been built).
+        if (location.hash === '#join') window.setTimeout(open, 300)
+        else if (isHome && delay > 0 && !seenRecently()) later(delay * 1000)
+        window.addEventListener('hashchange', function () {
+            if (location.hash === '#join') open()
+        })
     }
 
     // Sender (the mailing list service): its script, exactly as Sender gives it, loads on every page
