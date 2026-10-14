@@ -205,7 +205,7 @@
     }
 
     // ---------------------------------------------------- the JOIN THE LIST popup
-    // A full-screen overlay like the menu, with the mailing list sign-up in big type. It opens from the MAILING
+    // A small card over the dimmed page with the mailing list sign-up. It opens from the MAILING
     // LIST links and, once, by itself on the home page (js/data.js: popupDelay, popupDays, or a link ending in #join). Not on Connect, which
     // already shows the sign-up. It is built before Sender's script loads, so the script finds the form's place.
     function initListPopup() {
@@ -220,18 +220,14 @@
         popup.setAttribute('aria-labelledby', 'list-popup-title')
         popup.inert = true
         popup.innerHTML =
-            '<button type="button" class="pill pill--accent list-popup-close">CLOSE</button>' +
-            '<div class="list-popup-grid">' +
-                '<div class="list-popup-q">' +
-                    '<p class="eyebrow">Mailing list</p>' +
-                    '<h2 class="list-popup-title" id="list-popup-title" tabindex="-1">Join the list</h2>' +
+            '<div class="list-popup-card">' +
+                '<div class="list-popup-top">' +
+                    '<h2 class="list-popup-title" id="list-popup-title">Mailing list</h2>' +
+                    '<button type="button" class="pill pill--accent list-popup-close">CLOSE</button>' +
                 '</div>' +
-                '<div class="list-popup-a">' +
-                    '<p class="list-lede">' + esc(cfg.lede || '') + '</p>' +
-                    '<div class="list-embed"></div>' +
-                    (cfg.consent ? '<p class="list-consent">' + esc(cfg.consent) + '</p>' : '') +
-                    '<button type="button" class="list-popup-skip">No thanks</button>' +
-                '</div>' +
+                '<div class="list-embed"></div>' +
+                (cfg.consent ? '<p class="list-consent">' + esc(cfg.consent) + '</p>' : '') +
+                '<button type="button" class="list-popup-skip">No thanks</button>' +
             '</div>'
         document.body.appendChild(popup)
         HG.mountMailingList(popup.querySelector('.list-embed'))
@@ -275,9 +271,28 @@
             }
         }
 
-        function open() {
+        // When the popup comes up as the page opens, the home page's opening animation (the lines drawing, the
+        // floating images, the first stroke) waits behind it and plays once it is closed.
+        var held = false
+        var wasPaused = false
+        function holdIntro() {
+            if (held || !isHome || !HG.motion) return
+            held = true
+            wasPaused = HG.motion.get().paused
+            root.classList.add('list-hold')
+            HG.motion.set({ paused: true })
+        }
+        function releaseIntro() {
+            if (!held) return
+            held = false
+            root.classList.remove('list-hold')
+            if (!wasPaused) HG.motion.set({ paused: false })
+        }
+
+        function open(atStart) {
             window.clearTimeout(timer)
             if (isOpen()) return
+            if (atStart === true) holdIntro()
             var menuToggle = document.querySelector('.menu-toggle')
             if (root.classList.contains('menu-open') && menuToggle) menuToggle.click()
             lastFocus = document.activeElement
@@ -295,6 +310,7 @@
             popup.classList.remove('is-open')
             popup.inert = true
             root.classList.remove('list-open')
+            releaseIntro()
             backgrounds().forEach(function (el) {
                 el.inert = false
             })
@@ -302,6 +318,9 @@
         }
 
         closeButton.addEventListener('click', close)
+        popup.addEventListener('click', function (event) {
+            if (event.target === popup) close()
+        })
         popup.querySelector('.list-popup-skip').addEventListener('click', close)
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape' && isOpen()) close()
@@ -314,7 +333,8 @@
             open()
         })
 
-        // By itself, on the home page: not while someone is drawing or has the menu or a photo open.
+        // By itself, on the home page, right as it opens (popupDelay 0) or after popupDelay seconds. Later on it
+        // waits while someone is drawing or has the menu or a photo open.
         function later(ms) {
             timer = window.setTimeout(function () {
                 var busy = ['menu-open', 'lightbox-open', 'is-dragging'].some(function (name) {
@@ -324,9 +344,15 @@
                 else open()
             }, ms)
         }
-        var delay = cfg.popupDelay === undefined ? 3 : Number(cfg.popupDelay)
-        // A link ending in #join opens it straight away (after the page has been built).
-        if (location.hash === '#join') window.setTimeout(open, 300)
+        // As soon as the page is built (the scripts are all in), so it is the first thing seen.
+        function whenBuilt(fn) {
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn)
+            else fn()
+        }
+        var delay = cfg.popupDelay === false ? -1 : cfg.popupDelay === undefined ? 0 : Number(cfg.popupDelay)
+        // A link ending in #join opens it straight away on any page.
+        if (location.hash === '#join') whenBuilt(function () { open(true) })
+        else if (isHome && delay === 0 && !seenRecently()) whenBuilt(function () { open(true) })
         else if (isHome && delay > 0 && !seenRecently()) later(delay * 1000)
         window.addEventListener('hashchange', function () {
             if (location.hash === '#join') open()

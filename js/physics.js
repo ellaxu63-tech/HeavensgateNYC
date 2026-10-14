@@ -264,7 +264,8 @@
             docVisible &&
             !reducedMotionMedia.matches &&
             !document.documentElement.classList.contains('project-selected') &&
-            !document.documentElement.classList.contains('menu-open')
+            !document.documentElement.classList.contains('menu-open') &&
+            !document.documentElement.classList.contains('list-open') // the join-the-list popup is open: the stroke waits until it is closed
         )
     }
 
@@ -290,7 +291,7 @@
 
     function playGhost() {
         ghost.timer = null
-        if (!ghostAllowed()) return scheduleGhost(2500)
+        if (!ghostAllowed()) return scheduleGhost(document.documentElement.classList.contains('list-open') ? 800 : 2500)
         var rect = host.getBoundingClientRect()
         var path = ghostPath(rect.width, rect.height, intro.getBoundingClientRect().bottom - rect.top)
         var started = performance.now()
