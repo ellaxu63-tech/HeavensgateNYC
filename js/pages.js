@@ -305,6 +305,9 @@
         var button = form.querySelector('.list-submit')
         var status = section.querySelector('.list-status')
         section.querySelector('[data-list-lede]').textContent = cfg.lede || ''
+        var consent = section.querySelector('.list-consent')
+        consent.textContent = cfg.consent || ''
+        consent.hidden = !cfg.consent
         section.hidden = false
         // Arriving via the MAILING LIST link: the section did not exist when the browser looked for it.
         if (location.hash === '#list') section.scrollIntoView()

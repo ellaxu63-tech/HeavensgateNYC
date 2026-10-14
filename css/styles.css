@@ -871,6 +871,7 @@ html.fall-on .stage-intro { visibility: hidden; }
 .list-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .list-status { min-height: 1.8em; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .list-status.is-error { color: var(--upcoming); }
+.list-consent { max-width: 52ch; margin-top: 18px; color: var(--muted); font: 400 11px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 
 @media (max-width: 860px) {
     .connect-body { padding-left: var(--pad); }

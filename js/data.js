@@ -52,6 +52,8 @@
             emailField: 'email',
             fields: {},
             lede: 'Runway shows, castings and events, when they happen.',
+            // The line under the sign-up that says what joining means (leave empty to hide it).
+            consent: 'By joining you agree to receive emails from HEAVENSGATE NYC about shows, events and castings. Unsubscribe anytime.',
             success: 'You are on the list. Check your inbox to confirm.',
         },
 
