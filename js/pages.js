@@ -274,13 +274,30 @@
     }
 
     // --------------------------------------------------------- mailing list
+    // Puts a service's embed code on the page. Scripts set through innerHTML never
+    // run, so each one is rebuilt (same attributes, same text) to make it run.
+    function mountEmbed(holder, html) {
+        var template = document.createElement('template')
+        template.innerHTML = html
+        template.content.querySelectorAll('script').forEach(function (old) {
+            var script = document.createElement('script')
+            Array.prototype.forEach.call(old.attributes, function (attr) {
+                script.setAttribute(attr.name, attr.value)
+            })
+            script.text = old.textContent
+            old.replaceWith(script)
+        })
+        holder.appendChild(template.content)
+        holder.hidden = false
+    }
+
     // Posts the address to the mailing service's own sign-up form (js/data.js,
     // newsletter). The reply can't be read from another site, so any answer
     // that arrives counts as success; the service sends the confirmation email.
     function initMailingList() {
         var cfg = data.newsletter
         var section = main.querySelector('#list')
-        if (!section || !cfg || !cfg.action) return
+        if (!section || !cfg || !(cfg.embed || cfg.action)) return
 
         var form = section.querySelector('.list-form')
         var input = form.querySelector('.list-input')
@@ -291,6 +308,14 @@
         section.hidden = false
         // Arriving via the MAILING LIST link: the section did not exist when the browser looked for it.
         if (location.hash === '#list') section.scrollIntoView()
+
+        // The service's own form, shown as it made it, instead of this site's.
+        if (cfg.embed) {
+            form.hidden = true
+            status.hidden = true
+            mountEmbed(section.querySelector('.list-embed'), cfg.embed)
+            return
+        }
 
         function say(text, isError) {
             status.textContent = text
