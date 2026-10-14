@@ -230,6 +230,7 @@
                     '<p class="list-lede">' + esc(cfg.lede || '') + '</p>' +
                     '<div class="list-embed"></div>' +
                     (cfg.consent ? '<p class="list-consent">' + esc(cfg.consent) + '</p>' : '') +
+                    '<button type="button" class="list-popup-skip">No thanks</button>' +
                 '</div>' +
             '</div>'
         document.body.appendChild(popup)
@@ -246,17 +247,29 @@
         function backgrounds() {
             return Array.prototype.slice.call(document.querySelectorAll('#main, .site-header, .site-footer, .menu-overlay'))
         }
-        // Remember that it was shown, so it does not come back by itself for a while.
+        // Remember that it was shown, so it does not come back by itself: for the rest of this visit (this tab),
+        // and, if popupDays is above 0, for that many days.
+        function days() {
+            return cfg.popupDays === undefined ? 0 : Number(cfg.popupDays)
+        }
         function remember() {
             try {
-                localStorage.setItem(storeKey, String(Date.now()))
+                sessionStorage.setItem(storeKey, '1')
             } catch (e) {}
+            if (days() > 0) {
+                try {
+                    localStorage.setItem(storeKey, String(Date.now()))
+                } catch (e) {}
+            }
         }
         function seenRecently() {
             try {
+                if (sessionStorage.getItem(storeKey)) return true
+            } catch (e) {}
+            if (!(days() > 0)) return false
+            try {
                 var at = Number(localStorage.getItem(storeKey))
-                var days = cfg.popupDays === undefined ? 7 : Number(cfg.popupDays)
-                return !!at && Date.now() - at < days * 864e5
+                return !!at && Date.now() - at < days() * 864e5
             } catch (e) {
                 return false
             }
@@ -289,6 +302,7 @@
         }
 
         closeButton.addEventListener('click', close)
+        popup.querySelector('.list-popup-skip').addEventListener('click', close)
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape' && isOpen()) close()
         })
@@ -300,10 +314,10 @@
             open()
         })
 
-        // By itself, once, on the home page: not while someone is drawing, has the menu or a photo open, or is on a card.
+        // By itself, on the home page: not while someone is drawing or has the menu or a photo open.
         function later(ms) {
             timer = window.setTimeout(function () {
-                var busy = ['menu-open', 'lightbox-open', 'project-selected', 'is-dragging'].some(function (name) {
+                var busy = ['menu-open', 'lightbox-open', 'is-dragging'].some(function (name) {
                     return root.classList.contains(name)
                 })
                 if (busy) later(4000)

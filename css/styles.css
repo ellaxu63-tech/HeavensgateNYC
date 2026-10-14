@@ -900,6 +900,8 @@ html.list-open { overflow: hidden; }
     text-transform: var(--display-case);
 }
 .list-popup-title:focus { outline: none; }
+.list-popup-skip { margin-top: 22px; padding: 0; border: 0; background: none; color: var(--muted); font: 400 12px/1 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.list-popup-skip:hover { color: var(--fg); }
 .list-popup-a { padding: clamp(24px, 4vw, 48px) var(--pad) clamp(40px, 6vw, 72px) var(--gutter); }
 @media (max-width: 860px) {
     .list-popup-grid { grid-template-columns: 1fr; align-items: start; align-content: start; }
