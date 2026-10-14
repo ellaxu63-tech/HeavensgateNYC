@@ -310,15 +310,32 @@
         if (location.hash === '#list') section.scrollIntoView()
 
         // The service's own form, shown as it made it, or a link to its page, instead of this site's form.
-        if (cfg.embed || cfg.link) {
+        if (cfg.embed || cfg.link || cfg.senderForm) {
             form.hidden = true
             status.hidden = true
             var holder = section.querySelector('.list-embed')
-            if (cfg.embed) mountEmbed(holder, cfg.embed)
-            else {
-                holder.innerHTML = '<a class="connect-email" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.linkLabel || 'Join the list') + ' \u2197</a>'
-                holder.hidden = false
+            holder.hidden = false
+            if (cfg.embed) {
+                mountEmbed(holder, cfg.embed)
+                return
             }
+            var link = cfg.link
+                ? '<a class="connect-email" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.linkLabel || 'Join the list') + ' \u2197</a>'
+                : ''
+            if (!(cfg.senderForm && cfg.senderAccount)) {
+                holder.innerHTML = link
+                return
+            }
+            // Sender's script (layout.js) fills this in with the form. If nothing appears (the script is blocked,
+            // or the form code is wrong) the link takes its place, so there is always a way to join.
+            holder.innerHTML = '<div class="sender-form-field" data-sender-form-id="' + esc(cfg.senderForm) + '"></div><div class="list-fallback" hidden>' + link + '</div>'
+            var field = holder.querySelector('.sender-form-field')
+            var fallback = holder.querySelector('.list-fallback')
+            var showLink = function () {
+                fallback.hidden = !!field.firstChild
+            }
+            new MutationObserver(showLink).observe(field, { childList: true })
+            window.setTimeout(showLink, 5000)
             return
         }
 

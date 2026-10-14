@@ -204,8 +204,31 @@
         })
     }
 
+    // Sender (the mailing list service): its script, exactly as Sender gives it, loads on every page
+    // for its forms and tracking. The account code is in js/data.js (newsletter.senderAccount).
+    function loadSender(account) {
+        ;(function (s, e, n, d, er) {
+            s['Sender'] = er
+            ;(s[er] = s[er] || function () {
+                ;(s[er].q = s[er].q || []).push(arguments)
+            }),
+                (s[er].l = 1 * new Date())
+            s[er].on = function (event, callback) {
+                s[er].listeners = s[er].listeners || {}
+                ;(s[er].listeners[event] = s[er].listeners[event] || []).push(callback)
+            }
+            var a = e.createElement(n),
+                m = e.getElementsByTagName(n)[0]
+            a.async = 1
+            a.src = d
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender')
+        window.sender(account)
+    }
+
     // -------------------------------------------------------------- init
     fillIntro()
+    if (data.newsletter && data.newsletter.senderAccount) loadSender(data.newsletter.senderAccount)
 
     var skip = document.createElement('a')
     skip.className = 'skip-link'

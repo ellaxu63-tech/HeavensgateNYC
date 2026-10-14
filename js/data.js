@@ -30,8 +30,12 @@
         // The site can't store emails itself, so they go to a mailing service
         // (Sender, Mailchimp, Kit, Buttondown, Brevo, ...): make an account there and
         // create a sign-up form. Then use one of these:
+        //   senderAccount / senderForm – for Sender: the account code from its script (loaded
+        //                 on every page) and the form's code (the part after /forms/ in the form's
+        //                 address). The form is then shown on the Connect page itself.
         //   link        – the address of the form's own page. The Connect page shows a
-        //                 "Join the list" link (text: linkLabel) that opens it.
+        //                 "Join the list" link (text: linkLabel) that opens it. With senderForm
+        //                 set it is the fallback, shown if the form does not appear.
         //   embed       – the form's embed code, pasted between the backticks. It is shown
         //                 on the Connect page, inside the site, as the service made it.
         //   or, to keep this site's own form, take three things from the embed code:
@@ -39,6 +43,8 @@
         //   emailField  – the name="..." of the email input (e.g. EMAIL or email_address)
         //   fields      – any hidden inputs it contains, as { name: 'value' }
         newsletter: {
+            senderAccount: 'a82913b41c6781',
+            senderForm: 'egJmpl',
             link: 'https://stats.sender.net/forms/egJmpl/view',
             linkLabel: 'Join the list',
             embed: ``,
