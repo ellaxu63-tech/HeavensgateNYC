@@ -274,22 +274,6 @@
     }
 
     // --------------------------------------------------------- mailing list
-    // Puts a service's embed code on the page. Scripts set through innerHTML never
-    // run, so each one is rebuilt (same attributes, same text) to make it run.
-    function mountEmbed(holder, html) {
-        var template = document.createElement('template')
-        template.innerHTML = html
-        template.content.querySelectorAll('script').forEach(function (old) {
-            var script = document.createElement('script')
-            Array.prototype.forEach.call(old.attributes, function (attr) {
-                script.setAttribute(attr.name, attr.value)
-            })
-            script.text = old.textContent
-            old.replaceWith(script)
-        })
-        holder.appendChild(template.content)
-        holder.hidden = false
-    }
 
     // Posts the address to the mailing service's own sign-up form (js/data.js,
     // newsletter). The reply can't be read from another site, so any answer
@@ -316,29 +300,7 @@
         if (cfg.embed || cfg.link || cfg.senderForm) {
             form.hidden = true
             status.hidden = true
-            var holder = section.querySelector('.list-embed')
-            holder.hidden = false
-            if (cfg.embed) {
-                mountEmbed(holder, cfg.embed)
-                return
-            }
-            var link = cfg.link
-                ? '<a class="connect-email" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.linkLabel || 'Join the list') + ' \u2197</a>'
-                : ''
-            if (!(cfg.senderForm && cfg.senderAccount)) {
-                holder.innerHTML = link
-                return
-            }
-            // Sender's script (layout.js) fills this in with the form. If nothing appears (the script is blocked,
-            // or the form code is wrong) the link takes its place, so there is always a way to join.
-            holder.innerHTML = '<div class="sender-form-field" data-sender-form-id="' + esc(cfg.senderForm) + '"></div><div class="list-fallback" hidden>' + link + '</div>'
-            var field = holder.querySelector('.sender-form-field')
-            var fallback = holder.querySelector('.list-fallback')
-            var showLink = function () {
-                fallback.hidden = !!field.firstChild
-            }
-            new MutationObserver(showLink).observe(field, { childList: true })
-            window.setTimeout(showLink, 5000)
+            HG.mountMailingList(section.querySelector('.list-embed'))
             return
         }
 

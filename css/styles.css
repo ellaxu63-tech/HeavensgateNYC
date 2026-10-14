@@ -867,6 +867,46 @@ html.fall-on .stage-intro { visibility: hidden; }
     .apply-bar { transition: none; }
 }
 
+/* ---------------------------------------------------- JOIN THE LIST popup
+   A full-screen overlay like the menu: the title in the left half, the sign-up in the right. */
+.list-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 1600;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: var(--grid-edges), var(--grid-mid), var(--bg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 240ms ease, visibility 0s linear 240ms;
+}
+.list-popup.is-open { opacity: 1; visibility: visible; transition: opacity 240ms ease; }
+html.list-open { overflow: hidden; }
+.list-popup-close { position: fixed; top: calc((var(--header-h) - var(--pill-h)) / 2); right: calc(var(--pad) - var(--pill-pad)); z-index: 1; }
+.list-popup-grid {
+    flex: 1 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    margin-top: var(--header-h);
+    border-top: 1px solid var(--rule);
+}
+.list-popup-q { padding: clamp(32px, 5vw, 72px) var(--gutter) clamp(24px, 4vw, 48px) var(--pad); }
+.list-popup-title {
+    margin-top: 18px;
+    font: 400 clamp(64px, 11vw, 192px) / 0.86 var(--serif);
+    letter-spacing: -0.025em;
+    text-transform: var(--display-case);
+}
+.list-popup-title:focus { outline: none; }
+.list-popup-a { padding: clamp(24px, 4vw, 48px) var(--pad) clamp(40px, 6vw, 72px) var(--gutter); }
+@media (max-width: 860px) {
+    .list-popup-grid { grid-template-columns: 1fr; align-items: start; align-content: start; }
+    .list-popup-q { padding: 32px var(--pad) 12px; }
+    .list-popup-a { padding: 8px var(--pad) 48px; }
+}
+
 /* A field only bots see. */
 .list-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .list-status { min-height: 1.8em; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
@@ -1104,6 +1144,7 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
     .page-header::after { animation: none !important; }
     #hg-cursor,
     .menu-overlay,
+    .list-popup,
     .menu-label,
     .project-cover img,
     [data-nav-collapse],

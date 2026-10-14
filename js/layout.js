@@ -204,6 +204,116 @@
         })
     }
 
+    // ---------------------------------------------------- the JOIN THE LIST popup
+    // A full-screen overlay like the menu, with the mailing list sign-up in big type. It opens from the MAILING
+    // LIST links and, once, by itself on the home page (js/data.js: popupDelay, popupDays). Not on Connect, which
+    // already shows the sign-up. It is built before Sender's script loads, so the script finds the form's place.
+    function initListPopup() {
+        var cfg = data.newsletter
+        if (page === 'connect' || !HG.mailingListOn() || !(cfg.embed || cfg.link || cfg.senderForm)) return
+
+        var root = document.documentElement
+        var popup = document.createElement('div')
+        popup.className = 'list-popup'
+        popup.setAttribute('role', 'dialog')
+        popup.setAttribute('aria-modal', 'true')
+        popup.setAttribute('aria-labelledby', 'list-popup-title')
+        popup.inert = true
+        popup.innerHTML =
+            '<button type="button" class="pill pill--accent list-popup-close">CLOSE</button>' +
+            '<div class="list-popup-grid">' +
+                '<div class="list-popup-q">' +
+                    '<p class="eyebrow">Mailing list</p>' +
+                    '<h2 class="list-popup-title" id="list-popup-title" tabindex="-1">Join the list</h2>' +
+                '</div>' +
+                '<div class="list-popup-a">' +
+                    '<p class="list-lede">' + esc(cfg.lede || '') + '</p>' +
+                    '<div class="list-embed"></div>' +
+                    (cfg.consent ? '<p class="list-consent">' + esc(cfg.consent) + '</p>' : '') +
+                '</div>' +
+            '</div>'
+        document.body.appendChild(popup)
+        HG.mountMailingList(popup.querySelector('.list-embed'))
+
+        var closeButton = popup.querySelector('.list-popup-close')
+        var storeKey = 'hg-list-popup'
+        var lastFocus = null
+        var timer = null
+
+        function isOpen() {
+            return popup.classList.contains('is-open')
+        }
+        function backgrounds() {
+            return Array.prototype.slice.call(document.querySelectorAll('#main, .site-header, .site-footer, .menu-overlay'))
+        }
+        // Remember that it was shown, so it does not come back by itself for a while.
+        function remember() {
+            try {
+                localStorage.setItem(storeKey, String(Date.now()))
+            } catch (e) {}
+        }
+        function seenRecently() {
+            try {
+                var at = Number(localStorage.getItem(storeKey))
+                var days = cfg.popupDays === undefined ? 7 : Number(cfg.popupDays)
+                return !!at && Date.now() - at < days * 864e5
+            } catch (e) {
+                return false
+            }
+        }
+
+        function open() {
+            window.clearTimeout(timer)
+            if (isOpen()) return
+            var menuToggle = document.querySelector('.menu-toggle')
+            if (root.classList.contains('menu-open') && menuToggle) menuToggle.click()
+            lastFocus = document.activeElement
+            remember()
+            backgrounds().forEach(function (el) {
+                el.inert = true
+            })
+            popup.inert = false
+            popup.classList.add('is-open')
+            root.classList.add('list-open')
+            closeButton.focus({ preventScroll: true })
+        }
+        function close() {
+            if (!isOpen()) return
+            popup.classList.remove('is-open')
+            popup.inert = true
+            root.classList.remove('list-open')
+            backgrounds().forEach(function (el) {
+                el.inert = false
+            })
+            if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true })
+        }
+
+        closeButton.addEventListener('click', close)
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && isOpen()) close()
+        })
+        // The MAILING LIST pills (menu, footers) open it instead of going to Connect.
+        document.addEventListener('click', function (event) {
+            var link = event.target.closest && event.target.closest('a[href="connect.html#list"]')
+            if (!link || event.defaultPrevented || event.button || event.metaKey || event.ctrlKey || event.shiftKey) return
+            event.preventDefault()
+            open()
+        })
+
+        // By itself, once, on the home page: not while someone is drawing, has the menu or a photo open, or is on a card.
+        function later(ms) {
+            timer = window.setTimeout(function () {
+                var busy = ['menu-open', 'lightbox-open', 'project-selected', 'is-dragging'].some(function (name) {
+                    return root.classList.contains(name)
+                })
+                if (busy) later(4000)
+                else open()
+            }, ms)
+        }
+        var delay = cfg.popupDelay === undefined ? 10 : Number(cfg.popupDelay)
+        if (isHome && delay > 0 && !seenRecently()) later(delay * 1000)
+    }
+
     // Sender (the mailing list service): its script, exactly as Sender gives it, loads on every page
     // for its forms and tracking. The account code is in js/data.js (newsletter.senderAccount).
     function loadSender(account) {
@@ -228,6 +338,7 @@
 
     // -------------------------------------------------------------- init
     fillIntro()
+    initListPopup()
     if (data.newsletter && data.newsletter.senderAccount) loadSender(data.newsletter.senderAccount)
 
     var skip = document.createElement('a')

@@ -56,6 +56,10 @@ embedded form, copy the code), or keep this site's own form by filling in:
 - `emailField`: the `name` of its email input (`EMAIL`, `email_address`, ...)
 - `fields`: any hidden inputs it has, as `{ name: 'value' }`
 
+A big **JOIN THE LIST** popup (every page except Connect) opens when someone clicks a
+MAILING LIST link, and by itself once on the home page after `popupDelay` seconds
+(not again for `popupDays` days; `popupDelay: 0` turns the automatic opening off).
+
 The form posts the address in the background and shows `success` underneath. The
 service sends the confirmation email, and you send your announcements from its
 dashboard. A hidden field catches bots.

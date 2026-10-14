@@ -18,6 +18,45 @@
         return !!(n && (n.embed || n.link || n.action))
     }
 
+    // Puts the mailing list sign-up into `holder` (the Connect page and the popup both use it): the service's embed
+    // code (its scripts are rebuilt, because scripts set through innerHTML never run), or Sender's form (filled in
+    // by Sender's script, see layout.js) with a link to its page as the fallback, or just that link.
+    HG.mountMailingList = function (holder) {
+        var cfg = HG.data.newsletter
+        holder.hidden = false
+        if (cfg.embed) {
+            var template = document.createElement('template')
+            template.innerHTML = cfg.embed
+            template.content.querySelectorAll('script').forEach(function (old) {
+                var script = document.createElement('script')
+                Array.prototype.forEach.call(old.attributes, function (attr) {
+                    script.setAttribute(attr.name, attr.value)
+                })
+                script.text = old.textContent
+                old.replaceWith(script)
+            })
+            holder.appendChild(template.content)
+            return
+        }
+        var link = cfg.link
+            ? '<a class="connect-email" href="' + HG.esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + HG.esc(cfg.linkLabel || 'Join the list') + ' \u2197</a>'
+            : ''
+        if (!(cfg.senderForm && cfg.senderAccount)) {
+            holder.innerHTML = link
+            return
+        }
+        // If nothing appears (the script is blocked, or the form code is wrong) the link takes its place,
+        // so there is always a way to join.
+        holder.innerHTML = '<div class="sender-form-field" data-sender-form-id="' + HG.esc(cfg.senderForm) + '"></div><div class="list-fallback" hidden>' + link + '</div>'
+        var field = holder.querySelector('.sender-form-field')
+        var fallback = holder.querySelector('.list-fallback')
+        var showLink = function () {
+            fallback.hidden = !!field.firstChild
+        }
+        new MutationObserver(showLink).observe(field, { childList: true })
+        window.setTimeout(showLink, 5000)
+    }
+
     HG.isEmail = function (value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)
     }
