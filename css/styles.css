@@ -385,8 +385,12 @@ html.menu-open { overflow: hidden; }
 
 @media (max-width: 600px) {
     .site-footer { flex-wrap: wrap; padding-block: 10px; }
-    /* The home bar has a fixed height and no room for more links on a phone; APPLY and MAILING LIST are in the menu there. */
+    /* The home bar has a fixed height and no room for more links on a phone; APPLY is in the menu there. */
     .site-footer--fixed .pill--extra { display: none; }
+    /* MAILING LIST is the one link that has to be clear at the bottom of a phone: a pink button on every page. On the
+       home page it takes the place of ABOUT / SHOWS (they are in the menu there). */
+    .site-footer .pill--list { display: inline-flex; background: var(--accent); color: var(--accent-fg); }
+    .site-footer--fixed.site-footer--list .footer-links .pill:not(.pill--list) { display: none; }
 }
 
 /* --------------------------------------------------------------- cursor */

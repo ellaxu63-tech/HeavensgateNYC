@@ -19,7 +19,7 @@
     // ABOUT / SHOWS, plus APPLY and MAILING LIST once those are connected (js/data.js).
     var secondary = data.secondary.concat(
         data.form && data.form.action ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra' }] : [],
-        HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--extra' }] : []
+        HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--extra pill--list' }] : []
     )
 
     function currentFile() {
@@ -150,7 +150,7 @@
     function buildFooter() {
         var footer = document.createElement('footer')
         if (isHome) {
-            footer.className = 'site-footer site-footer--fixed'
+            footer.className = 'site-footer site-footer--fixed' + (HG.mailingListOn() ? ' site-footer--list' : '')
             footer.innerHTML =
                 '<nav class="footer-links" aria-label="About and shows" data-nav-collapse>' +
                     pillLinks(secondary) +
