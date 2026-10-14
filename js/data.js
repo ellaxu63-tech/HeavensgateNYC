@@ -25,18 +25,22 @@
         // The Instagram icon at the bottom right of every page.
         instagramUrl: 'https://www.instagram.com/heavensgatenyc/',
 
-        // The mailing list: a sign-up form on the Connect page, and a MAILING LIST
-        // link in the menu and footer. Nothing shows until `embed` or `action` is filled in.
+        // The mailing list: a sign-up on the Connect page, and a MAILING LIST
+        // link in the menu and footer. Nothing shows until `link`, `embed` or `action` is filled in.
         // The site can't store emails itself, so they go to a mailing service
         // (Sender, Mailchimp, Kit, Buttondown, Brevo, ...): make an account there and
-        // create a sign-up form. Then either:
-        //   embed       – paste the form's embed code between the backticks. It is shown
-        //                 on the Connect page as the service made it.
+        // create a sign-up form. Then use one of these:
+        //   link        – the address of the form's own page. The Connect page shows a
+        //                 "Join the list" link (text: linkLabel) that opens it.
+        //   embed       – the form's embed code, pasted between the backticks. It is shown
+        //                 on the Connect page, inside the site, as the service made it.
         //   or, to keep this site's own form, take three things from the embed code:
         //   action      – the address in <form action="...">
         //   emailField  – the name="..." of the email input (e.g. EMAIL or email_address)
         //   fields      – any hidden inputs it contains, as { name: 'value' }
         newsletter: {
+            link: 'https://stats.sender.net/forms/egJmpl/view',
+            linkLabel: 'Join the list',
             embed: ``,
             action: '',
             emailField: 'email',

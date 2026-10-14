@@ -12,6 +12,12 @@
         })
     }
 
+    // True once the mailing list is connected (js/data.js, newsletter): the form, link and menu entries show only then.
+    HG.mailingListOn = function () {
+        var n = HG.data.newsletter
+        return !!(n && (n.embed || n.link || n.action))
+    }
+
     HG.isEmail = function (value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)
     }

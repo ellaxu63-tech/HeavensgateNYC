@@ -758,6 +758,7 @@ html.fall-on .stage-intro { visibility: hidden; }
 .list-lede { max-width: 44ch; margin-top: 14px; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .list-form[hidden] { display: none; } /* `display: flex` above would otherwise beat the hidden attribute */
 .list-embed { max-width: 760px; margin-top: 22px; }
+.list-embed .connect-email { margin-top: 0; }
 .list-embed iframe,
 .list-embed img { max-width: 100%; }
 .list-form { display: flex; align-items: flex-end; gap: 14px; max-width: 760px; margin-top: 22px; }

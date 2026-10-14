@@ -297,7 +297,7 @@
     function initMailingList() {
         var cfg = data.newsletter
         var section = main.querySelector('#list')
-        if (!section || !cfg || !(cfg.embed || cfg.action)) return
+        if (!section || !HG.mailingListOn()) return
 
         var form = section.querySelector('.list-form')
         var input = form.querySelector('.list-input')
@@ -309,11 +309,16 @@
         // Arriving via the MAILING LIST link: the section did not exist when the browser looked for it.
         if (location.hash === '#list') section.scrollIntoView()
 
-        // The service's own form, shown as it made it, instead of this site's.
-        if (cfg.embed) {
+        // The service's own form, shown as it made it, or a link to its page, instead of this site's form.
+        if (cfg.embed || cfg.link) {
             form.hidden = true
             status.hidden = true
-            mountEmbed(section.querySelector('.list-embed'), cfg.embed)
+            var holder = section.querySelector('.list-embed')
+            if (cfg.embed) mountEmbed(holder, cfg.embed)
+            else {
+                holder.innerHTML = '<a class="connect-email" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.linkLabel || 'Join the list') + ' \u2197</a>'
+                holder.hidden = false
+            }
             return
         }
 

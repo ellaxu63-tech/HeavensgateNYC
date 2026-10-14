@@ -45,9 +45,10 @@ link), but it stays hidden until it is connected. A static site can't keep
 emails itself, so the sign-ups go to a mailing service that stores the list and
 sends the emails (Sender, Mailchimp, Kit, Buttondown, Brevo, ...). Make an account
 there and create a sign-up form. Then in [`js/data.js`](js/data.js), under `newsletter`,
-either paste the form's embed code into `embed` (it is shown on the Connect page as the
-service made it; in Sender: Forms, create an embedded form, copy the code), or keep this
-site's own form by filling in:
+put the form's page address in `link` (the Connect page then shows a "Join the list"
+link that opens it; this is what is live now), or paste the form's embed code into `embed`
+(it is shown inside the Connect page as the service made it; in Sender: Forms, create an
+embedded form, copy the code), or keep this site's own form by filling in:
 
 - `action`: the address in the embed code's `<form action="...">`
 - `emailField`: the `name` of its email input (`EMAIL`, `email_address`, ...)
