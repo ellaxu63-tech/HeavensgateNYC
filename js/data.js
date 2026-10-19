@@ -92,7 +92,7 @@
         //                 (or `in: ['Hair', 'Video']`, or `not: 'Hair'`)
         //   optionalIf  – with required: true, not compulsory when an earlier answer matches (same forms)
         form: {
-            action: '',
+            action: 'https://script.google.com/macros/s/AKfycbymJated_Bd7yIYwO7u2f_y0MHGxDQP47DFq7BIkQwkTTwg3c2j8MiYi_l6sPAKxSLAsA/exec',
             label: 'APPLY', // the link in the menu and footer
             // The jeweled APPLY button in the header, right of EVENTS (the letters are in the picture).
             // Leave empty to show a plain APPLY link there instead.
