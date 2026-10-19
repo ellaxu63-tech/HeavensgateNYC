@@ -25,7 +25,9 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `project.html`  | One project (`project.html?slug=runway-01`)                                |
 | `studio.html`   | What the studio does                                                       |
 | `connect.html`  | Contact, and the mailing list sign-up                                      |
-| `apply.html`    | The application form, one question at a time                               |
+| `apply.html`    | The list of forms (designers, crew)                                        |
+| `designers.html`| The designers' application, one question at a time                         |
+| `crew.html`     | The crew sign-up, one question at a time                                   |
 | `press.html`    | Press list                                                                 |
 | `events.html`   | Events (upcoming + past)                                                   |
 | `shows.html`    | Events of type "Show"                                                      |
@@ -68,21 +70,29 @@ The form posts the address in the background and shows `success` underneath. The
 service sends the confirmation email, and you send your announcements from its
 dashboard. A hidden field catches bots.
 
-## Application form
+## Forms (designers, crew)
 
-`apply.html` is a form that shows one question per screen (an intro first, a
-thank-you at the end). The questions, texts and answer choices are in
-[`js/data.js`](js/data.js) under `form`: add, remove or reword them there. Like the
-mailing list, nothing shows (the page says "Not open yet", and there is no APPLY
-link) until `form.action` is set. To click through it without sending anything,
-set `action: 'preview'`.
+`apply.html` lists the forms, and each one has its own page: `designers.html` and `crew.html`
+(`apply.html?form=<id>` works too). A form shows one question per screen, with an intro first and
+a thank-you at the end. The questions, texts and answer choices are in
+[`js/data.js`](js/data.js) under `form.forms`: add, remove or reword them there. To add a third
+form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
-### Receiving the form
+Like the mailing list, nothing shows (the pages say "Not open yet", and there is no APPLY link)
+until the forms are connected. There are two ways, and they can be mixed:
 
-Each submission becomes a **row in a Google Sheet** and is **emailed to
-info@heavensgateny.com**. No account other than Google is needed.
+- **Google Sheet (this site's own forms):** put the script's address in `form.action` (steps
+  below). To click through the forms without sending anything, set `action: 'preview'`.
+- **Google Forms:** make a form at forms.google.com and put its address in that form's `link`.
+  The form then opens it in a new tab instead of showing these questions, and no script is needed.
+  (Google Forms keeps the answers in its own Responses tab and can email you about each one.)
 
-1. Make a new Google Sheet (sheets.new). Name it, e.g., "HEAVENSGATE applications".
+### Receiving the forms
+
+Each submission becomes a **row in a Google Sheet** (one tab per form: Designers, Crew) and is
+**emailed to info@heavensgateny.com**. No account other than Google is needed.
+
+1. Make a new Google Sheet (sheets.new). Name it, e.g., "HEAVENSGATE forms".
 2. In it: **Extensions → Apps Script**. Delete what is there, paste in the whole of
    [`apps-script/receive-form.gs`](apps-script/receive-form.gs) and save. (Change
    `NOTIFY_EMAIL` at the top if the emails should go to another address.)
@@ -93,10 +103,10 @@ info@heavensgateny.com**. No account other than Google is needed.
 5. Copy the **Web app URL** (it ends in `/exec`) and paste it into
    `form.action` in `js/data.js`.
 
-New rows appear in the sheet's `Applications` tab. If you edit the script later:
-**Deploy → Manage deployments → pencil → Version: New version → Deploy** (the
-address stays the same). Submissions that arrive while the script is broken are
-not kept, so test by sending one yourself after any change.
+The tabs appear in the sheet when the first answer for that form arrives. If you edit the script
+later: **Deploy → Manage deployments → pencil → Version: New version → Deploy** (the address
+stays the same). Submissions that arrive while the script is broken are not kept, so test by
+sending one yourself after any change.
 
 > Everything on the site is real content now.
 

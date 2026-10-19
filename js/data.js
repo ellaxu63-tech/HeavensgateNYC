@@ -66,14 +66,19 @@
             success: 'You are on the list. Check your inbox to confirm.',
         },
 
-        // The application form (apply.html): one question at a time, then a thank-you
-        // screen. Nothing shows (no page content, no menu link) until `action` is set.
-        // Answers go to a Google Sheet and your inbox: set it up with the steps in the
-        // README ("Receiving the form"), then paste the web app address here. Until then,
-        // `action: 'preview'` lets you click through the whole form without sending anything.
+        // The forms (apply.html lists them; designers.html and crew.html are one each): one question
+        // at a time, then a thank-you screen. Nothing shows (no page content, no APPLY link) until the
+        // forms are connected, either way:
+        //   action – the address of the Google Sheet script (README, "Receiving the forms"). Every form
+        //            sends its answers there: one tab in the sheet per form, and an email to you.
+        //            `action: 'preview'` lets you click through the forms without sending anything.
+        //   link   – on a form: the address of a Google Form (or any form page). The form then opens
+        //            that instead of this site's own questions, and needs no `action`.
         //
+        // Each form: id (also the name of its tab in the sheet), page, title, blurb (the line in the
+        // list), eyebrow, intro, start (the button), questions, done.
         // Each question:
-        //   id          – the column name in the sheet (letters and numbers, unique)
+        //   id          – the column name in the sheet (letters and numbers, unique within the form)
         //   label       – the question
         //   type        – 'text', 'email', 'longtext' or 'choice'
         //   required    – true to make it compulsory
@@ -83,41 +88,109 @@
         form: {
             action: '',
             label: 'APPLY', // the link in the menu and footer
-            eyebrow: 'Application',
+            // The page that lists the forms (apply.html).
+            eyebrow: 'Join us',
             title: 'Apply',
-            intro: 'Designers, models, artists and performers: tell us about yourself and what you would like to make with HEAVENSGATE NYC. It takes about two minutes.',
-            start: 'START',
-            questions: [
-                { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
-                { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
-                { id: 'instagram', label: 'What is your Instagram?', type: 'text', placeholder: '@yourhandle' },
+            intro: 'Pick the one that fits. Each takes about two minutes.',
+            forms: [
                 {
-                    id: 'role',
-                    label: 'How would you like to be part of HEAVENSGATE NYC?',
-                    type: 'choice',
-                    required: true,
-                    options: ['Designer', 'Model', 'Artist or performer', 'Vendor', 'Collaboration', 'Something else'],
+                    id: 'designers',
+                    page: 'designers.html',
+                    link: '',
+                    title: 'Designers',
+                    blurb: 'Apply to show your collection with HEAVENSGATE NYC.',
+                    eyebrow: 'Application',
+                    intro: 'Designers: tell us about your brand and what you would like to show. It takes about two minutes.',
+                    start: 'START',
+                    questions: [
+                        { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
+                        { id: 'brand', label: 'What is your brand or label called?', type: 'text', required: true },
+                        { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
+                        { id: 'instagram', label: 'What is your Instagram?', type: 'text', required: true, placeholder: '@yourbrand' },
+                        {
+                            id: 'portfolio',
+                            label: 'Share a link to your work.',
+                            type: 'text',
+                            required: true,
+                            hint: 'Your website, lookbook, Drive folder or video.',
+                            placeholder: 'https://',
+                        },
+                        {
+                            id: 'category',
+                            label: 'What do you make?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Ready-to-wear', 'Streetwear', 'Knitwear', 'Accessories or jewelry', 'Footwear', 'Costume or performance wear', 'Something else'],
+                        },
+                        {
+                            id: 'looks',
+                            label: 'How many looks could you show?',
+                            type: 'choice',
+                            required: true,
+                            options: ['1 to 3', '4 to 6', '7 to 10', 'More than 10'],
+                        },
+                        {
+                            id: 'about',
+                            label: 'Tell us about the collection you would like to show.',
+                            type: 'longtext',
+                            required: true,
+                            placeholder: 'Type your answer here',
+                        },
+                    ],
+                    done: {
+                        title: 'Thank you.',
+                        text: 'We read every application and will be in touch if it is a fit for an upcoming show.',
+                    },
                 },
                 {
-                    id: 'portfolio',
-                    label: 'Share a link to your work.',
-                    type: 'text',
-                    required: true,
-                    hint: 'A portfolio, lookbook, Drive folder or video.',
-                    placeholder: 'https://',
-                },
-                {
-                    id: 'about',
-                    label: 'Tell us about yourself and what you have in mind.',
-                    type: 'longtext',
-                    required: true,
-                    placeholder: 'Type your answer here',
+                    id: 'crew',
+                    page: 'crew.html',
+                    link: '',
+                    title: 'Crew',
+                    blurb: 'Hair, makeup, styling, photo, video, production and more.',
+                    eyebrow: 'Sign up',
+                    intro: 'Crew: tell us what you do and how to reach you, and we will think of you when we are building a team for a show.',
+                    start: 'START',
+                    questions: [
+                        { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
+                        { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
+                        { id: 'phone', label: 'What is your phone number?', type: 'text', required: true, hint: 'For show days, so we can reach you quickly.' },
+                        { id: 'instagram', label: 'What is your Instagram?', type: 'text', placeholder: '@yourhandle' },
+                        {
+                            id: 'role',
+                            label: 'What would you like to do?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Hair', 'Makeup', 'Styling or dressing', 'Photography', 'Video', 'Production or backstage', 'Sound or lights', 'Door or guest list', 'Something else'],
+                        },
+                        {
+                            id: 'experience',
+                            label: 'Have you worked on fashion shows before?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Not yet, but I am keen', 'A few', 'Lots'],
+                        },
+                        {
+                            id: 'portfolio',
+                            label: 'Share a link to your work.',
+                            type: 'text',
+                            hint: 'A portfolio, Instagram or Drive folder.',
+                            placeholder: 'https://',
+                        },
+                        {
+                            id: 'notes',
+                            label: 'Anything we should know?',
+                            type: 'longtext',
+                            hint: 'Dates you cannot do, equipment you bring, anything else.',
+                            placeholder: 'Type your answer here',
+                        },
+                    ],
+                    done: {
+                        title: 'Thank you.',
+                        text: 'You are on our crew list. We will reach out when we are building a team for a show.',
+                    },
                 },
             ],
-            done: {
-                title: 'Thank you.',
-                text: 'We read every submission and will be in touch if it is a fit.',
-            },
         },
 
         // The video on the home page: a floating thumbnail (the poster image) that

@@ -18,7 +18,7 @@
 
     // ABOUT / SHOWS, plus APPLY and MAILING LIST once those are connected (js/data.js).
     var secondary = data.secondary.concat(
-        data.form && data.form.action ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra' }] : [],
+        HG.formsOn() ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra' }] : [],
         HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--extra pill--list' }] : []
     )
 

@@ -1,10 +1,12 @@
 /*
- * The application form (apply.html): an intro, then one question per screen,
- * then a thank-you. Questions and texts come from js/data.js (form). Answers are
- * sent with HG.post to the address set there (a Google Sheet, see the README).
+ * The forms (js/data.js, form): apply.html lists them, and each one runs on its own page
+ * (designers.html, crew.html) or at apply.html?form=<id>. A form is an intro, then one question per
+ * screen, then a thank-you. Answers are sent with HG.post to the address set in js/data.js (a Google
+ * Sheet, see the README), with the form's id so each form gets its own tab. A form with a `link`
+ * opens that page (a Google Form) instead.
  *
- * Keys: Enter moves on (Shift + Enter is a new line in a long answer), a letter
- * picks that choice. On touch screens Enter just types, so the OK button does it.
+ * Keys: Enter moves on (Shift + Enter is a new line in a long answer), a letter picks that choice
+ * (or that form, in the list). On touch screens Enter just types, so the OK button does it.
  */
 (function () {
     'use strict'
@@ -12,7 +14,8 @@
     var HG = window.HG
     var data = HG.data
     var esc = HG.esc
-    var cfg = data.form
+    var root = data.form
+    var forms = (root && root.forms) || []
     var frame = document.querySelector('[data-apply]')
     var bar = document.querySelector('.apply-bar')
     var trap = document.getElementById('apply-trap')
@@ -22,8 +25,21 @@
         return '<a class="text-link" href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>'
     }
 
+    // A form is open once it has a link of its own or the sheet address is set.
+    function isOpen(f) {
+        return !!(f.link || (root && root.action))
+    }
+
+    // Which form this page is for: the page says so (data-form), or ?form=crew; otherwise the list.
+    var wanted = document.body.getAttribute('data-form') || new URLSearchParams(location.search).get('form') || ''
+    var picked = forms.filter(function (f) {
+        return f.id === wanted
+    })[0]
+    var openForms = forms.filter(isOpen)
+    var cfg = picked || (openForms.length === 1 ? openForms[0] : null)
+
     // Not connected yet: say so instead of showing a form that goes nowhere.
-    if (!cfg || !cfg.action) {
+    if (!openForms.length || (picked && !isOpen(picked))) {
         frame.innerHTML =
             '<div class="apply-step">' +
                 '<div class="apply-q"><h1 class="apply-title">Not open yet.</h1></div>' +
@@ -32,6 +48,46 @@
         HG.capsBrand(frame)
         return
     }
+
+    // No form picked: a short list to choose from. A letter picks one.
+    if (!cfg) {
+        frame.innerHTML =
+            '<div class="apply-step">' +
+                '<div class="apply-q">' +
+                    '<p class="eyebrow">' + esc(root.eyebrow || '') + '</p>' +
+                    '<h1 class="apply-title apply-title--intro" id="apply-q" tabindex="-1">' + esc(root.title || 'Apply') + '</h1>' +
+                '</div>' +
+                '<div class="apply-a">' +
+                    '<p class="apply-text">' + esc(root.intro || '') + '</p>' +
+                    '<div class="apply-choices apply-choices--list">' +
+                        openForms
+                            .map(function (f, i) {
+                                var href = f.link || f.page || 'apply.html?form=' + encodeURIComponent(f.id)
+                                return (
+                                    '<a class="apply-choice" href="' + esc(href) + '"' + (f.link ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' +
+                                        '<span class="apply-key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
+                                        '<span class="apply-choice-body">' +
+                                            '<span class="apply-choice-label">' + esc(f.title) + '</span>' +
+                                            (f.blurb ? '<span class="apply-choice-blurb">' + esc(f.blurb) + '</span>' : '') +
+                                        '</span>' +
+                                    '</a>'
+                                )
+                            })
+                            .join('') +
+                    '</div>' +
+                    '<div class="apply-actions"><span class="apply-keys">Press a letter</span></div>' +
+                '</div>' +
+            '</div>'
+        HG.capsBrand(frame)
+        bar.style.transform = 'scaleX(0)'
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey || event.metaKey || event.altKey || event.key.length !== 1) return
+            var pick = frame.querySelectorAll('a.apply-choice')[event.key.toUpperCase().charCodeAt(0) - 65]
+            if (pick) pick.click()
+        })
+        return
+    }
+    document.title = cfg.title + ' \u2014 ' + data.siteName
 
     var questions = cfg.questions
     var total = questions.length
@@ -89,8 +145,11 @@
                     '<div class="apply-a">' +
                         '<p class="apply-text">' + esc(cfg.intro || '') + '</p>' +
                         '<div class="apply-actions">' +
-                            '<button type="button" class="pill pill--accent apply-next">' + esc(cfg.start || 'START') + '</button>' +
-                            '<span class="apply-keys">Press Enter ↵</span>' +
+                            (cfg.link
+                                ? '<a class="pill pill--accent apply-next" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.start || 'START') + ' \u2197</a>'
+                                : '<button type="button" class="pill pill--accent apply-next">' + esc(cfg.start || 'START') + '</button>') +
+                            (forms.length > 1 ? '<a class="pill" href="apply.html">ALL FORMS</a>' : '') +
+                            (cfg.link ? '' : '<span class="apply-keys">Press Enter ↵</span>') +
                         '</div>' +
                     '</div>' +
                 '</div>'
@@ -128,9 +187,11 @@
         HG.capsBrand(frame)
 
         if (index < 0) {
-            step.querySelector('.apply-next').addEventListener('click', function () {
-                show(0, 'forward')
-            })
+            if (!cfg.link) {
+                step.querySelector('.apply-next').addEventListener('click', function () {
+                    show(0, 'forward')
+                })
+            }
             step.querySelector('.apply-next').focus({ preventScroll: true })
             return
         }
@@ -231,7 +292,8 @@
         sending = true
         submit.disabled = true
         submit.textContent = 'SENDING…'
-        HG.post(cfg.action, fields)
+        fields.form = cfg.id
+        HG.post(root.action, fields)
             .then(function (result) {
                 sending = false
                 done(result.preview)

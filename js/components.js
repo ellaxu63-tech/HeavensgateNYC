@@ -57,6 +57,12 @@
         window.setTimeout(showLink, 5000)
     }
 
+    // True once a form is connected (js/data.js, form): the APPLY link and the form pages show only then.
+    HG.formsOn = function () {
+        var f = HG.data.form
+        return !!(f && f.forms && f.forms.some(function (item) { return f.action || item.link }))
+    }
+
     HG.isEmail = function (value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)
     }
