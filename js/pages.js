@@ -273,6 +273,16 @@
         })
     }
 
+    // ---------------------------------------------------------------- forms
+    // The list of forms (designers, crew, volunteers) on the Connect page, once a form is connected.
+    function initFormsList() {
+        var section = main.querySelector('#apply')
+        if (!section || !HG.formsOn()) return
+        section.querySelector('[data-apply-lede]').textContent = data.form.intro || ''
+        section.querySelector('[data-apply-rows]').innerHTML = HG.formRows(HG.openForms())
+        section.hidden = false
+    }
+
     // --------------------------------------------------------- mailing list
 
     // Posts the address to the mailing service's own sign-up form (js/data.js,
@@ -364,6 +374,7 @@
             break
         case 'connect':
             fillContactEmail()
+            initFormsList()
             initMailingList()
             break
     }

@@ -18,9 +18,16 @@
 
     // ABOUT / SHOWS, plus APPLY and MAILING LIST once those are connected (js/data.js).
     var secondary = data.secondary.concat(
-        HG.formsOn() ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra' }] : [],
+        HG.formsOn() ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra', apply: true }] : [],
         HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--extra pill--list' }] : []
     )
+
+    // The main menu: GALLERY ... CONNECT, with APPLY (the forms) before CONNECT once a form is connected.
+    var menuNav = data.nav.slice()
+    if (HG.formsOn()) {
+        var at = menuNav.map(function (item) { return item.href }).indexOf('connect.html')
+        menuNav.splice(at === -1 ? menuNav.length : at, 0, { label: data.form.label || 'APPLY', href: 'apply.html' })
+    }
 
     function currentFile() {
         var file = location.pathname.split('/').pop()
@@ -68,7 +75,7 @@
         menu.setAttribute('aria-label', 'Main menu')
         menu.innerHTML =
             '<ol class="menu-list">' +
-                data.nav
+                menuNav
                     .map(function (item, i) {
                         var number = String(i + 1).padStart(2, '0')
                         return (
@@ -83,7 +90,7 @@
                     })
                     .join('') +
             '</ol>' +
-            '<div class="menu-secondary">' + pillLinks(secondary) + '</div>'
+            '<div class="menu-secondary">' + pillLinks(secondary.filter(function (item) { return !item.apply })) + '</div>'
         return menu
     }
 

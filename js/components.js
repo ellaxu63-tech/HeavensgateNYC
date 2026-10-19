@@ -57,10 +57,37 @@
         window.setTimeout(showLink, 5000)
     }
 
-    // True once a form is connected (js/data.js, form): the APPLY link and the form pages show only then.
-    HG.formsOn = function () {
+    // The forms that are open (js/data.js, form): the sheet address is set, or the form has a link of its own.
+    HG.openForms = function () {
         var f = HG.data.form
-        return !!(f && f.forms && f.forms.some(function (item) { return f.action || item.link }))
+        return f && f.forms ? f.forms.filter(function (item) { return f.action || item.link }) : []
+    }
+
+    // True once a form is connected: the APPLY links and the form pages show only then.
+    HG.formsOn = function () {
+        return HG.openForms().length > 0
+    }
+
+    // The list of forms as rows (A designers, B crew...), for the Apply page and the Connect page.
+    HG.formRows = function (forms) {
+        return (
+            '<div class="apply-choices apply-choices--list">' +
+                forms
+                    .map(function (f, i) {
+                        var href = f.link || f.page || 'apply.html?form=' + encodeURIComponent(f.id)
+                        return (
+                            '<a class="apply-choice" href="' + HG.esc(href) + '"' + (f.link ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' +
+                                '<span class="apply-key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
+                                '<span class="apply-choice-body">' +
+                                    '<span class="apply-choice-label">' + HG.esc(f.title) + '</span>' +
+                                    (f.blurb ? '<span class="apply-choice-blurb">' + HG.esc(f.blurb) + '</span>' : '') +
+                                '</span>' +
+                            '</a>'
+                        )
+                    })
+                    .join('') +
+            '</div>'
+        )
     }
 
     HG.isEmail = function (value) {

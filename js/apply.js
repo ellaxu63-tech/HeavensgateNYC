@@ -25,21 +25,16 @@
         return '<a class="text-link" href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>'
     }
 
-    // A form is open once it has a link of its own or the sheet address is set.
-    function isOpen(f) {
-        return !!(f.link || (root && root.action))
-    }
-
     // Which form this page is for: the page says so (data-form), or ?form=crew; otherwise the list.
     var wanted = document.body.getAttribute('data-form') || new URLSearchParams(location.search).get('form') || ''
     var picked = forms.filter(function (f) {
         return f.id === wanted
     })[0]
-    var openForms = forms.filter(isOpen)
+    var openForms = HG.openForms()
     var cfg = picked || (openForms.length === 1 ? openForms[0] : null)
 
     // Not connected yet: say so instead of showing a form that goes nowhere.
-    if (!openForms.length || (picked && !isOpen(picked))) {
+    if (!openForms.length || (picked && openForms.indexOf(picked) === -1)) {
         frame.innerHTML =
             '<div class="apply-step">' +
                 '<div class="apply-q"><h1 class="apply-title">Not open yet.</h1></div>' +
@@ -47,6 +42,58 @@
             '</div>'
         HG.capsBrand(frame)
         return
+    }
+
+    initSlides()
+
+    // A small slideshow of the gallery under the form. It lives outside the questions, so it keeps going from
+    // one question to the next. Each slide opens its project in a new tab (the answers here are kept).
+    function initSlides() {
+        var projects = (data.projects || []).filter(function (p) {
+            return p.image
+        })
+        if (projects.length < 2) return
+        var holder = document.createElement('div')
+        holder.className = 'apply-slides'
+        holder.innerHTML =
+            '<a class="apply-slide" target="_blank" rel="noopener noreferrer" data-cursor="open">' +
+                '<img alt="" decoding="async"><img alt="" decoding="async">' +
+            '</a>' +
+            '<p class="apply-slide-cap"><span class="apply-slide-count"></span><span class="apply-slide-title"></span></p>'
+        frame.after(holder)
+
+        var link = holder.querySelector('.apply-slide')
+        var imgs = holder.querySelectorAll('img')
+        var title = holder.querySelector('.apply-slide-title')
+        var count = holder.querySelector('.apply-slide-count')
+        var on = imgs[0]
+        var off = imgs[1]
+        var n = 0
+
+        function go(i) {
+            var project = projects[i]
+            var pre = new Image()
+            pre.onload = function () {
+                off.src = project.image
+                off.classList.add('is-on')
+                on.classList.remove('is-on')
+                var swap = on
+                on = off
+                off = swap
+                link.href = HG.projectUrl(project)
+                link.setAttribute('aria-label', 'Gallery: ' + project.title)
+                count.textContent = 'Gallery ' + pad(i + 1) + ' / ' + pad(projects.length)
+                title.textContent = [project.title, project.year].filter(Boolean).join(' \u00b7 ')
+            }
+            pre.src = project.image // a picture that fails to load is simply skipped at the next turn
+        }
+        go(0)
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        window.setInterval(function () {
+            if (document.hidden) return
+            n = (n + 1) % projects.length
+            go(n)
+        }, 3500)
     }
 
     // No form picked: a short list to choose from. A letter picks one.
@@ -59,22 +106,7 @@
                 '</div>' +
                 '<div class="apply-a">' +
                     '<p class="apply-text">' + esc(root.intro || '') + '</p>' +
-                    '<div class="apply-choices apply-choices--list">' +
-                        openForms
-                            .map(function (f, i) {
-                                var href = f.link || f.page || 'apply.html?form=' + encodeURIComponent(f.id)
-                                return (
-                                    '<a class="apply-choice" href="' + esc(href) + '"' + (f.link ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' +
-                                        '<span class="apply-key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
-                                        '<span class="apply-choice-body">' +
-                                            '<span class="apply-choice-label">' + esc(f.title) + '</span>' +
-                                            (f.blurb ? '<span class="apply-choice-blurb">' + esc(f.blurb) + '</span>' : '') +
-                                        '</span>' +
-                                    '</a>'
-                                )
-                            })
-                            .join('') +
-                    '</div>' +
+                    HG.formRows(openForms) +
                     '<div class="apply-actions"><span class="apply-keys">Press a letter</span></div>' +
                 '</div>' +
             '</div>'

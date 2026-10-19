@@ -82,6 +82,10 @@ optional for the volunteer photographers), and an answer can carry a note shown 
 is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add a third
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
+The forms are in the main menu (APPLY, before CONNECT), in the footers, and listed on the Connect
+page. Under each form a small slideshow of the gallery (the projects' covers) keeps going between
+the questions; each slide opens its project in a new tab.
+
 Like the mailing list, nothing shows (the pages say "Not open yet", and there is no APPLY link)
 until the forms are connected. There are two ways, and they can be mixed:
 
