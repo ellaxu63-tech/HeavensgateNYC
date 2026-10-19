@@ -91,12 +91,23 @@
 
     var questions = cfg.questions
     var total = questions.length
-    // A question can depend on an earlier answer: showIf: { id: 'role', equals: 'Video' }. These are the
-    // indexes of the questions to ask right now, in order.
+    // A question can depend on an earlier answer: showIf: { id: 'role', equals: 'Video' } (or `in: [...]`, or
+    // `not: '...'`), and it can stop being compulsory for some answers: optionalIf: { id: 'role', equals: 'Photography' }.
+    function matches(cond) {
+        var answer = answers[cond.id]
+        if (cond.equals !== undefined) return answer === cond.equals
+        if (cond.in) return cond.in.indexOf(answer) !== -1
+        if (cond.not !== undefined) return answer !== cond.not
+        return true
+    }
+    function isRequired(q) {
+        return !!q.required && !(q.optionalIf && matches(q.optionalIf))
+    }
+    // The indexes of the questions to ask right now, in order.
     function visibleIndexes() {
         var list = []
         questions.forEach(function (q, i) {
-            if (!q.showIf || answers[q.showIf.id] === q.showIf.equals) list.push(i)
+            if (!q.showIf || matches(q.showIf)) list.push(i)
         })
         return list
     }
@@ -125,11 +136,15 @@
                 '<div class="apply-choices" role="radiogroup" aria-labelledby="apply-q">' +
                     q.options
                         .map(function (option, i) {
+                            // An option is a string, or { label, note }: the note (the pay, say) is shown on its row.
+                            var label = typeof option === 'string' ? option : option.label
+                            var note = typeof option === 'string' ? '' : option.note
                             return (
                                 '<label class="apply-choice">' +
-                                    '<input type="radio" name="apply-choice" value="' + esc(option) + '"' + (value === option ? ' checked' : '') + '>' +
+                                    '<input type="radio" name="apply-choice" value="' + esc(label) + '"' + (value === label ? ' checked' : '') + '>' +
                                     '<span class="apply-key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
-                                    '<span class="apply-choice-label">' + esc(option) + '</span>' +
+                                    '<span class="apply-choice-label">' + esc(label) + '</span>' +
+                                    (note ? '<span class="apply-choice-note">' + esc(note) + '</span>' : '') +
                                 '</label>'
                             )
                         })
@@ -179,7 +194,7 @@
         return (
             '<form class="apply-step" novalidate>' +
                 '<div class="apply-q">' +
-                    '<p class="eyebrow">' + pad(pos + 1) + ' / ' + pad(path.length) + (q.required ? '' : ' · Optional') + '</p>' +
+                    '<p class="eyebrow">' + pad(pos + 1) + ' / ' + pad(path.length) + (isRequired(q) ? '' : ' · Optional') + '</p>' +
                     '<h1 class="apply-title" id="apply-q" tabindex="-1">' + esc(q.label) + '</h1>' +
                     (q.hint ? '<p class="apply-hint">' + esc(q.hint) + '</p>' : '') +
                 '</div>' +
@@ -288,7 +303,7 @@
         remember()
         var q = questions[index]
         var value = answers[q.id] || ''
-        if (q.required && !value) {
+        if (isRequired(q) && !value) {
             setError(q.type === 'choice' ? 'Please pick one.' : 'Please answer this one.')
             return
         }

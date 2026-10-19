@@ -848,6 +848,9 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-choice:hover { background: var(--hover); }
 .apply-choices--list { margin-top: 24px; }
 a.apply-choice { color: inherit; text-decoration: none; }
+.apply-choice-note { margin-left: auto; padding-left: 16px; color: var(--muted); font: 400 12px/1.4 var(--mono); letter-spacing: 0.04em; text-align: right; text-transform: uppercase; transition: color 160ms ease; }
+.apply-choice:hover .apply-choice-note,
+.apply-choice input:checked ~ .apply-choice-note { color: var(--fg); }
 .apply-choice-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .apply-choice-blurb { color: var(--muted); font: 400 12px/1.5 var(--mono); letter-spacing: 0.02em; text-transform: uppercase; }
 .apply-choices--list .apply-choice { padding-block: 16px; }

@@ -27,8 +27,8 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `connect.html`  | Contact, and the mailing list sign-up                                      |
 | `apply.html`    | The list of forms (designers, crew)                                        |
 | `designers.html`| The designers' application, one question at a time                         |
-| `crew.html`     | The crew sign-up (hair and makeup, video), one question at a time          |
-| `volunteers.html`| The volunteer sign-up (photography and more), one question at a time      |
+| `crew.html`     | The crew sign-up (hair and makeup, video, photography), one question at a time |
+| `volunteers.html`| The volunteer sign-up (other ways to help), one question at a time        |
 | `press.html`    | Press list                                                                 |
 | `events.html`   | Events (upcoming + past)                                                   |
 | `shows.html`    | Events of type "Show"                                                      |
@@ -77,7 +77,8 @@ dashboard. A hidden field catches bots.
 (`apply.html?form=<id>` works too). A form shows one question per screen, with an intro first and
 a thank-you at the end. The questions, texts and answer choices are in
 [`js/data.js`](js/data.js) under `form.forms`: add, remove or reword them there. A question can depend on an earlier answer
-(`showIf`: the video quote is only asked of video applicants). A form can also say which show it
+(`showIf`: the video quote is only asked of video applicants; `optionalIf`: the link to their work is
+optional for the volunteer photographers), and an answer can carry a note shown on its row (the pay). A form can also say which show it
 is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add a third
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 

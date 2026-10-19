@@ -85,8 +85,11 @@
         //   required    – true to make it compulsory
         //   hint        – a small line under the question (optional)
         //   placeholder – the faint text in the empty answer (optional)
-        //   options     – for 'choice': the answers to pick from
+        //   options     – for 'choice': the answers to pick from, each a string or { label, note }
+        //                 (the note, such as the pay, is shown on that answer's row)
         //   showIf      – only ask it when an earlier answer matches: { id: 'role', equals: 'Video' }
+        //                 (or `in: ['Hair', 'Video']`, or `not: 'Hair'`)
+        //   optionalIf  – with required: true, not compulsory when an earlier answer matches (same forms)
         form: {
             action: '',
             label: 'APPLY', // the link in the menu and footer
@@ -149,9 +152,9 @@
                     page: 'crew.html',
                     link: '',
                     title: 'Crew',
-                    blurb: 'Hair and makeup ($100) and video (send us your quote).',
+                    blurb: 'Hair and makeup ($100), video (send us your quote), photography (volunteer).',
                     eyebrow: 'Sign up',
-                    intro: 'Crew: hair and makeup artists, and video. Hair and makeup is $100. For video, send us your quote.',
+                    intro: 'Crew: hair and makeup, video and photography. Each role shows what it pays as you pick it.',
                     start: 'START',
                     questions: [
                         { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
@@ -163,7 +166,11 @@
                             label: 'What would you like to do?',
                             type: 'choice',
                             required: true,
-                            options: ['Hair or makeup ($100)', 'Video (send us your quote)'],
+                            options: [
+                                { label: 'Hair or makeup', note: '$100' },
+                                { label: 'Video', note: 'Send us your quote' },
+                                { label: 'Photography', note: 'Volunteer' },
+                            ],
                         },
                         {
                             id: 'quote',
@@ -172,7 +179,7 @@
                             required: true,
                             hint: 'Your price, and what it includes.',
                             placeholder: '$',
-                            showIf: { id: 'role', equals: 'Video (send us your quote)' },
+                            showIf: { id: 'role', equals: 'Video' },
                         },
                         {
                             id: 'experience',
@@ -186,6 +193,7 @@
                             label: 'Share a link to your work.',
                             type: 'text',
                             required: true,
+                            optionalIf: { id: 'role', equals: 'Photography' }, // optional for the volunteers
                             hint: 'A portfolio, Instagram or Drive folder.',
                             placeholder: 'https://',
                         },
@@ -207,9 +215,9 @@
                     page: 'volunteers.html',
                     link: '',
                     title: 'Volunteers',
-                    blurb: 'Photography and other ways to help.',
+                    blurb: 'Other ways to help at a show.',
                     eyebrow: 'Sign up',
-                    intro: 'Volunteers: photographers, and anyone who wants to help make a show happen. Tell us how you would like to help.',
+                    intro: 'Volunteers: anyone who wants to help make a show happen. Tell us how you would like to help. (Volunteer photographers sign up under Crew.)',
                     start: 'START',
                     questions: [
                         { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
@@ -221,7 +229,7 @@
                             label: 'How would you like to help?',
                             type: 'choice',
                             required: true,
-                            options: ['Photography', 'Styling or dressing', 'Production or backstage', 'Sound or lights', 'Door or guest list', 'Something else'],
+                            options: ['Styling or dressing', 'Production or backstage', 'Sound or lights', 'Door or guest list', 'Something else'],
                         },
                         {
                             id: 'experience',
