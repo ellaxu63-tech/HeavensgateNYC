@@ -25,10 +25,11 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `project.html`  | One project (`project.html?slug=runway-01`)                                |
 | `studio.html`   | What the studio does                                                       |
 | `connect.html`  | Contact, and the mailing list sign-up                                      |
-| `apply.html`    | The list of forms (designers, crew)                                        |
+| `apply.html`    | The list of forms (designers, crew, volunteers, models)                    |
 | `designers.html`| The designers' application, one question at a time                         |
 | `crew.html`     | The crew sign-up (hair and makeup, video, photography), one question at a time |
 | `volunteers.html`| The volunteer sign-up (other ways to help), one question at a time        |
+| `models.html`   | The model casting form (measurements, photos, professional details)       |
 | `press.html`    | Press list                                                                 |
 | `events.html`   | Events (upcoming + past)                                                   |
 | `shows.html`    | Events of type "Show"                                                      |
@@ -71,16 +72,24 @@ The form posts the address in the background and shows `success` underneath. The
 service sends the confirmation email, and you send your announcements from its
 dashboard. A hidden field catches bots.
 
-## Forms (designers, crew)
+## Forms (designers, crew, volunteers, models)
 
-`apply.html` lists the forms, and each one has its own page: `designers.html`, `crew.html` and `volunteers.html`
+`apply.html` lists the forms, and each one has its own page: `designers.html`, `crew.html`, `volunteers.html` and `models.html`
 (`apply.html?form=<id>` works too). A form shows one question per screen, with an intro first and
 a thank-you at the end. The questions, texts and answer choices are in
 [`js/data.js`](js/data.js) under `form.forms`: add, remove or reword them there. A question can depend on an earlier answer
 (`showIf`: the video quote is only asked of video applicants; `optionalIf`: the link to their work is
 optional for the volunteer photographers), and an answer can carry a note shown on its row (the pay). A form can also say which show it
-is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add a third
+is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add another
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
+
+The **models** form says casting is to be announced and that it is a volunteer position (the `intro` and `blurb` in
+`js/data.js`; reword them when casting opens). It has a `photos` question: the person picks up to three pictures
+from their phone or computer, each is shrunk in their browser (about 150 KB) and sent with the answers. The script saves
+them in a Drive folder called **HEAVENSGATE form photos** (made the first time), puts each one's link in the sheet
+(columns `photos_1`, `photos_2`, `photos_3`) and attaches them to the email. The photos stay private to the Google
+account that owns the sheet: share the folder with whoever does the casting. If a form uses a Google Form `link`
+instead, add a **File upload** question there (people then need a Google sign-in).
 
 The forms are in the main menu (APPLY, before CONNECT), in the footers, and listed on the Connect
 page. Under each form a small slideshow of the gallery (the projects' covers) keeps going between
@@ -97,7 +106,7 @@ until the forms are connected. There are two ways, and they can be mixed:
 
 ### Receiving the forms
 
-Each submission becomes a **row in a Google Sheet** (one tab per form: Designers, Crew, Volunteers) and is
+Each submission becomes a **row in a Google Sheet** (one tab per form: Designers, Crew, Volunteers, Models) and is
 **emailed to info@heavensgateny.com**. No account other than Google is needed.
 
 1. Make a new Google Sheet (sheets.new). Name it, e.g., "HEAVENSGATE forms".
@@ -111,7 +120,8 @@ Each submission becomes a **row in a Google Sheet** (one tab per form: Designers
 5. Copy the **Web app URL** (it ends in `/exec`) and paste it into
    `form.action` in `js/data.js`.
 
-The tabs appear in the sheet when the first answer for that form arrives. If you edit the script
+The tabs appear in the sheet when the first answer for that form arrives. In step 4 Google also asks for
+permission to use Drive (that is where the model photos go). If you edit the script
 later: **Deploy → Manage deployments → pencil → Version: New version → Deploy** (the address
 stays the same). Submissions that arrive while the script is broken are not kept, so test by
 sending one yourself after any change.

@@ -5,6 +5,9 @@
  * Sheet, see the README), with the form's id so each form gets its own tab. A form with a `link`
  * opens that page (a Google Form) instead.
  *
+ * A 'photos' question lets the person pick pictures; each is shrunk in the browser (so a phone photo is a few
+ * hundred KB, not several MB) and sent with the answers as <id>_1, <id>_2, ... for the script to save to Drive.
+ *
  * Keys: Enter moves on (Shift + Enter is a new line in a long answer), a letter picks that choice
  * (or that form, in the list). On touch screens Enter just types, so the OK button does it.
  */
@@ -163,6 +166,9 @@
         if (q.type === 'longtext') {
             return '<textarea class="apply-input apply-input--long" rows="3"' + common + ' autocomplete="off">' + esc(value) + '</textarea>'
         }
+        if (q.type === 'photos') {
+            return '<div class="apply-photos" id="apply-photos"></div>'
+        }
         if (q.type === 'choice') {
             return (
                 '<div class="apply-choices" role="radiogroup" aria-labelledby="apply-q">' +
@@ -236,7 +242,7 @@
                     '<div class="apply-actions">' +
                         '<button type="button" class="pill apply-back" aria-label="Previous question">BACK</button>' +
                         '<button type="submit" class="pill pill--accent apply-next">' + (last ? 'SUBMIT' : 'OK') + '</button>' +
-                        '<span class="apply-keys">' + (q.type === 'choice' ? 'Press a letter' : 'Press Enter ↵') + '</span>' +
+                        (q.type === 'photos' ? '' : '<span class="apply-keys">' + (q.type === 'choice' ? 'Press a letter' : 'Press Enter ↵') + '</span>') +
                     '</div>' +
                 '</div>' +
             '</form>'
@@ -277,7 +283,10 @@
         })
 
         var field = form.querySelector('#apply-field') || form.querySelector('input[type="radio"]:checked') || form.querySelector('input[type="radio"]')
-        if (q.type === 'choice') {
+        if (q.type === 'photos') {
+            mountPhotos(q)
+            field = form.querySelector('.apply-add input') || form.querySelector('.apply-next')
+        } else if (q.type === 'choice') {
             form.querySelectorAll('input[type="radio"]').forEach(function (radio) {
                 radio.addEventListener('change', function () {
                     answers[q.id] = radio.value
@@ -306,6 +315,113 @@
         field.focus({ preventScroll: true })
     }
 
+    // ---- photos ----
+    var PHOTO_SIDE = 1400 // the longest side a sent picture keeps, in pixels
+    var photosBusy = false
+
+    // A File to a JPEG data address, no bigger than PHOTO_SIDE (a transparent PNG gets a white background).
+    function shrinkPhoto(file) {
+        return new Promise(function (resolve, reject) {
+            var url = URL.createObjectURL(file)
+            var img = new Image()
+            img.onload = function () {
+                var scale = Math.min(1, PHOTO_SIDE / Math.max(img.naturalWidth, img.naturalHeight))
+                var canvas = document.createElement('canvas')
+                canvas.width = Math.max(1, Math.round(img.naturalWidth * scale))
+                canvas.height = Math.max(1, Math.round(img.naturalHeight * scale))
+                var ctx = canvas.getContext('2d')
+                ctx.fillStyle = '#fff'
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+                URL.revokeObjectURL(url)
+                resolve(canvas.toDataURL('image/jpeg', 0.82))
+            }
+            img.onerror = function () {
+                URL.revokeObjectURL(url)
+                reject(new Error('unreadable'))
+            }
+            img.src = url
+        })
+    }
+
+    // The picker for a 'photos' question: the chosen pictures as small tiles (each with a remove button),
+    // and an add tile while there is room.
+    function mountPhotos(q) {
+        var holder = frame.querySelector('#apply-photos')
+        var max = q.max || 3
+        var list = answers[q.id] || (answers[q.id] = [])
+
+        function draw() {
+            holder.innerHTML =
+                '<ul class="apply-thumbs">' +
+                    list
+                        .map(function (photo, i) {
+                            return (
+                                '<li class="apply-thumb">' +
+                                    '<img src="' + photo.data + '" alt="Photo ' + (i + 1) + '">' +
+                                    '<button type="button" class="apply-thumb-remove" data-i="' + i + '" aria-label="Remove photo ' + (i + 1) + '">\u00d7</button>' +
+                                '</li>'
+                            )
+                        })
+                        .join('') +
+                    (list.length < max
+                        ? '<li class="apply-add"><input type="file" accept="image/*"' + (max - list.length > 1 ? ' multiple' : '') + ' aria-label="Add photos"><span aria-hidden="true">+</span><span class="apply-add-text" aria-hidden="true">' + (list.length ? 'Add' : 'Add photos') + '</span></li>'
+                        : '') +
+                '</ul>'
+            var input = holder.querySelector('input')
+            if (input) input.addEventListener('change', function () {
+                add(Array.prototype.slice.call(input.files))
+            })
+            holder.querySelectorAll('.apply-thumb-remove').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    list.splice(Number(button.getAttribute('data-i')), 1)
+                    setError('')
+                    draw()
+                    var again = holder.querySelector('input')
+                    if (again) again.focus({ preventScroll: true })
+                })
+            })
+        }
+
+        function add(files) {
+            var room = max - list.length
+            var picks = files.filter(function (file) {
+                return /^image\//.test(file.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(file.name)
+            })
+            if (!picks.length) {
+                setError('Please choose a picture (JPG or PNG).')
+                return
+            }
+            setError(picks.length > room ? 'Up to ' + max + ' photos. We kept the first ' + room + '.' : '')
+            photosBusy = true
+            Promise.all(
+                picks.slice(0, room).map(function (file) {
+                    return shrinkPhoto(file).then(
+                        function (data) {
+                            return { name: file.name, data: data }
+                        },
+                        function () {
+                            return null
+                        }
+                    )
+                })
+            ).then(function (photos) {
+                photosBusy = false
+                var good = photos.filter(Boolean)
+                if (good.length < photos.length) setError('One photo could not be read. Try a JPG or PNG.')
+                good.forEach(function (photo) {
+                    list.push(photo)
+                })
+                if (!frame.contains(holder)) return // went to another question meanwhile; the photos are kept
+                draw()
+                var next = holder.querySelector('input')
+                if (next) next.focus({ preventScroll: true })
+            })
+        }
+
+        draw()
+    }
+
     // After a beat, so the picked choice is seen.
     function moveOnSoon() {
         window.clearTimeout(timer)
@@ -326,7 +442,7 @@
     function remember() {
         var q = questions[index]
         var field = frame.querySelector('#apply-field')
-        if (field) answers[q.id] = field.value.trim()
+        if (field && q.type !== 'photos') answers[q.id] = field.value.trim()
     }
 
     function advance() {
@@ -334,9 +450,13 @@
         window.clearTimeout(timer)
         remember()
         var q = questions[index]
-        var value = answers[q.id] || ''
+        var value = q.type === 'photos' ? (answers[q.id] || []).length : answers[q.id] || ''
         if (isRequired(q) && !value) {
-            setError(q.type === 'choice' ? 'Please pick one.' : 'Please answer this one.')
+            setError(q.type === 'choice' ? 'Please pick one.' : q.type === 'photos' ? 'Please add at least one photo.' : 'Please answer this one.')
+            return
+        }
+        if (photosBusy) {
+            setError('One moment, the photos are still loading.')
             return
         }
         if (value && q.type === 'email' && !HG.isEmail(value)) {
@@ -354,7 +474,15 @@
         var fields = {}
         var asked = visibleIndexes()
         questions.forEach(function (q, i) {
-            fields[q.id] = asked.indexOf(i) === -1 ? '' : answers[q.id] || ''
+            var shown = asked.indexOf(i) !== -1
+            if (q.type === 'photos') {
+                // One field per picture (photos_1, photos_2, ...): the script saves each to Drive.
+                ;(shown ? answers[q.id] || [] : []).forEach(function (photo, n) {
+                    fields[q.id + '_' + (n + 1)] = photo.data
+                })
+                return
+            }
+            fields[q.id] = shown ? answers[q.id] || '' : ''
         })
         // Bots fill every field; people never see the extra one.
         if (trap.value) {

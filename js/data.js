@@ -66,7 +66,7 @@
             success: 'You are on the list. Check your inbox to confirm.',
         },
 
-        // The forms (apply.html lists them; designers.html, crew.html and volunteers.html are one each): one question
+        // The forms (apply.html lists them; designers.html, crew.html, volunteers.html and models.html are one each): one question
         // at a time, then a thank-you screen. Nothing shows (no page content, no APPLY link) until the
         // forms are connected, either way:
         //   action – the address of the Google Sheet script (README, "Receiving the forms"). Every form
@@ -81,7 +81,8 @@
         // Each question:
         //   id          – the column name in the sheet (letters and numbers, unique within the form)
         //   label       – the question
-        //   type        – 'text', 'email', 'longtext' or 'choice'
+        //   type        – 'text', 'email', 'longtext', 'choice' or 'photos' (the person picks pictures from their
+        //                 phone or computer; `max` is how many, 3 if left out)
         //   required    – true to make it compulsory
         //   hint        – a small line under the question (optional)
         //   placeholder – the faint text in the empty answer (optional)
@@ -96,7 +97,7 @@
             // The page that lists the forms (apply.html).
             eyebrow: 'Join us',
             title: 'Apply',
-            intro: 'Pick the one that fits. Each takes about two minutes.',
+            intro: 'Pick the one that fits. Each takes a few minutes.',
             forms: [
                 {
                     id: 'designers',
@@ -256,6 +257,87 @@
                     done: {
                         title: 'Thank you.',
                         text: 'You are on our volunteer list. We will reach out when we need a hand at a show.',
+                    },
+                },
+                {
+                    id: 'models',
+                    page: 'models.html',
+                    link: '',
+                    title: 'Models',
+                    blurb: 'Casting to be announced. A volunteer position.',
+                    eyebrow: 'Casting',
+                    intro: 'Models: casting is to be announced. This is a volunteer position, so it is unpaid. Send your measurements, photos and professional details now, and we will write to you when casting opens.',
+                    start: 'START',
+                    questions: [
+                        { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
+                        { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
+                        { id: 'phone', label: 'What is your phone number?', type: 'text', hint: 'Optional. For casting and show days.' },
+                        { id: 'instagram', label: 'What is your Instagram?', type: 'text', required: true, placeholder: '@yourhandle' },
+                        { id: 'height', label: 'How tall are you?', type: 'text', required: true, placeholder: '5 ft 10 or 178 cm' },
+                        {
+                            id: 'measurements',
+                            label: 'What are your measurements?',
+                            type: 'text',
+                            required: true,
+                            hint: 'Bust or chest, waist and hips, in inches or cm.',
+                            placeholder: '34 / 26 / 36',
+                        },
+                        {
+                            id: 'sizes',
+                            label: 'What sizes do you wear?',
+                            type: 'text',
+                            required: true,
+                            hint: 'Dress or suit size, and shoe size.',
+                            placeholder: 'Dress 4, shoe 8',
+                        },
+                        {
+                            id: 'photos',
+                            label: 'Add your photos.',
+                            type: 'photos',
+                            required: true,
+                            max: 3,
+                            hint: 'Up to three: a clear face shot and a full-length one are best. No filters.',
+                        },
+                        {
+                            id: 'experience',
+                            label: 'Have you modeled before?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Not yet, but I am keen', 'A few times', 'Lots'],
+                        },
+                        {
+                            id: 'representation',
+                            label: 'Are you signed with an agency?',
+                            type: 'choice',
+                            required: true,
+                            options: ['No, I am freelance', 'Yes'],
+                        },
+                        {
+                            id: 'agency',
+                            label: 'Which agency?',
+                            type: 'text',
+                            required: true,
+                            placeholder: 'Agency name',
+                            showIf: { id: 'representation', equals: 'Yes' },
+                        },
+                        {
+                            id: 'work',
+                            label: 'Tell us about your work so far.',
+                            type: 'longtext',
+                            hint: 'Optional. Shows, shoots and campaigns you have done.',
+                            placeholder: 'Type your answer here',
+                        },
+                        {
+                            id: 'portfolio',
+                            label: 'Share a link to your portfolio.',
+                            type: 'text',
+                            hint: 'Optional. A comp card, website or Drive folder.',
+                            placeholder: 'https://',
+                        },
+                    ],
+                    done: {
+                        title: 'Thank you.',
+                        text: 'You are on our casting list. Casting is to be announced, and we will write to you when it opens.',
                     },
                 },
             ],

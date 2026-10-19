@@ -6,14 +6,22 @@
  * NOTIFY_EMAIL. Paste this whole file into the sheet's Apps Script editor and deploy it as a web app
  * (steps: README, "Receiving the forms"). The columns follow the question ids in js/data.js; if you
  * add a question later, its column appears by itself.
+ *
+ * Photos (the models form) arrive as pictures: each is saved in a Drive folder (PHOTO_FOLDER, made the first
+ * time), its link goes in the sheet, and the pictures are attached to the email. The files stay private to
+ * you; share the folder with whoever does the casting.
  */
 var NOTIFY_EMAIL = 'info@heavensgateny.com' // who gets the email for each submission
 var DEFAULT_TAB = 'Submissions'             // the tab for anything that arrives without a form name
+var PHOTO_FOLDER = 'HEAVENSGATE form photos' // the Drive folder the uploaded photos are saved in
+var MAX_PHOTOS = 5                          // most pictures kept from one submission
+var MAX_PHOTO_BYTES = 3 * 1024 * 1024       // largest picture kept (the site sends about 200 KB each)
 
 function doPost(e) {
   var answers = (e && e.parameter) || {}
   var tab = tabName_(answers.form)
   delete answers.form // the tab already says which form it is
+  var photos = savePhotos_(answers) // before the sheet is locked: saving files is the slow part
 
   var lock = LockService.getScriptLock()
   lock.waitLock(20000) // two people sending at the same moment take turns
@@ -47,6 +55,7 @@ function doPost(e) {
       subject: 'New ' + (tab === DEFAULT_TAB ? '' : tab.toLowerCase() + ' ') + 'submission: ' + String(who).replace(/[\r\n]+/g, ' ').slice(0, 80),
       body: lines.join('\n\n') + '\n\nAll submissions: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl(),
     }
+    if (photos.length) message.attachments = photos
     if (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(answers.email || '')) message.replyTo = answers.email
     MailApp.sendEmail(message)
   } catch (error) {
@@ -59,6 +68,41 @@ function doPost(e) {
 // Opening the web app address in a browser just says it is running.
 function doGet() {
   return ContentService.createTextOutput('The HEAVENSGATE NYC form receiver is running.')
+}
+
+// Pictures arrive as "data:image/jpeg;base64,...". Each is saved to Drive and replaced, in `answers`, by
+// its link (so the sheet gets the link, not the picture). Returns the pictures, to attach to the email.
+// A problem here never loses the submission: the answers are still saved, with a note in the photo's cell.
+function savePhotos_(answers) {
+  var blobs = []
+  var folder = null
+  var who = String(answers.name || 'applicant').replace(/[^A-Za-z0-9 \-]/g, '').slice(0, 40).trim() || 'applicant'
+  Object.keys(answers).forEach(function (key) {
+    var text = String(answers[key])
+    if (text.indexOf('data:image/') !== 0) return
+    try {
+      var comma = text.indexOf(',')
+      var type = text.slice(5, text.indexOf(';'))
+      if (comma === -1 || ['image/jpeg', 'image/png', 'image/webp'].indexOf(type) === -1) throw new Error('not a picture')
+      if (blobs.length >= MAX_PHOTOS) throw new Error('too many pictures')
+      var bytes = Utilities.base64Decode(text.slice(comma + 1))
+      if (bytes.length > MAX_PHOTO_BYTES) throw new Error('picture too large')
+      var extension = type === 'image/jpeg' ? 'jpg' : type.slice(6)
+      var blob = Utilities.newBlob(bytes, type, who + ' - ' + key + ' - ' + Utilities.formatDate(new Date(), 'UTC', 'yyyy-MM-dd HHmmss') + '.' + extension)
+      folder = folder || photoFolder_()
+      answers[key] = folder.createFile(blob).getUrl()
+      blobs.push(blob)
+    } catch (error) {
+      console.error('Photo not saved (' + key + '): ' + error)
+      answers[key] = '(photo not saved: ' + error.message + ')'
+    }
+  })
+  return blobs
+}
+
+function photoFolder_() {
+  var found = DriveApp.getFoldersByName(PHOTO_FOLDER)
+  return found.hasNext() ? found.next() : DriveApp.createFolder(PHOTO_FOLDER)
 }
 
 // "designers" -> "Designers". Only letters, numbers, spaces, dashes: it becomes a tab name.
