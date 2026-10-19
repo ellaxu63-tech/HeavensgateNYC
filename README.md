@@ -75,7 +75,8 @@ dashboard. A hidden field catches bots.
 `apply.html` lists the forms, and each one has its own page: `designers.html` and `crew.html`
 (`apply.html?form=<id>` works too). A form shows one question per screen, with an intro first and
 a thank-you at the end. The questions, texts and answer choices are in
-[`js/data.js`](js/data.js) under `form.forms`: add, remove or reword them there. To add a third
+[`js/data.js`](js/data.js) under `form.forms`: add, remove or reword them there. A form can also say which show it
+is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add a third
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
 Like the mailing list, nothing shows (the pages say "Not open yet", and there is no APPLY link)

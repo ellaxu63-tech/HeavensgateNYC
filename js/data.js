@@ -76,7 +76,8 @@
         //            that instead of this site's own questions, and needs no `action`.
         //
         // Each form: id (also the name of its tab in the sheet), page, title, blurb (the line in the
-        // list), eyebrow, intro, start (the button), questions, done.
+        // list), eyebrow, intro, start (the button), questions, done, and optionally `show` (the show
+        // it is for: title, date, text; shown on the intro screen and saved as a "show" column).
         // Each question:
         //   id          – the column name in the sheet (letters and numbers, unique within the form)
         //   label       – the question
@@ -98,9 +99,15 @@
                     page: 'designers.html',
                     link: '',
                     title: 'Designers',
-                    blurb: 'Apply to show your collection with HEAVENSGATE NYC.',
+                    blurb: 'Apply to show in Liquid Sky, February 13, 2027.',
                     eyebrow: 'Application',
-                    intro: 'Designers: tell us about your brand and what you would like to show. It takes about two minutes.',
+                    intro: 'Designers: tell us about your brand and how your collection fits. It takes about two minutes.',
+                    // The show this form is for: shown on the intro screen, and saved with every answer.
+                    show: {
+                        title: 'Liquid Sky',
+                        date: 'February 13, 2027',
+                        text: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
+                    },
                     start: 'START',
                     questions: [
                         { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
@@ -116,13 +123,6 @@
                             placeholder: 'https://',
                         },
                         {
-                            id: 'category',
-                            label: 'What do you make?',
-                            type: 'choice',
-                            required: true,
-                            options: ['Ready-to-wear', 'Streetwear', 'Knitwear', 'Accessories or jewelry', 'Footwear', 'Costume or performance wear', 'Something else'],
-                        },
-                        {
                             id: 'looks',
                             label: 'How many looks could you show?',
                             type: 'choice',
@@ -131,9 +131,10 @@
                         },
                         {
                             id: 'about',
-                            label: 'Tell us about the collection you would like to show.',
+                            label: 'How would your collection fit Liquid Sky?',
                             type: 'longtext',
                             required: true,
+                            hint: 'Think electric hues, artificial light, futuristic textures and unexpected silhouettes.',
                             placeholder: 'Type your answer here',
                         },
                     ],

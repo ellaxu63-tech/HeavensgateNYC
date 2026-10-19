@@ -819,6 +819,10 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-hint { margin-top: 20px; max-width: 44ch; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-a { padding: clamp(24px, 4vw, 56px) var(--pad) clamp(40px, 6vw, 80px) var(--gutter); }
 .apply-text { max-width: 46ch; color: var(--muted); font: 400 13px/1.8 var(--mono); letter-spacing: 0.02em; text-transform: uppercase; }
+.apply-show { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--rule); }
+.apply-show-title { margin-top: 12px; font: 400 clamp(36px, 4vw, 64px) / 0.95 var(--serif); letter-spacing: -0.02em; text-transform: var(--display-case); }
+.apply-show-date { margin-top: 10px; color: var(--fg); font: 400 12px/1.4 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.apply-show .apply-text { margin-top: 14px; }
 .apply-input { display: block; width: 100%; }
 .apply-input--long { min-height: 3.5em; resize: none; overflow: hidden; font-size: clamp(24px, 2.8vw, 44px); line-height: 1.15; }
 .apply-error { min-height: 1.8em; margin-top: 12px; color: var(--upcoming); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }

@@ -144,6 +144,14 @@
                     '</div>' +
                     '<div class="apply-a">' +
                         '<p class="apply-text">' + esc(cfg.intro || '') + '</p>' +
+                        (cfg.show
+                            ? '<div class="apply-show">' +
+                                  '<p class="eyebrow">The show</p>' +
+                                  '<p class="apply-show-title">' + esc(cfg.show.title) + '</p>' +
+                                  (cfg.show.date ? '<p class="apply-show-date">' + esc(cfg.show.date) + '</p>' : '') +
+                                  (cfg.show.text ? '<p class="apply-text">' + esc(cfg.show.text) + '</p>' : '') +
+                              '</div>'
+                            : '') +
                         '<div class="apply-actions">' +
                             (cfg.link
                                 ? '<a class="pill pill--accent apply-next" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.start || 'START') + ' \u2197</a>'
@@ -293,6 +301,7 @@
         submit.disabled = true
         submit.textContent = 'SENDING…'
         fields.form = cfg.id
+        if (cfg.show) fields.show = cfg.show.title
         HG.post(root.action, fields)
             .then(function (result) {
                 sending = false
