@@ -152,9 +152,9 @@
                     page: 'crew.html',
                     link: '',
                     title: 'Crew',
-                    blurb: 'Hair and makeup ($100), video (send us your quote), photography (volunteer).',
+                    blurb: 'Hair and makeup, video and photography.',
                     eyebrow: 'Sign up',
-                    intro: 'Crew: hair and makeup, video and photography. Each role shows what it pays as you pick it.',
+                    intro: 'Crew: hair and makeup, video and photography. Tell us what you do and how to reach you, and we will think of you when we are building a team for a show.',
                     start: 'START',
                     questions: [
                         { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
