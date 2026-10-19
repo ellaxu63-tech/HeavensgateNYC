@@ -52,40 +52,44 @@
     }
 
     // ---------------------------------------------------------------- header
-    // APPLY, right of EVENTS, once a form is connected: the picture frame with the word on it (js/data.js,
-    // form.buttonFrame), or the whole picture (form.buttonImage), or a plain link.
+    // The APPLY picture button (js/data.js, form.buttonFrame): the frame with the word written on it in the
+    // same type as the other links, or the whole picture (form.buttonImage) when there is no frame.
+    function applyPicture(width, height) {
+        var frame = data.form.buttonFrame
+        var image = data.form.buttonImage
+        var label = data.form.label || 'APPLY'
+        if (frame) {
+            return (
+                '<img src="' + esc(frame) + '" width="' + width + '" height="' + height + '" alt="" decoding="async">' +
+                '<span class="pill--jewel-label" aria-hidden="true">' + esc(label) + '</span>'
+            )
+        }
+        return image ? '<img src="' + esc(image) + '" width="' + width + '" height="' + height + '" alt="" decoding="async">' : ''
+    }
+
+    // APPLY, right of EVENTS, once a form is connected: the picture button, or a plain link.
     function applyLink() {
         if (!HG.formsOn()) return ''
         var label = data.form.label || 'APPLY'
-        var frame = data.form.buttonFrame
-        var image = data.form.buttonImage
-        if (frame) {
-            return (
-                '<a class="pill pill--jewel pill--frame" ' + linkAttrs({ href: 'apply.html' }) + ' aria-label="' + esc(label) + '">' +
-                    '<img src="' + esc(frame) + '" width="77" height="58" alt="" decoding="async">' +
-                    '<span class="pill--jewel-label" aria-hidden="true">' + esc(label) + '</span>' +
-                '</a>'
-            )
-        }
-        if (!image) return pillLinks([{ label: label, href: 'apply.html' }])
+        var picture = applyPicture(80, 60)
+        if (!picture) return pillLinks([{ label: label, href: 'apply.html' }])
         return (
-            '<a class="pill pill--jewel" ' + linkAttrs({ href: 'apply.html' }) + ' aria-label="' + esc(label) + '">' +
-                '<img src="' + esc(image) + '" width="72" height="54" alt="" decoding="async">' +
+            '<a class="pill pill--jewel' + (data.form.buttonFrame ? ' pill--frame' : '') + '" ' + linkAttrs({ href: 'apply.html' }) + ' aria-label="' + esc(label) + '">' +
+                picture +
             '</a>'
         )
     }
 
-    // On phones the header has no room for links, so the whole APPLY picture goes in the middle of the home page,
-    // under the intro sentence (inside it, so the floating images keep clear of it too).
+    // On phones the header has no room for links, so the same picture goes in the middle of the home page, under
+    // the intro sentence (inside it, so the floating images keep clear of it too).
     function addHomeApply() {
         var intro = document.querySelector('.stage-intro')
-        var image = data.form && data.form.buttonImage
-        if (!isHome || !intro || !image || !HG.formsOn()) return
+        if (!isHome || !intro || !HG.formsOn()) return
+        var picture = applyPicture(112, 84)
+        if (!picture) return
         intro.insertAdjacentHTML(
             'beforeend',
-            '<a class="home-apply" href="apply.html" aria-label="' + esc(data.form.label || 'APPLY') + '" data-cursor="open">' +
-                '<img src="' + esc(image) + '" width="200" height="150" alt="" decoding="async">' +
-            '</a>'
+            '<a class="home-apply" href="apply.html" aria-label="' + esc(data.form.label || 'APPLY') + '" data-cursor="open">' + picture + '</a>'
         )
     }
 

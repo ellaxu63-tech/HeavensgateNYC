@@ -95,10 +95,11 @@
         form: {
             action: 'https://script.google.com/macros/s/AKfycbymJated_Bd7yIYwO7u2f_y0MHGxDQP47DFq7BIkQwkTTwg3c2j8MiYi_l6sPAKxSLAsA/exec',
             label: 'APPLY', // the link in the menu and footer
-            // The APPLY button. `buttonFrame` is the header one, right of EVENTS on wide screens: a picture of the
-            // frame with the word written on it (the letters are too small to read inside a picture that size).
-            // `buttonImage` is the whole picture, letters included: it sits in the middle of the home page on
-            // phones. Leave both empty for a plain APPLY link in the header (and nothing on the phone home page).
+            // The APPLY button: `buttonFrame` is a picture of a frame, and the word is written on it in the same
+            // type as the other links. It sits in the header, right of EVENTS, and on phones (where the header has
+            // no room for links) in the middle of the home page. `buttonImage` is a whole picture with the letters
+            // in it, used instead only if `buttonFrame` is empty. Leave both empty for a plain APPLY link in the
+            // header (and nothing on the phone home page).
             buttonFrame: 'assets/apply-frame.webp',
             buttonImage: 'assets/apply-button.webp',
             // The page that lists the forms (apply.html).
