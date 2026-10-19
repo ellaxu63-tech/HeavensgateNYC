@@ -61,7 +61,16 @@ function setup() {
 }
 
 function doPost(e) {
-  var answers = (e && e.parameter) || {}
+  try {
+    return receive_((e && e.parameter) || {})
+  } catch (error) {
+    console.error('Submission not saved: ' + error) // shows in the editor under Executions
+    return ContentService.createTextOutput('error: ' + error)
+  }
+}
+
+// Saves one submission: the row in its tab, the photos in Drive, and the email if NOTIFY_EMAIL is set.
+function receive_(answers) {
   var tab = tabName_(answers.form)
   delete answers.form // the tab already says which form it is
   var photos = savePhotos_(answers) // before the sheet is locked: saving files is the slow part
@@ -109,8 +118,18 @@ function doPost(e) {
   return ContentService.createTextOutput('ok')
 }
 
-// Opening the web app address in a browser just says it is running.
-function doGet() {
+// Opening the web app address in a browser says it is running. Opening it with ?test=1 on the end saves one
+// clearly marked test row in the Models tab, so you can check the whole thing without the website: it says
+// what happened, or what went wrong.
+function doGet(e) {
+  if (e && e.parameter && e.parameter.test) {
+    try {
+      receive_({ form: 'models', name: 'TEST - delete this row', email: 'test@example.com', phone: '', instagram: '@test', height: 'test', measurements: 'test', sizes: 'test', experience: 'test' })
+      return ContentService.createTextOutput('Test row added to the Models tab. You can delete it.')
+    } catch (error) {
+      return ContentService.createTextOutput('Test failed: ' + error)
+    }
+  }
   return ContentService.createTextOutput('The HEAVENSGATE NYC form receiver is running.')
 }
 
