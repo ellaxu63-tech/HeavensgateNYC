@@ -226,10 +226,16 @@
                         '<p class="apply-text">' + esc(cfg.intro || '') + '</p>' +
                         (cfg.show
                             ? '<div class="apply-show">' +
-                                  '<p class="eyebrow">The show</p>' +
+                                  '<p class="eyebrow">Show details</p>' +
                                   '<p class="apply-show-title">' + esc(cfg.show.title) + '</p>' +
-                                  (cfg.show.date ? '<p class="apply-show-date">' + esc(cfg.show.date) + '</p>' : '') +
+                                  (cfg.show.date || cfg.show.location ? '<p class="apply-show-date">' + esc([cfg.show.date, cfg.show.location].filter(Boolean).join(' \u00b7 ')) + '</p>' : '') +
                                   (cfg.show.text ? '<p class="apply-text">' + esc(cfg.show.text) + '</p>' : '') +
+                                  (cfg.show.includes && cfg.show.includes.length
+                                      ? '<div class="apply-includes">' +
+                                            '<p class="eyebrow">' + esc(cfg.show.includesTitle || 'Includes') + '</p>' +
+                                            '<ul>' + cfg.show.includes.map(function (item) { return '<li>' + esc(item) + '</li>' }).join('') + '</ul>' +
+                                        '</div>'
+                                      : '') +
                               '</div>'
                             : '') +
                         pressHtml() +
@@ -454,7 +460,17 @@
 
     function setError(text) {
         var el = frame.querySelector('.apply-error')
-        if (el) el.textContent = text
+        if (!el) return
+        el.textContent = text
+        el.classList.remove('is-note')
+    }
+
+    // A calm line in the same place (an error is red, this is grey).
+    function setNote(text) {
+        var el = frame.querySelector('.apply-error')
+        if (!el) return
+        el.textContent = text
+        el.classList.add('is-note')
     }
 
     // Keep what is typed when going back.
@@ -511,6 +527,8 @@
         sending = true
         submit.disabled = true
         submit.textContent = 'SENDING…'
+        // Photos take a few seconds to save: say so, so nobody closes the page halfway.
+        if (Object.keys(fields).some(function (name) { return /_\d+$/.test(name) && fields[name] })) setNote('Sending your photos. This can take a few seconds, please keep this page open.')
         fields.form = cfg.id
         if (cfg.show) fields.show = cfg.show.title
         HG.post(root.action, fields)

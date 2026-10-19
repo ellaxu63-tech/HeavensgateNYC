@@ -832,8 +832,12 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-show-title { margin-top: 12px; font: 400 clamp(36px, 4vw, 64px) / 0.95 var(--serif); letter-spacing: -0.02em; text-transform: var(--display-case); }
 .apply-show-date { margin-top: 10px; color: var(--fg); font: 400 12px/1.4 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-show .apply-text { margin-top: 14px; }
+.apply-includes { margin-top: 22px; }
+.apply-includes ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 24px; margin: 10px 0 0; padding: 0; list-style: none; }
+.apply-includes li { padding: 7px 0; border-top: 1px solid var(--rule); font: 400 12px/1.5 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-input { display: block; width: 100%; }
 .apply-input--long { min-height: 3.5em; resize: none; overflow: hidden; font-size: clamp(24px, 2.8vw, 44px); line-height: 1.15; }
+.apply-error.is-note { color: var(--muted); }
 .apply-error { min-height: 1.8em; margin-top: 12px; color: var(--upcoming); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; }
 .apply-a > .apply-text + .apply-actions { margin-top: 28px; }

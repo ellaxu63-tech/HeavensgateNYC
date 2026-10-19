@@ -77,7 +77,8 @@
         //
         // Each form: id (also the name of its tab in the sheet), page, title, blurb (the line in the
         // list), eyebrow, intro, start (the button), questions, done, and optionally `show` (the show
-        // it is for: title, date, text; shown on the intro screen and saved as a "show" column).
+        // it is for: title, date, location, text, and `includes`, a list of what the package covers under
+        // the heading `includesTitle`; shown on the intro screen, and the title is saved as a "show" column).
         // Each question:
         //   id          – the column name in the sheet (letters and numbers, unique within the form)
         //   label       – the question
@@ -114,7 +115,20 @@
                     show: {
                         title: 'Liquid Sky',
                         date: 'February 13, 2027',
+                        location: 'NYC',
                         text: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
+                        // The package: a heading and a list, shown under the show's text.
+                        includesTitle: 'Production & support includes',
+                        includes: [
+                            'Creative direction',
+                            'Model casting',
+                            'Fitting support & styling direction',
+                            'Hair & makeup',
+                            'Backstage planning & run of show',
+                            'Music direction',
+                            'Photography & video',
+                            'Press / editorial submission',
+                        ],
                     },
                     start: 'START',
                     questions: [
@@ -144,6 +158,13 @@
                             required: true,
                             hint: 'Think electric hues, artificial light, futuristic textures and unexpected silhouettes.',
                             placeholder: 'Type your answer here',
+                        },
+                        {
+                            id: 'confirm',
+                            label: 'Are you able to confirm your participation with payment (Base Fee: $1,600) by 1/15?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Yes', 'No', 'I have questions first'],
                         },
                     ],
                     done: {
