@@ -116,15 +116,17 @@ Each submission becomes a **row in a Google Sheet** (one tab per form: Designers
 2. In it: **Extensions → Apps Script**. Delete what is there, paste in the whole of
    [`apps-script/receive-form.gs`](apps-script/receive-form.gs) and save. (Change
    `NOTIFY_EMAIL` at the top if the emails should go to another address.)
-3. **Deploy → New deployment**. Click the gear next to "Select type" and choose
+3. In the toolbar, pick the function **setup** and click **Run**. Google asks you to authorise it: choose your
+   account; if it warns the app is "unverified" (it is your own script), click
+   **Advanced → Go to … (unsafe) → Allow**. Setup makes the four tabs (Designers, Crew, Volunteers, Models) with
+   their columns, and the Drive folder for the model photos. It is safe to run again.
+4. **Deploy → New deployment**. Click the gear next to "Select type" and choose
    **Web app**. Set **Execute as: Me** and **Who has access: Anyone**, then **Deploy**.
-4. Google asks you to authorise it. Choose your account; if it warns the app is
-   "unverified" (it is your own script), click **Advanced → Go to … (unsafe) → Allow**.
 5. Copy the **Web app URL** (it ends in `/exec`) and paste it into
    `form.action` in `js/data.js`.
 
-The tabs appear in the sheet when the first answer for that form arrives. In step 4 Google also asks for
-permission to use Drive (that is where the model photos go). If you edit the script
+A question you add later gets its own column by itself. Google asks for permission to use Drive in step 3
+(that is where the model photos go). If you edit the script
 later: **Deploy → Manage deployments → pencil → Version: New version → Deploy** (the address
 stays the same). Submissions that arrive while the script is broken are not kept, so test by
 sending one yourself after any change.

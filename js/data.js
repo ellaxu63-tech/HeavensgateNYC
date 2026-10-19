@@ -171,7 +171,7 @@
                             type: 'choice',
                             required: true,
                             options: [
-                                { label: 'Hair or makeup', note: '$100' },
+                                { label: 'Hair or makeup', note: '$100 per show, fewer than 4 simple looks' },
                                 { label: 'Video', note: 'Send us your quote' },
                                 { label: 'Photography', note: 'Volunteer' },
                             ],

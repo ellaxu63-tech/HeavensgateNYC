@@ -7,6 +7,9 @@
  * (steps: README, "Receiving the forms"). The columns follow the question ids in js/data.js; if you
  * add a question later, its column appears by itself.
  *
+ * First time: run `setup` once (it makes the four tabs with their columns, the photo folder, and asks for the
+ * permissions it needs). Then deploy as a web app (README, "Receiving the forms").
+ *
  * Photos (the models form) arrive as pictures: each is saved in a Drive folder (PHOTO_FOLDER, made the first
  * time), its link goes in the sheet, and the pictures are attached to the email. The files stay private to
  * you; share the folder with whoever does the casting.
@@ -16,6 +19,46 @@ var DEFAULT_TAB = 'Submissions'             // the tab for anything that arrives
 var PHOTO_FOLDER = 'HEAVENSGATE form photos' // the Drive folder the uploaded photos are saved in
 var MAX_PHOTOS = 5                          // most pictures kept from one submission
 var MAX_PHOTO_BYTES = 3 * 1024 * 1024       // largest picture kept (the site sends about 200 KB each)
+
+// The tabs and their columns, in the order of the questions in js/data.js. Only the starting layout:
+// a question added later gets its own column by itself, so this list never has to be kept up to date.
+var TABS = {
+  Designers: ['name', 'brand', 'email', 'instagram', 'portfolio', 'looks', 'about', 'show'],
+  Crew: ['name', 'email', 'phone', 'instagram', 'role', 'quote', 'experience', 'portfolio', 'notes'],
+  Volunteers: ['name', 'email', 'phone', 'instagram', 'role', 'experience', 'portfolio', 'notes'],
+  Models: ['name', 'email', 'phone', 'instagram', 'height', 'measurements', 'sizes', 'photos_1', 'photos_2', 'photos_3', 'experience', 'representation', 'agency', 'work', 'portfolio'],
+}
+var WIDE_COLUMNS = ['about', 'work', 'notes', 'quote'] // the long answers get a wide, wrapped column
+
+// Run this once from the editor (pick `setup` in the toolbar, then Run). Safe to run again: it only adds what
+// is missing. It also asks Google for the permissions the script needs (sheet, email, Drive), so the
+// first real submission does not have to.
+function setup() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  Object.keys(TABS).forEach(function (tab, i) {
+    var sheet = spreadsheet.getSheetByName(tab) || spreadsheet.insertSheet(tab, i)
+    var headers = sheet.getLastColumn() > 0 ? sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0] : ['Time']
+    TABS[tab].forEach(function (key) {
+      if (headers.indexOf(key) === -1) headers.push(key)
+    })
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold').setBackground('#f3f3f3')
+    sheet.setFrozenRows(1)
+    sheet.setColumnWidth(1, 150)
+    sheet.getRange(2, 1, sheet.getMaxRows() - 1, 1).setNumberFormat('yyyy-mm-dd hh:mm')
+    headers.forEach(function (header, column) {
+      if (column === 0) return
+      var wide = WIDE_COLUMNS.indexOf(header) !== -1
+      sheet.setColumnWidth(column + 1, wide ? 320 : 160)
+      if (wide) sheet.getRange(2, column + 1, sheet.getMaxRows() - 1, 1).setWrap(true)
+    })
+  })
+  // The sheet starts with an empty "Sheet1": drop it once the real tabs are there.
+  var blank = spreadsheet.getSheetByName('Sheet1')
+  if (blank && blank.getLastRow() === 0 && spreadsheet.getSheets().length > 1) spreadsheet.deleteSheet(blank)
+  photoFolder_()
+  MailApp.getRemainingDailyQuota()
+  SpreadsheetApp.getUi().alert('Ready. Tabs: ' + Object.keys(TABS).join(', ') + '. Next: Deploy > New deployment > Web app.')
+}
 
 function doPost(e) {
   var answers = (e && e.parameter) || {}
