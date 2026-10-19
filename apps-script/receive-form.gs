@@ -2,8 +2,8 @@
  * HEAVENSGATE NYC: receives the forms (designers.html, crew.html, ...).
  *
  * Every submission is added as a row to the Google Sheet this script lives in, on a tab named after
- * the form ("Designers", "Crew"; made the first time one arrives), and a copy is emailed to
- * NOTIFY_EMAIL. Paste this whole file into the sheet's Apps Script editor and deploy it as a web app
+ * the form ("Designers", "Crew"; made the first time one arrives). No email is sent unless you put an
+ * address in NOTIFY_EMAIL. Paste this whole file into the sheet's Apps Script editor and deploy it as a web app
  * (steps: README, "Receiving the forms"). The columns follow the question ids in js/data.js; if you
  * add a question later, its column appears by itself.
  *
@@ -11,10 +11,10 @@
  * permissions it needs). Then deploy as a web app (README, "Receiving the forms").
  *
  * Photos (the models form) arrive as pictures: each is saved in a Drive folder (PHOTO_FOLDER, made the first
- * time), its link goes in the sheet, and the pictures are attached to the email. The files stay private to
- * you; share the folder with whoever does the casting.
+ * time) and its link goes in the sheet (and the pictures are attached to the email, if there is one). The
+ * files stay private to you; share the folder with whoever does the casting.
  */
-var NOTIFY_EMAIL = 'info@heavensgateny.com' // who gets the email for each submission
+var NOTIFY_EMAIL = ''                       // an address to email every submission to; empty = no emails (the sheet is the inbox)
 var DEFAULT_TAB = 'Submissions'             // the tab for anything that arrives without a form name
 var PHOTO_FOLDER = 'HEAVENSGATE form photos' // the Drive folder the uploaded photos are saved in
 var MAX_PHOTOS = 5                          // most pictures kept from one submission
@@ -88,6 +88,7 @@ function doPost(e) {
   }
 
   // The row is saved first; a problem with the email never loses a submission.
+  if (!NOTIFY_EMAIL) return ContentService.createTextOutput('ok')
   try {
     var lines = Object.keys(answers).map(function (key) {
       return key + ': ' + answers[key]
