@@ -94,6 +94,9 @@
         form: {
             action: '',
             label: 'APPLY', // the link in the menu and footer
+            // The jeweled APPLY button in the header, right of EVENTS (the letters are in the picture).
+            // Leave empty to show a plain APPLY link there instead.
+            buttonImage: 'assets/apply-button.webp',
             // The page that lists the forms (apply.html).
             eyebrow: 'Join us',
             title: 'Apply',

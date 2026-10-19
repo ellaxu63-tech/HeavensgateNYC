@@ -92,7 +92,10 @@ account that owns the sheet: share the folder with whoever does the casting. If 
 instead, add a **File upload** question there (people then need a Google sign-in).
 
 The forms are in the main menu (APPLY, before CONNECT), in the footers, and listed on the Connect
-page. Under each form a small slideshow of the gallery (the projects' covers) keeps going between
+page. On wide screens APPLY is also in the header, right of EVENTS, as a jeweled button
+(`assets/apply-button.webp`, set in `form.buttonImage`; leave it empty for a plain link). The first screen of every form, and
+the Apply list, has an "In the press" line: the outlets in the `press` list (each once) and "and more", so it grows
+when you add press. Under each form a small slideshow of the gallery (the projects' covers) keeps going between
 the questions; each slide opens its project in a new tab.
 
 Like the mailing list, nothing shows (the pages say "Not open yet", and there is no APPLY link)

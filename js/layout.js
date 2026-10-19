@@ -52,6 +52,19 @@
     }
 
     // ---------------------------------------------------------------- header
+    // APPLY, right of EVENTS, once a form is connected: the jeweled button (js/data.js, form.buttonImage), or a plain link.
+    function applyLink() {
+        if (!HG.formsOn()) return ''
+        var label = data.form.label || 'APPLY'
+        var image = data.form.buttonImage
+        if (!image) return pillLinks([{ label: label, href: 'apply.html' }])
+        return (
+            '<a class="pill pill--jewel" ' + linkAttrs({ href: 'apply.html' }) + ' aria-label="' + esc(label) + '">' +
+                '<img src="' + esc(image) + '" width="81" height="54" alt="" decoding="async">' +
+            '</a>'
+        )
+    }
+
     function buildHeader() {
         var header = document.createElement('header')
         header.className = 'site-header'
@@ -61,7 +74,7 @@
                 '<span class="brand-name">' + esc(data.siteName) + '</span>' +
             '</a>' +
             '<div class="site-nav" data-nav-collapse>' +
-                '<nav class="pill-links" aria-label="Press and events">' + pillLinks(data.headerPills) + '</nav>' +
+                '<nav class="pill-links" aria-label="Press, events and apply">' + pillLinks(data.headerPills) + applyLink() + '</nav>' +
                 '<button type="button" class="pill pill--accent menu-toggle" aria-expanded="false" aria-controls="menu-overlay">MENU</button>' +
             '</div>'
         return header

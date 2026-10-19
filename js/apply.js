@@ -99,6 +99,23 @@
         }, 3500)
     }
 
+    // Who has written about us, from the press list (js/data.js, press): each outlet once, newest first, then
+    // "and more" (so the line stays true as press is added there, and is not limited to what is listed).
+    function pressHtml() {
+        var names = []
+        ;(data.press || []).forEach(function (item) {
+            if (item.pub && names.indexOf(item.pub) === -1) names.push(item.pub)
+        })
+        if (!names.length) return ''
+        return (
+            '<div class="apply-press">' +
+                '<p class="eyebrow">In the press</p>' +
+                '<p class="apply-press-names">' + names.map(esc).join(', ') + ' and more.</p>' +
+                '<a class="text-link" href="press.html">See the press</a>' +
+            '</div>'
+        )
+    }
+
     // No form picked: a short list to choose from. A letter picks one.
     if (!cfg) {
         frame.innerHTML =
@@ -110,6 +127,7 @@
                 '<div class="apply-a">' +
                     '<p class="apply-text">' + esc(root.intro || '') + '</p>' +
                     HG.formRows(openForms) +
+                    pressHtml() +
                     '<div class="apply-actions"><span class="apply-keys">Press a letter</span></div>' +
                 '</div>' +
             '</div>'
@@ -214,6 +232,7 @@
                                   (cfg.show.text ? '<p class="apply-text">' + esc(cfg.show.text) + '</p>' : '') +
                               '</div>'
                             : '') +
+                        pressHtml() +
                         '<div class="apply-actions">' +
                             (cfg.link
                                 ? '<a class="pill pill--accent apply-next" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.start || 'START') + ' \u2197</a>'
