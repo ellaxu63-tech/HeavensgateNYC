@@ -91,6 +91,15 @@
 
     var questions = cfg.questions
     var total = questions.length
+    // A question can depend on an earlier answer: showIf: { id: 'role', equals: 'Video' }. These are the
+    // indexes of the questions to ask right now, in order.
+    function visibleIndexes() {
+        var list = []
+        questions.forEach(function (q, i) {
+            if (!q.showIf || answers[q.showIf.id] === q.showIf.equals) list.push(i)
+        })
+        return list
+    }
     var answers = {}
     var index = -1 // -1 intro, 0 to total-1 the questions, total the thank-you
     var hasKeyboard = window.matchMedia('(hover: hover) and (pointer: fine)').matches // Enter moves on only with a real keyboard
@@ -164,11 +173,13 @@
             )
         }
         var q = questions[index]
-        var last = index === total - 1
+        var path = visibleIndexes()
+        var pos = path.indexOf(index)
+        var last = pos === path.length - 1
         return (
             '<form class="apply-step" novalidate>' +
                 '<div class="apply-q">' +
-                    '<p class="eyebrow">' + pad(index + 1) + ' / ' + pad(total) + (q.required ? '' : ' · Optional') + '</p>' +
+                    '<p class="eyebrow">' + pad(pos + 1) + ' / ' + pad(path.length) + (q.required ? '' : ' · Optional') + '</p>' +
                     '<h1 class="apply-title" id="apply-q" tabindex="-1">' + esc(q.label) + '</h1>' +
                     (q.hint ? '<p class="apply-hint">' + esc(q.hint) + '</p>' : '') +
                 '</div>' +
@@ -191,7 +202,8 @@
         frame.innerHTML = stepHtml()
         var step = frame.firstElementChild
         step.setAttribute('data-dir', direction || 'forward')
-        bar.style.transform = 'scaleX(' + Math.max(index, 0) / total + ')'
+        var shown = visibleIndexes()
+        bar.style.transform = 'scaleX(' + (index < 0 ? 0 : shown.indexOf(index) / shown.length) + ')'
         HG.capsBrand(frame)
 
         if (index < 0) {
@@ -212,7 +224,9 @@
         })
         form.querySelector('.apply-back').addEventListener('click', function () {
             remember()
-            show(index - 1, 'back')
+            var path = visibleIndexes()
+            var pos = path.indexOf(index)
+            show(pos > 0 ? path[pos - 1] : -1, 'back')
         })
 
         var field = form.querySelector('#apply-field') || form.querySelector('input[type="radio"]:checked') || form.querySelector('input[type="radio"]')
@@ -282,15 +296,18 @@
             setError('Please enter a valid email address.')
             return
         }
-        if (index < total - 1) show(index + 1, 'forward')
+        var path = visibleIndexes()
+        var pos = path.indexOf(index)
+        if (pos < path.length - 1) show(path[pos + 1], 'forward')
         else send()
     }
 
     function send() {
         var submit = frame.querySelector('.apply-next')
         var fields = {}
-        questions.forEach(function (q) {
-            fields[q.id] = answers[q.id] || ''
+        var asked = visibleIndexes()
+        questions.forEach(function (q, i) {
+            fields[q.id] = asked.indexOf(i) === -1 ? '' : answers[q.id] || ''
         })
         // Bots fill every field; people never see the extra one.
         if (trap.value) {

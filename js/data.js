@@ -66,7 +66,7 @@
             success: 'You are on the list. Check your inbox to confirm.',
         },
 
-        // The forms (apply.html lists them; designers.html and crew.html are one each): one question
+        // The forms (apply.html lists them; designers.html, crew.html and volunteers.html are one each): one question
         // at a time, then a thank-you screen. Nothing shows (no page content, no APPLY link) until the
         // forms are connected, either way:
         //   action – the address of the Google Sheet script (README, "Receiving the forms"). Every form
@@ -86,6 +86,7 @@
         //   hint        – a small line under the question (optional)
         //   placeholder – the faint text in the empty answer (optional)
         //   options     – for 'choice': the answers to pick from
+        //   showIf      – only ask it when an earlier answer matches: { id: 'role', equals: 'Video' }
         form: {
             action: '',
             label: 'APPLY', // the link in the menu and footer
@@ -148,9 +149,9 @@
                     page: 'crew.html',
                     link: '',
                     title: 'Crew',
-                    blurb: 'Hair, makeup, styling, photo, video, production and more.',
+                    blurb: 'Hair and makeup ($100) and video (send us your quote).',
                     eyebrow: 'Sign up',
-                    intro: 'Crew: tell us what you do and how to reach you, and we will think of you when we are building a team for a show.',
+                    intro: 'Crew: hair and makeup artists, and video. Hair and makeup is $100. For video, send us your quote.',
                     start: 'START',
                     questions: [
                         { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
@@ -162,7 +163,16 @@
                             label: 'What would you like to do?',
                             type: 'choice',
                             required: true,
-                            options: ['Hair', 'Makeup', 'Styling or dressing', 'Photography', 'Video', 'Production or backstage', 'Sound or lights', 'Door or guest list', 'Something else'],
+                            options: ['Hair or makeup ($100)', 'Video (send us your quote)'],
+                        },
+                        {
+                            id: 'quote',
+                            label: 'What is your quote for video?',
+                            type: 'text',
+                            required: true,
+                            hint: 'Your price, and what it includes.',
+                            placeholder: '$',
+                            showIf: { id: 'role', equals: 'Video (send us your quote)' },
                         },
                         {
                             id: 'experience',
@@ -175,6 +185,7 @@
                             id: 'portfolio',
                             label: 'Share a link to your work.',
                             type: 'text',
+                            required: true,
                             hint: 'A portfolio, Instagram or Drive folder.',
                             placeholder: 'https://',
                         },
@@ -189,6 +200,54 @@
                     done: {
                         title: 'Thank you.',
                         text: 'You are on our crew list. We will reach out when we are building a team for a show.',
+                    },
+                },
+                {
+                    id: 'volunteers',
+                    page: 'volunteers.html',
+                    link: '',
+                    title: 'Volunteers',
+                    blurb: 'Photography and other ways to help.',
+                    eyebrow: 'Sign up',
+                    intro: 'Volunteers: photographers, and anyone who wants to help make a show happen. Tell us how you would like to help.',
+                    start: 'START',
+                    questions: [
+                        { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
+                        { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
+                        { id: 'phone', label: 'What is your phone number?', type: 'text', required: true, hint: 'For show days, so we can reach you quickly.' },
+                        { id: 'instagram', label: 'What is your Instagram?', type: 'text', placeholder: '@yourhandle' },
+                        {
+                            id: 'role',
+                            label: 'How would you like to help?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Photography', 'Styling or dressing', 'Production or backstage', 'Sound or lights', 'Door or guest list', 'Something else'],
+                        },
+                        {
+                            id: 'experience',
+                            label: 'Have you worked on fashion shows before?',
+                            type: 'choice',
+                            required: true,
+                            options: ['Not yet, but I am keen', 'A few', 'Lots'],
+                        },
+                        {
+                            id: 'portfolio',
+                            label: 'Share a link to your work.',
+                            type: 'text',
+                            hint: 'Optional.',
+                            placeholder: 'https://',
+                        },
+                        {
+                            id: 'notes',
+                            label: 'Anything we should know?',
+                            type: 'longtext',
+                            hint: 'Dates you cannot do, anything else.',
+                            placeholder: 'Type your answer here',
+                        },
+                    ],
+                    done: {
+                        title: 'Thank you.',
+                        text: 'You are on our volunteer list. We will reach out when we need a hand at a show.',
                     },
                 },
             ],
