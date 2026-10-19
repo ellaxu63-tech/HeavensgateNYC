@@ -267,13 +267,25 @@ main:focus { outline: none; }
 .pill--frame:hover img { transform: none; }
 .pill--jewel-label { position: absolute; inset: 0; display: grid; place-items: center; font: 400 13px/1 var(--mono); letter-spacing: 0.02em; text-transform: uppercase; } /* the same type as .pill */
 
-/* On phones the same picture, whole, sits in the middle of the home page under the sentence. */
-.home-apply { position: relative; display: none; }
+/* On phones APPLY is a plain call to action in the middle of the home page: white text with a white line under it. */
+.home-apply { display: none; }
 
 @media (max-width: 860px) {
-    .home-apply { display: block; width: 112px; margin: 6px auto 0; pointer-events: auto; color: var(--fg); text-decoration: none; }
-    .home-apply img { display: block; width: 100%; height: auto; transition: opacity 160ms ease; }
-    .home-apply:active img { opacity: 0.7; }
+    .home-apply {
+        display: block;
+        width: fit-content;
+        margin: 10px auto 0;
+        padding: 12px 10px;
+        color: var(--fg);
+        font: 400 15px/1 var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 7px;
+        pointer-events: auto;
+    }
+    .home-apply:active { opacity: 0.6; }
     .site-header { grid-template-columns: 1fr auto; }
     .brand { gap: 12px; }
     .brand-name { font-size: 24px; }
@@ -664,14 +676,13 @@ html.fall-on .stage-intro { visibility: hidden; }
 }
 .fall-layer > * { position: absolute; margin: 0; white-space: nowrap; will-change: transform; }
 .fall-layer > .home-apply { display: block; margin: 0; }
-.fall-layer > .home-apply img { width: 100%; height: auto; }
 
 /* Reduced motion: nothing falls, the writing just fades out. */
 @media (prefers-reduced-motion: reduce) {
     html.project-selected .site-nav .pill,
     html.project-selected .site-footer--fixed .pill { color: transparent; background: transparent; }
-    html.project-selected .site-nav .pill--jewel img,
-    html.project-selected .home-apply img { opacity: 0; }
+    html.project-selected .site-nav .pill--jewel img { opacity: 0; }
+    html.project-selected .home-apply { color: transparent; }
     html.project-selected .site-header .brand-name,
     html.project-selected .stage-intro { color: transparent; }
     html.project-selected .site-header .brand-logo { opacity: 0; }

@@ -92,10 +92,10 @@ account that owns the sheet: share the folder with whoever does the casting. If 
 instead, add a **File upload** question there (people then need a Google sign-in).
 
 The forms are in the main menu (APPLY, before CONNECT), in the footers, and listed on the Connect
-page. APPLY is also a picture button: a frame with the word written on it in the same type as the other links
-(`assets/apply-frame.webp`, set in `form.buttonFrame`). It sits in the header, right of EVENTS, and on phones (where
-the header has no room) in the middle of the home page, under the sentence. Leave `buttonFrame` and `buttonImage`
-empty for a plain link in the header. The first screen of every form, and
+page. On wide screens APPLY is also in the header, right of EVENTS, as a picture button: a frame with the word written on it
+in the same type as the other links (`assets/apply-frame.webp`, set in `form.buttonFrame`; leave `buttonFrame` and
+`buttonImage` empty for a plain link). On phones, where the header has no room, the home page has a plain APPLY link
+(white text, a white line under it) in the middle, under the sentence. The first screen of every form, and
 the Apply list, has an "In the press" line: the outlets in the `press` list (each once) and "and more", so it grows
 when you add press. Under each form a small slideshow of the gallery (the projects' covers) keeps going between
 the questions; each slide opens its project in a new tab.

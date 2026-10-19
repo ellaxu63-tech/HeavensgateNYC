@@ -80,16 +80,15 @@
         )
     }
 
-    // On phones the header has no room for links, so the same picture goes in the middle of the home page, under
-    // the intro sentence (inside it, so the floating images keep clear of it too).
+    // On phones the header has no room for links, so APPLY goes in the middle of the home page as a plain call
+    // to action (white text, a white line under it) below the intro sentence. It is inside the sentence's box,
+    // so the floating images keep clear of it too. (Wide screens hide it: they have the header button.)
     function addHomeApply() {
         var intro = document.querySelector('.stage-intro')
         if (!isHome || !intro || !HG.formsOn()) return
-        var picture = applyPicture(112, 84)
-        if (!picture) return
         intro.insertAdjacentHTML(
             'beforeend',
-            '<a class="home-apply" href="apply.html" aria-label="' + esc(data.form.label || 'APPLY') + '" data-cursor="open">' + picture + '</a>'
+            '<a class="home-apply" href="apply.html">' + esc(data.form.label || 'APPLY') + '</a>'
         )
     }
 
