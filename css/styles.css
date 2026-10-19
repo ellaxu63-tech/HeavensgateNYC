@@ -256,14 +256,24 @@ main:focus { outline: none; }
 }
 .menu-toggle { min-width: 80px; }
 
-/* The jeweled APPLY button (a picture with the letters in it) beside EVENTS. */
-.pill--jewel { height: 54px; padding: 0; border-radius: 0; background: transparent; }
+/* The APPLY button beside EVENTS: a picture of a frame, with the word written on it (.pill--frame). */
+.pill--jewel { position: relative; height: 54px; padding: 0; border-radius: 0; background: transparent; }
 .pill--jewel:hover,
 .pill--jewel[aria-current="page"] { background: transparent; }
 .pill--jewel img { display: block; width: auto; height: 100%; transition: transform 240ms ease, filter 240ms ease; }
 .pill--jewel:hover img { transform: scale(1.07) rotate(-1.5deg); filter: brightness(1.18); }
+.pill--frame { height: 58px; transition: transform 240ms ease; }
+.pill--frame:hover { transform: scale(1.07) rotate(-1.5deg); }
+.pill--frame:hover img { transform: none; }
+.pill--jewel-label { position: absolute; inset: 0; display: grid; place-items: center; font: 400 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* On phones the same picture, whole, sits in the middle of the home page under the sentence. */
+.home-apply { display: none; }
 
 @media (max-width: 860px) {
+    .home-apply { display: block; width: min(200px, 54vw); margin: 10px auto 0; pointer-events: auto; }
+    .home-apply img { display: block; width: 100%; height: auto; transition: opacity 160ms ease; }
+    .home-apply:active img { opacity: 0.7; }
     .site-header { grid-template-columns: 1fr auto; }
     .brand { gap: 12px; }
     .brand-name { font-size: 24px; }
@@ -653,12 +663,15 @@ html.fall-on .stage-intro { visibility: hidden; }
     font-family: var(--mono);
 }
 .fall-layer > * { position: absolute; margin: 0; white-space: nowrap; will-change: transform; }
+.fall-layer > .home-apply { display: block; margin: 0; }
+.fall-layer > .home-apply img { width: 100%; height: auto; }
 
 /* Reduced motion: nothing falls, the writing just fades out. */
 @media (prefers-reduced-motion: reduce) {
     html.project-selected .site-nav .pill,
     html.project-selected .site-footer--fixed .pill { color: transparent; background: transparent; }
-    html.project-selected .site-nav .pill--jewel img { opacity: 0; }
+    html.project-selected .site-nav .pill--jewel img,
+    html.project-selected .home-apply img { opacity: 0; }
     html.project-selected .site-header .brand-name,
     html.project-selected .stage-intro { color: transparent; }
     html.project-selected .site-header .brand-logo { opacity: 0; }

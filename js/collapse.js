@@ -127,7 +127,7 @@
         document.body.appendChild(layer)
         items = []
 
-        document.querySelectorAll('.site-nav .pill, .site-footer--fixed .pill').forEach(cloneOf)
+        document.querySelectorAll('.site-nav .pill, .site-footer--fixed .pill, .home-apply').forEach(cloneOf)
         document.querySelectorAll('.brand-name, .brand-logo').forEach(cloneOf)
         var intro = document.querySelector('.stage-intro')
         if (intro) wordsOf(intro)
