@@ -265,6 +265,54 @@
             .join('')
     }
 
+    // ------------------------------------------------------------- tickets
+    // One row per show (js/data.js, tickets.shows). Without a `link` the row says "On sale soon" and points to the
+    // mailing list; with one it shows GET TICKETS, which opens the ticketing site in a new tab.
+    function renderTickets() {
+        var cfg = data.tickets || {}
+        var shows = cfg.shows || []
+        var listLink = HG.mailingListOn()
+            ? '<a class="text-link" href="connect.html#list">Join the mailing list to hear first</a>'
+            : '<a class="text-link" href="mailto:' + esc(data.contactEmail) + '">Write to us to hear first</a>'
+        var holder = main.querySelector('.tickets-list')
+
+        holder.innerHTML = shows.length
+            ? shows
+                  .map(function (show) {
+                      var live = /^https?:\/\//i.test(show.link || '') && !show.soldOut
+                      var status = show.soldOut ? 'Sold out' : live ? 'On sale' : 'On sale soon'
+                      var action = show.soldOut
+                          ? '<span class="pill ticket-off">SOLD OUT</span>'
+                          : live
+                            ? '<a class="pill pill--accent" href="' + esc(show.link) + '" target="_blank" rel="noopener noreferrer">' + esc(show.button || 'GET TICKETS') + ' ↗</a>'
+                            : '<span class="pill ticket-off">TICKETS ON SALE SOON</span>'
+                      return (
+                          '<article class="ticket">' +
+                              '<div class="ticket-main">' +
+                                  '<span class="events-card-tag' + (live ? ' upcoming' : '') + '">' + esc(status) + '</span>' +
+                                  '<span class="events-card-date">' + esc(show.date || '') + '</span>' +
+                                  '<h2 class="events-card-title">' + esc(show.title) + '</h2>' +
+                                  (show.location ? '<p class="ticket-meta">' + esc(show.location) + '</p>' : '') +
+                              '</div>' +
+                              '<div class="ticket-side">' +
+                                  (show.text ? '<p class="ticket-text">' + esc(show.text) + '</p>' : '') +
+                                  (show.price ? '<p class="ticket-price">' + esc(show.price) + '</p>' : '') +
+                                  (!live && !show.soldOut && show.onSale ? '<p class="ticket-meta">' + esc(show.onSale) + '</p>' : '') +
+                                  '<div class="ticket-actions">' + action + (live || show.soldOut ? '' : listLink) + '</div>' +
+                              '</div>' +
+                          '</article>'
+                      )
+                  })
+                  .join('')
+            : '<article class="ticket"><div class="ticket-main"><h2 class="events-card-title">Nothing on sale right now.</h2></div>' +
+              '<div class="ticket-side"><div class="ticket-actions">' + listLink + '</div></div></article>'
+
+        var note = main.querySelector('.tickets-note')
+        if (note && cfg.note) {
+            note.innerHTML = esc(cfg.note) + ' <a class="text-link" href="mailto:' + esc(data.contactEmail) + '">' + esc(data.contactEmail) + '</a>'
+        }
+    }
+
     // ---------------------------------------------------------- email links
     function fillContactEmail() {
         main.querySelectorAll('[data-contact-email]').forEach(function (a) {
@@ -371,6 +419,9 @@
             renderEvents(function (ev) {
                 return ev.type === 'Show'
             })
+            break
+        case 'tickets':
+            renderTickets()
             break
         case 'connect':
             fillContactEmail()

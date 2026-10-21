@@ -32,6 +32,7 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `models.html`   | The model casting form (measurements, photos, professional details)       |
 | `press.html`    | Press list                                                                 |
 | `events.html`   | Events (upcoming + past)                                                   |
+| `tickets.html`  | Tickets: one row per show, with a GET TICKETS button once you add the link |
 | `shows.html`    | Events of type "Show"                                                      |
 | `event.html`    | One event with its posters (`event.html?slug=nyfw-2026-collective-runway`) |
 | `about.html`    | About                                                                      |
@@ -162,6 +163,19 @@ poster shown on its card) and `images` (all the posters, main one first) and
 the card links to its own page; `summary` and `credits` fill that page. Every
 poster in `images` also floats on the home page with the projects (use `thumb`
 for a small version and `label` for its caption) and links to the event.
+
+## Tickets
+
+`tickets.html` (TICKETS in the menu) has one row per show, from `tickets.shows` in [`js/data.js`](js/data.js). The site
+does not take payments: tickets are sold on a ticketing site (Eventbrite, Posh, Dice, Tixr, Ticket Tailor, or Resident
+Advisor if it accepts you) and this page sends people there.
+
+- **Before tickets are on sale**, leave a show's `link` empty. The row says "On sale soon" and points to the mailing
+  list (or to your email if the mailing list is not set up). `onSale` can add a line such as "On sale in January".
+- **When they are on sale**, paste the ticket page's address into `link`. The row then shows GET TICKETS (opens in a
+  new tab); `price` adds a line such as "From $40"; `button` changes the wording.
+- **Sold out**: set `soldOut: true`.
+- **A new show**: copy the entry and change it.
 
 ## The video on the home page
 

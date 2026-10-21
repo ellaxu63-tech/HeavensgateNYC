@@ -370,6 +370,33 @@
             ],
         },
 
+        // The Tickets page (tickets.html): one row per show. Tickets are sold on a ticketing site (Eventbrite, Posh,
+        // RA, Dice, Tixr ...), not here. Until you have the ticket page's address, leave `link` empty: the row says
+        // "On sale soon" and points to the mailing list. Paste the address into `link` when tickets go on sale and
+        // the GET TICKETS button appears (it opens in a new tab).
+        //   title, date, location, text – shown on the row
+        //   link    – the ticket page's address (empty = not on sale yet)
+        //   price   – optional line, e.g. 'From $40'
+        //   onSale  – optional line while `link` is empty, e.g. 'On sale in January'
+        //   soldOut – true shows SOLD OUT and takes the button away
+        //   button  – optional wording of the button (default 'GET TICKETS')
+        tickets: {
+            note: 'Questions about tickets? Write to',
+            shows: [
+                {
+                    title: 'Liquid Sky',
+                    date: 'February 13, 2027',
+                    location: 'NYC',
+                    text: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
+                    link: '',
+                    price: '',
+                    onSale: '',
+                    soldOut: false,
+                    button: 'GET TICKETS',
+                },
+            ],
+        },
+
         // The video on the home page: a floating thumbnail (the poster image) that
         // opens a player when clicked. Remove this block to take it off.
         homeVideo: {
@@ -388,6 +415,7 @@
             { label: 'STUDIO', href: 'studio.html' },
             { label: 'PRESS', href: 'press.html' },
             { label: 'EVENTS', href: 'events.html' },
+            { label: 'TICKETS', href: 'tickets.html' },
             { label: 'CONNECT', href: 'connect.html' },
         ],
 

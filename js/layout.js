@@ -114,7 +114,7 @@
         menu.className = 'menu-overlay'
         menu.setAttribute('aria-label', 'Main menu')
         menu.innerHTML =
-            '<ol class="menu-list">' +
+            '<ol class="menu-list" style="--menu-count:' + menuNav.length + '">' +
                 menuNav
                     .map(function (item, i) {
                         var number = String(i + 1).padStart(2, '0')

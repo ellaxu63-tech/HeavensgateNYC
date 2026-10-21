@@ -343,7 +343,9 @@ html.menu-open { overflow: hidden; }
 }
 .menu-label {
     padding: 10px 0 14px var(--gutter);
-    font: 400 clamp(48px, min(9vw, 12vh), 128px) / 0.95 var(--serif);
+    /* As large as 9vw / 12vh allow, but small enough that every item (--menu-count, set in js/layout.js) and the
+       row of small links under them fit the window; each item is 0.95 of its font size + 25px of padding and rule. */
+    font: 400 clamp(40px, min(9vw, 12vh, calc(((100vh - 160px) / var(--menu-count, 6) - 25px) / 0.95)), 128px) / 0.95 var(--serif);
     letter-spacing: -0.02em;
     text-transform: var(--display-case);
     transition: opacity 200ms ease;
@@ -366,7 +368,7 @@ html.menu-open { overflow: hidden; }
 @media (max-width: 860px) {
     .menu-item { grid-template-columns: 56px 1fr; }
     .menu-num { padding-left: var(--pad); }
-    .menu-label { padding-left: 0; font-size: clamp(44px, 14vw, 88px); }
+    .menu-label { padding-left: 0; font-size: clamp(40px, min(14vw, calc(((100vh - 150px) / var(--menu-count, 6) - 25px) / 0.95)), 88px); }
     .menu-arrow { display: none; }
 }
 
@@ -1237,7 +1239,23 @@ a.events-card:hover { background: rgba(var(--fg-rgb), 0.05); }
 .events-card-arrow { align-self: flex-end; font-size: 20px; opacity: 0.5; }
 a.events-card:hover .events-card-arrow { opacity: 1; }
 
+/* Tickets: one row per show, split at the centre line like the pages' headers. */
+.tickets-list { display: flex; flex-direction: column; }
+.ticket { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+.ticket-main { display: flex; flex-direction: column; gap: 14px; min-width: 0; padding: 30px var(--gutter) 34px var(--pad); }
+.ticket-side { display: flex; flex-direction: column; gap: 18px; min-width: 0; padding: 30px var(--pad) 34px var(--gutter); }
+.ticket-meta { color: var(--muted); text-transform: uppercase; }
+.ticket-text { max-width: 46ch; color: var(--muted); font: 400 13px/1.8 var(--mono); letter-spacing: 0.02em; text-transform: uppercase; }
+.ticket-price { font: 400 clamp(26px, 2.6vw, 40px) / 1.05 var(--serif); letter-spacing: -0.01em; text-transform: var(--display-case); }
+.ticket-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.ticket-off { border: 1px solid var(--grid); color: var(--muted); cursor: default; }
+.ticket-off:hover { background: transparent; }
+.tickets-note { padding: 26px var(--pad); color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+
 @media (max-width: 860px) {
+    .ticket { grid-template-columns: 1fr; }
+    .ticket-main { padding: 26px var(--pad) 8px; }
+    .ticket-side { padding: 10px var(--pad) 30px; }
     .events-grid { grid-template-columns: 1fr; }
     .events-card,
     .events-card:nth-child(even) { min-height: 0; padding: 26px var(--pad); }
