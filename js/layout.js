@@ -22,10 +22,10 @@
         HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'studio.html#list', className: 'pill--extra pill--list' }] : []
     )
 
-    // The main menu (js/data.js, nav), with APPLY (the forms) added at the end once a form is connected.
+    // The main menu (js/data.js, nav), with APPLY (the forms) added at the top once a form is connected.
     var menuNav = data.nav.slice()
     if (HG.formsOn()) {
-        menuNav.push({ label: data.form.label || 'APPLY', href: 'apply.html' })
+        menuNav.unshift({ label: data.form.label || 'APPLY', href: 'apply.html' })
     }
 
     function currentFile() {

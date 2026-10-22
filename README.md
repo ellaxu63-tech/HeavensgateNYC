@@ -92,7 +92,7 @@ them in a Drive folder called **HEAVENSGATE form photos** (made the first time),
 account that owns the sheet: share the folder with whoever does the casting. If a form uses a Google Form `link`
 instead, add a **File upload** question there (people then need a Google sign-in).
 
-The forms are in the main menu (APPLY, last), in the footers, and listed on the Studio
+The forms are in the main menu (APPLY, first), in the footers, and listed on the Studio
 page. On wide screens APPLY is also in the header, right of EVENTS, as a picture button: a frame with the word written on it
 in the same type as the other links (`assets/apply-frame.webp`, set in `form.buttonFrame`; leave `buttonFrame` and
 `buttonImage` empty for a plain link). On phones, where the header has no room, the home page has a plain APPLY link
