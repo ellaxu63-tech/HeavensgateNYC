@@ -215,6 +215,12 @@
         var photosLink = proj
             ? '<p class="page-lede"><a class="text-link" href="' + esc(HG.projectUrl(proj)) + '">' + esc(ev.projectLabel || 'See the photos') + ' →</a></p>'
             : ''
+        // Links an event can carry (js/data.js, links): tickets, the application ...
+        var eventLinks = (ev.links || [])
+            .map(function (item) {
+                return '<p class="page-lede"><a class="text-link" href="' + esc(item.href) + '">' + esc(item.label) + ' →</a></p>'
+            })
+            .join('')
         var videoItems = ev.videos || (ev.video ? [ev.video] : proj ? proj.videos || (proj.video ? [proj.video] : []) : [])
         // With a video, the card image is just its poster frame, so don't repeat it.
         var images = ev.images && ev.images.length ? ev.images : ev.image && !videoItems.length ? [ev.image] : []
@@ -232,6 +238,7 @@
                     '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
                     bioHtml(ev.summary || (proj && proj.summary)) +
                     photosLink +
+                    eventLinks +
                     creditsHtml((ev.details || []).concat(ev.credits || (proj && proj.credits) || [])) +
                 '</div>' +
             '</div>'

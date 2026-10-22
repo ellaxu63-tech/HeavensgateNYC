@@ -1072,7 +1072,30 @@
         //   video / videos – a clip shown first on the event page (same as for
         //              projects); an event also shows its project's video
         //   projectLabel – wording of the link to the project (default "See the photos")
+        //   links    – [{ label, href }] shown as links under the text (tickets, the application ...)
+        //   tag      – 'Upcoming' (pink) or 'Past'
         events: [
+            {
+                // A placeholder until the poster and the details are ready: no poster yet, so the card is text only.
+                // Add `image` / `images` (as in the events below) and edit `summary` and `details` when you have them.
+                slug: 'liquid-sky',
+                tag: 'Upcoming',
+                title: 'Liquid Sky',
+                date: 'Feb 13, 2027',
+                location: 'NYC',
+                type: 'Show',
+                summary: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
+                details: [
+                    { role: 'Date', names: ['Saturday, February 13, 2027'] },
+                    { role: 'City', names: ['NYC'] },
+                    { role: 'Tickets', names: ['On sale soon'] },
+                    { role: 'Venue', names: ['To be announced'] },
+                ],
+                links: [
+                    { label: 'Apply as a designer', href: 'designers.html' },
+                    { label: 'Tickets', href: 'tickets.html' },
+                ],
+            },
             {
                 slug: 'sound-form',
                 tag: 'Past',
