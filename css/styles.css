@@ -777,8 +777,18 @@ html.fall-on .stage-intro { visibility: hidden; }
     .offer p { padding: 0 var(--pad) 32px; }
 }
 
-/* Connect */
+/* Work with us (the bottom of the Studio page): the old Connect page's blocks. */
+.studio-head { display: grid; grid-template-columns: 1fr 1fr; align-items: end; border-bottom: 1px solid var(--rule); scroll-margin-top: var(--header-h); }
+.studio-head h2 {
+    padding: clamp(40px, 6vw, 88px) var(--gutter) 22px var(--pad);
+    font: 400 clamp(48px, 7.5vw, 128px) / 0.9 var(--serif);
+    letter-spacing: -0.025em;
+    text-transform: var(--display-case);
+    overflow-wrap: anywhere;
+}
+.studio-head p { padding: 0 var(--pad) 28px var(--gutter); color: var(--muted); text-transform: uppercase; }
 .connect-body {
+    scroll-margin-top: var(--header-h);
     padding: clamp(36px, 5vw, 64px) var(--pad) clamp(44px, 6vw, 80px) calc(50% + var(--gutter));
     border-bottom: 1px solid var(--rule);
 }
@@ -1027,6 +1037,9 @@ html.list-hold .site-footer--fixed::after { animation-play-state: paused; }
 
 @media (max-width: 860px) {
     .connect-body { padding-left: var(--pad); }
+    .studio-head { grid-template-columns: 1fr; }
+    .studio-head h2 { padding: 36px var(--pad) 14px; }
+    .studio-head p { padding: 0 var(--pad) 26px; }
 }
 
 /* Gallery */

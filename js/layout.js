@@ -19,14 +19,13 @@
     // ABOUT / SHOWS, plus APPLY and MAILING LIST once those are connected (js/data.js).
     var secondary = data.secondary.concat(
         HG.formsOn() ? [{ label: data.form.label || 'APPLY', href: 'apply.html', className: 'pill--extra', apply: true }] : [],
-        HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'connect.html#list', className: 'pill--extra pill--list' }] : []
+        HG.mailingListOn() ? [{ label: 'MAILING LIST', href: 'studio.html#list', className: 'pill--extra pill--list' }] : []
     )
 
-    // The main menu: GALLERY ... CONNECT, with APPLY (the forms) before CONNECT once a form is connected.
+    // The main menu (js/data.js, nav), with APPLY (the forms) added at the end once a form is connected.
     var menuNav = data.nav.slice()
     if (HG.formsOn()) {
-        var at = menuNav.map(function (item) { return item.href }).indexOf('connect.html')
-        menuNav.splice(at === -1 ? menuNav.length : at, 0, { label: data.form.label || 'APPLY', href: 'apply.html' })
+        menuNav.push({ label: data.form.label || 'APPLY', href: 'apply.html' })
     }
 
     function currentFile() {
@@ -39,7 +38,7 @@
     }
 
     function linkAttrs(item) {
-        // A link to a spot on a page (connect.html#list) is not "the page you are on".
+        // A link to a spot on a page (studio.html#list) is not "the page you are on".
         return 'href="' + esc(item.href) + '"' + (isCurrent(item.href) && item.href.indexOf('#') === -1 ? ' aria-current="page"' : '')
     }
 
@@ -253,11 +252,11 @@
 
     // ---------------------------------------------------- the JOIN THE LIST popup
     // A small card over the dimmed page with the mailing list sign-up. It opens from the MAILING
-    // LIST links and, once, by itself on the home page (js/data.js: popupDelay, popupDays, or a link ending in #join). Not on Connect, which
+    // LIST links and, once, by itself on the home page (js/data.js: popupDelay, popupDays, or a link ending in #join). Not on the Studio page, which
     // already shows the sign-up. It is built before Sender's script loads, so the script finds the form's place.
     function initListPopup() {
         var cfg = data.newsletter
-        if (page === 'connect' || !HG.mailingListOn() || !(cfg.embed || cfg.link || cfg.senderForm)) return
+        if (page === 'studio' || !HG.mailingListOn() || !(cfg.embed || cfg.link || cfg.senderForm)) return
 
         var root = document.documentElement
         var popup = document.createElement('div')
@@ -372,9 +371,9 @@
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape' && isOpen()) close()
         })
-        // The MAILING LIST pills (menu, footers) open it instead of going to Connect.
+        // The MAILING LIST pills (menu, footers) open it instead of going to the Studio page.
         document.addEventListener('click', function (event) {
-            var link = event.target.closest && event.target.closest('a[href="connect.html#list"]')
+            var link = event.target.closest && event.target.closest('a[href="studio.html#list"]')
             if (!link || event.defaultPrevented || event.button || event.metaKey || event.ctrlKey || event.shiftKey) return
             event.preventDefault()
             open()

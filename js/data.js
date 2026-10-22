@@ -19,25 +19,25 @@
         intro:
             '**HEAVENSGATE NYC** is an independent fashion and performance platform producing **runway shows, live presentations, and creative experiences** for emerging designers and artists.',
 
-        // Shown in the footer and on the Connect page.
+        // Shown in the footer and at the bottom of the Studio page.
         contactEmail: 'info@heavensgateny.com',
 
         // The Instagram icon at the bottom right of every page.
         instagramUrl: 'https://www.instagram.com/heavensgatenyc/',
 
-        // The mailing list: a sign-up on the Connect page, and a MAILING LIST
+        // The mailing list: a sign-up at the bottom of the Studio page, and a MAILING LIST
         // link in the menu and footer. Nothing shows until `link`, `embed` or `action` is filled in.
         // The site can't store emails itself, so they go to a mailing service
         // (Sender, Mailchimp, Kit, Buttondown, Brevo, ...): make an account there and
         // create a sign-up form. Then use one of these:
         //   senderAccount / senderForm – for Sender: the account code from its script (loaded
         //                 on every page) and the form's code (the part after /forms/ in the form's
-        //                 address). The form is then shown on the Connect page itself.
-        //   link        – the address of the form's own page. The Connect page shows a
+        //                 address). The form is then shown on the Studio page itself.
+        //   link        – the address of the form's own page. The Studio page shows a
         //                 "Join the list" link (text: linkLabel) that opens it. With senderForm
         //                 set it is the fallback, shown if the form does not appear.
         //   embed       – the form's embed code, pasted between the backticks. It is shown
-        //                 on the Connect page, inside the site, as the service made it.
+        //                 on the Studio page, inside the site, as the service made it.
         //   or, to keep this site's own form, take three things from the embed code:
         //   action      – the address in <form action="...">
         //   emailField  – the name="..." of the email input (e.g. EMAIL or email_address)
@@ -52,7 +52,7 @@
             emailField: 'email',
             fields: {},
             lede: 'Runway shows, castings and events, when they happen.',
-            // The big JOIN THE LIST popup (every page except Connect). It opens when the MAILING LIST link
+            // The big JOIN THE LIST popup (every page except Studio). It opens when the MAILING LIST link
             // is clicked, and by itself on the home page: popupDelay is the seconds after the site opens
             // (0 = right away, with the home page's opening animation waiting behind it until it is closed;
             // false = never by itself). Once shown it does not come back during that visit (so reloading does
@@ -416,7 +416,6 @@
             { label: 'PRESS', href: 'press.html' },
             { label: 'EVENTS', href: 'events.html' },
             { label: 'TICKETS', href: 'tickets.html' },
-            { label: 'CONNECT', href: 'connect.html' },
         ],
 
         // Links in the right half of the header, left of MENU (up to three fit

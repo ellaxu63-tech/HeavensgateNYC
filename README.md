@@ -23,8 +23,8 @@ sub-folder such as `https://you.github.io/HeavensgateNYC/`.
 | `index.html`    | Home: floating project images around the intro text                        |
 | `gallery.html`  | Every project in a grid                                                    |
 | `project.html`  | One project (`project.html?slug=runway-01`)                                |
-| `studio.html`   | What the studio does                                                       |
-| `connect.html`  | Contact, and the mailing list sign-up                                      |
+| `studio.html`   | What the studio does, then "Work with us": email, the forms, the mailing list |
+| `connect.html`  | Only sends people on to the bottom of `studio.html` (old links keep working) |
 | `apply.html`    | The list of forms (designers, crew, volunteers, models)                    |
 | `designers.html`| The designers' application, one question at a time                         |
 | `crew.html`     | The crew sign-up (hair and makeup, video, photography), one question at a time |
@@ -45,23 +45,23 @@ page), menu links, projects, press and events.
 
 ## Mailing list
 
-The Connect page has a sign-up form (and the menu and footer get a MAILING LIST
+The Studio page (at the bottom, "Work with us") has a sign-up form (and the menu and footer get a MAILING LIST
 link), but it stays hidden until it is connected. A static site can't keep
 emails itself, so the sign-ups go to a mailing service that stores the list and
 sends the emails (Sender, Mailchimp, Kit, Buttondown, Brevo, ...). Make an account
 there and create a sign-up form. Then in [`js/data.js`](js/data.js), under `newsletter`,
-put the form's page address in `link` (the Connect page then shows a "Join the list"
+put the form's page address in `link` (the Studio page then shows a "Join the list"
 link that opens it), or for Sender set `senderAccount` and `senderForm` (Sender's script
-then loads on every page and the form appears on the Connect page, with the link as the
+then loads on every page and the form appears on the Studio page, with the link as the
 fallback; this is what is live now), or paste the form's embed code into `embed`
-(it is shown inside the Connect page as the service made it; in Sender: Forms, create an
+(it is shown inside the Studio page as the service made it; in Sender: Forms, create an
 embedded form, copy the code), or keep this site's own form by filling in:
 
 - `action`: the address in the embed code's `<form action="...">`
 - `emailField`: the `name` of its email input (`EMAIL`, `email_address`, ...)
 - `fields`: any hidden inputs it has, as `{ name: 'value' }`
 
-A big **JOIN THE LIST** popup (every page except Connect) opens when someone clicks a
+A big **JOIN THE LIST** popup (every page except Studio) opens when someone clicks a
 MAILING LIST link, and by itself on the home page: `popupDelay` is the seconds after the site
 opens (`0`, the default, is right away, with the home page's opening animation waiting behind it
 until it is closed; `false` turns the automatic opening off). It does not come back during that
@@ -92,7 +92,7 @@ them in a Drive folder called **HEAVENSGATE form photos** (made the first time),
 account that owns the sheet: share the folder with whoever does the casting. If a form uses a Google Form `link`
 instead, add a **File upload** question there (people then need a Google sign-in).
 
-The forms are in the main menu (APPLY, before CONNECT), in the footers, and listed on the Connect
+The forms are in the main menu (APPLY, last), in the footers, and listed on the Studio
 page. On wide screens APPLY is also in the header, right of EVENTS, as a picture button: a frame with the word written on it
 in the same type as the other links (`assets/apply-frame.webp`, set in `form.buttonFrame`; leave `buttonFrame` and
 `buttonImage` empty for a plain link). On phones, where the header has no room, the home page has a plain APPLY link

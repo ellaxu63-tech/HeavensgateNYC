@@ -3,56 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Connect — HEAVENSGATE NYC</title>
-    <meta name="description" content="Get in touch with HEAVENSGATE NYC.">
+    <title>HEAVENSGATE NYC</title>
+    <meta name="robots" content="noindex">
     <meta name="theme-color" content="#000000">
-    <meta property="og:title" content="Connect — HEAVENSGATE NYC">
-    <meta property="og:description" content="Get in touch with HEAVENSGATE NYC.">
-    <meta property="og:type" content="website">
-    <link rel="icon" href="assets/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-    <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Connect now lives at the bottom of the Studio page. This keeps old links working (connect.html#list goes to studio.html#list). -->
+    <meta http-equiv="refresh" content="0; url=studio.html#connect">
+    <style>body { margin: 0; padding: 24px; background: #000; color: #fff; font: 14px/1.6 ui-monospace, Menlo, monospace; } a { color: #fff; }</style>
 </head>
-<body data-page="connect">
-    <noscript><p style="padding:24px">HEAVENSGATE NYC needs JavaScript turned on to display this page.</p></noscript>
-    <main id="main" class="page" tabindex="-1">
-        <header class="page-header">
-            <h1 class="page-title">Connect</h1>
-            <p class="page-sub">Collaborations, presentations &amp; enquiries</p>
-        </header>
-        <section class="connect-body">
-            <p class="eyebrow">Email</p>
-            <!-- The address is set in js/data.js (contactEmail). -->
-            <a class="connect-email" data-contact-email href="mailto:info@heavensgateny.com">info@heavensgateny.com</a>
-        </section>
-        <!-- The forms (designers, crew, volunteers). Hidden until a form is connected in js/data.js (form). -->
-        <section class="connect-body" id="apply" hidden>
-            <p class="eyebrow">Apply</p>
-            <p class="list-lede" data-apply-lede></p>
-            <div data-apply-rows></div>
-        </section>
-        <!-- The mailing list. Hidden until the form address is set in js/data.js (newsletter). -->
-        <section class="connect-body" id="list" hidden>
-            <p class="eyebrow">Mailing list</p>
-            <p class="list-lede" data-list-lede></p>
-            <div class="list-embed" hidden></div>
-            <form class="list-form" novalidate>
-                <label class="visually-hidden" for="list-email">Email address</label>
-                <input class="list-input" id="list-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="your@email.com" required>
-                <input class="list-trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-                <button class="pill pill--accent list-submit" type="submit">JOIN</button>
-            </form>
-            <p class="list-status" role="status" aria-live="polite"></p>
-            <p class="list-consent" hidden></p>
-        </section>
-    </main>
-    <script src="js/data.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/layout.js"></script>
-    <script src="js/cursor.js"></script>
-    <script src="js/pages.js"></script>
+<body>
+    <p>This page moved to <a href="studio.html#connect">Studio</a>.</p>
+    <script>location.replace('studio.html' + (location.hash || '#connect'))</script>
 </body>
 </html>

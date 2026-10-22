@@ -18,7 +18,7 @@
         return !!(n && (n.embed || n.link || n.action))
     }
 
-    // Puts the mailing list sign-up into `holder` (the Connect page and the popup both use it): the service's embed
+    // Puts the mailing list sign-up into `holder` (the Studio page and the popup both use it): the service's embed
     // code (its scripts are rebuilt, because scripts set through innerHTML never run), or Sender's form (filled in
     // by Sender's script, see layout.js) with a link to its page as the fallback, or just that link.
     HG.mountMailingList = function (holder) {
@@ -68,7 +68,7 @@
         return HG.openForms().length > 0
     }
 
-    // The list of forms as rows (A designers, B crew...), for the Apply page and the Connect page.
+    // The list of forms as rows (A designers, B crew...), for the Apply page and the Studio page.
     HG.formRows = function (forms) {
         return (
             '<div class="apply-choices apply-choices--list">' +

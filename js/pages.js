@@ -272,7 +272,7 @@
         var cfg = data.tickets || {}
         var shows = cfg.shows || []
         var listLink = HG.mailingListOn()
-            ? '<a class="text-link" href="connect.html#list">Join the mailing list to hear first</a>'
+            ? '<a class="text-link" href="studio.html#list">Join the mailing list to hear first</a>'
             : '<a class="text-link" href="mailto:' + esc(data.contactEmail) + '">Write to us to hear first</a>'
         var holder = main.querySelector('.tickets-list')
 
@@ -322,7 +322,7 @@
     }
 
     // ---------------------------------------------------------------- forms
-    // The list of forms (designers, crew, volunteers) on the Connect page, once a form is connected.
+    // The list of forms (designers, crew, volunteers, models) at the bottom of the Studio page, once a form is connected.
     function initFormsList() {
         var section = main.querySelector('#apply')
         if (!section || !HG.formsOn()) return
@@ -423,7 +423,7 @@
         case 'tickets':
             renderTickets()
             break
-        case 'connect':
+        case 'studio':
             fillContactEmail()
             initFormsList()
             initMailingList()
