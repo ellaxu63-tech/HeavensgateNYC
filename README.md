@@ -85,7 +85,7 @@ is for (`show`: title, date, text): that appears on its first screen and is save
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
 The **models** form says casting is to be announced and that it is a volunteer position (the `intro` and `blurb` in
-`js/data.js`; reword them when casting opens). It has a `photos` question: the person picks up to three pictures
+`js/data.js`; reword them when casting opens). Height has its own question with boxes for feet and inches, or centimeters (saved as one answer in both units, for example "5 ft 10 in (178 cm)" in the `height` column). It also has a `photos` question: the person picks up to three pictures
 from their phone or computer, each is shrunk in their browser (about 150 KB) and sent with the answers. The script saves
 them in a Drive folder called **HEAVENSGATE form photos** (made the first time), puts each one's link in the sheet
 (columns `photos_1`, `photos_2`, `photos_3`) and, if emails are on, attaches them to the email. The photos stay private to the Google

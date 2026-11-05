@@ -82,8 +82,9 @@
         // Each question:
         //   id          – the column name in the sheet (letters and numbers, unique within the form)
         //   label       – the question
-        //   type        – 'text', 'email', 'longtext', 'choice' or 'photos' (the person picks pictures from their
-        //                 phone or computer; `max` is how many, 3 if left out)
+        //   type        – 'text', 'email', 'longtext', 'choice', 'photos' (the person picks pictures from their
+        //                 phone or computer; `max` is how many, 3 if left out) or 'height' (boxes for feet and inches,
+        //                 or centimeters; saved as one answer, "5 ft 10 in (178 cm)")
         //   required    – true to make it compulsory
         //   hint        – a small line under the question (optional)
         //   placeholder – the faint text in the empty answer (optional)
@@ -300,7 +301,7 @@
                         { id: 'email', label: 'What is your email?', type: 'email', required: true, placeholder: 'your@email.com' },
                         { id: 'phone', label: 'What is your phone number?', type: 'text', hint: 'Optional. For casting and show days.' },
                         { id: 'instagram', label: 'What is your Instagram?', type: 'text', required: true, placeholder: '@yourhandle' },
-                        { id: 'height', label: 'How tall are you?', type: 'text', required: true, placeholder: '5 ft 10 or 178 cm' },
+                        { id: 'height', label: 'How tall are you?', type: 'height', required: true, hint: 'Feet and inches, or centimeters.' },
                         {
                             id: 'measurements',
                             label: 'What are your measurements?',

@@ -187,6 +187,24 @@
         if (q.type === 'photos') {
             return '<div class="apply-photos" id="apply-photos"></div>'
         }
+        if (q.type === 'height') {
+            var h = answers[q.id] || {}
+            var box = function (id, label, width, max, key) {
+                return (
+                    '<label class="apply-unit"><span class="apply-unit-label">' + label + '</span>' +
+                        '<input class="apply-input apply-input--unit" id="' + id + '" style="width:' + width + 'em" type="text" inputmode="decimal" maxlength="' + max + '" autocomplete="off" value="' + esc(h[key] || '') + '">' +
+                    '</label>'
+                )
+            }
+            return (
+                '<div class="apply-height" role="group" aria-labelledby="apply-q">' +
+                    box('apply-ft', 'Feet', 1.6, 1, 'ft') +
+                    box('apply-in', 'Inches', 2.1, 4, 'in') +
+                    '<span class="apply-or" aria-hidden="true">or</span>' +
+                    box('apply-cm', 'Centimeters', 2.8, 5, 'cm') +
+                '</div>'
+            )
+        }
         if (q.type === 'choice') {
             return (
                 '<div class="apply-choices" role="radiogroup" aria-labelledby="apply-q">' +
@@ -311,6 +329,13 @@
         if (q.type === 'photos') {
             mountPhotos(q)
             field = form.querySelector('.apply-add input') || form.querySelector('.apply-next')
+        } else if (q.type === 'height') {
+            field = form.querySelector('#apply-ft')
+            form.querySelectorAll('.apply-input--unit').forEach(function (input) {
+                input.addEventListener('input', function () {
+                    setError('')
+                })
+            })
         } else if (q.type === 'choice') {
             form.querySelectorAll('input[type="radio"]').forEach(function (radio) {
                 radio.addEventListener('change', function () {
@@ -338,6 +363,29 @@
             }
         }
         field.focus({ preventScroll: true })
+    }
+
+    // The height question: feet and inches, or centimeters, saved as one answer in both units, "5 ft 10 in (178 cm)".
+    // Gives { empty: true }, { error } or { text }. If both are filled in, the feet and inches win.
+    function parseHeight(value) {
+        value = value || {}
+        var ft = String(value.ft || '').trim()
+        var inch = String(value.in || '').trim()
+        var cm = String(value.cm || '').trim()
+        var number = /^\d+(\.\d+)?$/
+        if (!ft && !inch && !cm) return { empty: true }
+        if (ft || inch) {
+            if (!number.test(ft) || (inch && !number.test(inch))) return { error: 'Please enter feet and inches as numbers, like 5 and 10.' }
+            var f = Number(ft)
+            var i = Number(inch || 0)
+            if (f < 3 || f > 8 || i >= 12) return { error: 'Please check your height: feet from 3 to 8, inches from 0 to 11.' }
+            return { text: f + ' ft ' + i + ' in (' + Math.round((f * 12 + i) * 2.54) + ' cm)' }
+        }
+        if (!number.test(cm)) return { error: 'Please enter centimeters as a number, like 178.' }
+        var c = Number(cm)
+        if (c < 100 || c > 250) return { error: 'Please check your height in centimeters (100 to 250).' }
+        var total = Math.round(c / 2.54)
+        return { text: Math.round(c) + ' cm (' + Math.floor(total / 12) + ' ft ' + (total % 12) + ' in)' }
     }
 
     // ---- photos ----
@@ -476,6 +524,14 @@
     // Keep what is typed when going back.
     function remember() {
         var q = questions[index]
+        if (q.type === 'height') {
+            var read = function (id) {
+                var input = frame.querySelector(id)
+                return input ? input.value.trim() : ''
+            }
+            answers[q.id] = { ft: read('#apply-ft'), in: read('#apply-in'), cm: read('#apply-cm') }
+            return
+        }
         var field = frame.querySelector('#apply-field')
         if (field && q.type !== 'photos') answers[q.id] = field.value.trim()
     }
@@ -485,7 +541,14 @@
         window.clearTimeout(timer)
         remember()
         var q = questions[index]
-        var value = q.type === 'photos' ? (answers[q.id] || []).length : answers[q.id] || ''
+        if (q.type === 'height') {
+            var tall = parseHeight(answers[q.id])
+            if (tall.error || (tall.empty && isRequired(q))) {
+                setError(tall.error || 'Please enter your height.')
+                return
+            }
+        }
+        var value = q.type === 'photos' ? (answers[q.id] || []).length : q.type === 'height' ? 1 : answers[q.id] || ''
         if (isRequired(q) && !value) {
             setError(q.type === 'choice' ? 'Please pick one.' : q.type === 'photos' ? 'Please add at least one photo.' : 'Please answer this one.')
             return
@@ -515,6 +578,10 @@
                 ;(shown ? answers[q.id] || [] : []).forEach(function (photo, n) {
                     fields[q.id + '_' + (n + 1)] = photo.data
                 })
+                return
+            }
+            if (q.type === 'height') {
+                fields[q.id] = shown ? parseHeight(answers[q.id]).text || '' : ''
                 return
             }
             fields[q.id] = shown ? answers[q.id] || '' : ''
