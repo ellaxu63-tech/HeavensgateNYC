@@ -862,6 +862,7 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-title:focus { outline: none; }
 .apply-title--intro { font-size: clamp(64px, 11vw, 192px); line-height: 0.86; }
 .apply-hint { margin-top: 20px; max-width: 44ch; color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.apply-hint--large { max-width: 42ch; color: var(--fg); font-size: clamp(15px, 1.45vw, 20px); line-height: 1.6; letter-spacing: 0.02em; }
 .apply-a { padding: clamp(24px, 4vw, 56px) var(--pad) clamp(40px, 6vw, 80px) var(--gutter); }
 .apply-text { max-width: 46ch; color: var(--muted); font: 400 13px/1.8 var(--mono); letter-spacing: 0.02em; text-transform: uppercase; }
 .apply-show { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--rule); }

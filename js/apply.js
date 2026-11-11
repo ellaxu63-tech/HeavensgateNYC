@@ -300,7 +300,7 @@
                 '<div class="apply-q">' +
                     '<p class="eyebrow">' + pad(pos + 1) + ' / ' + pad(path.length) + (isRequired(q) ? '' : ' · Optional') + '</p>' +
                     '<h1 class="apply-title" id="apply-q" tabindex="-1">' + esc(q.label) + '</h1>' +
-                    (q.hint ? '<p class="apply-hint">' + esc(q.hint) + '</p>' : '') +
+                    (q.hint ? '<p class="apply-hint' + (q.hintLarge ? ' apply-hint--large' : '') + '">' + esc(q.hint) + '</p>' : '') +
                 '</div>' +
                 '<div class="apply-a">' +
                     fieldHtml(q) +

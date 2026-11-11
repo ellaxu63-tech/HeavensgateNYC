@@ -325,6 +325,7 @@
                             type: 'choice',
                             required: true,
                             hint: 'On show day, from your call time until your role is finished.',
+                            hintLarge: true, // the hint in larger type (for text people must read)
                             options: ['Yes, I can work the full shift', 'No, I cannot'],
                             // `mustBe`: only this answer lets the form go on; the other shows `mustBeError`.
                             mustBe: 'Yes, I can work the full shift',
@@ -335,6 +336,7 @@
                             label: 'Do you understand and agree?',
                             type: 'choice',
                             required: true,
+                            hintLarge: true,
                             hint: 'I understand this is an unpaid volunteer role. I will arrive on time, stay for my whole shift, and tell the team as early as I can if I cannot make it.',
                             options: ['I understand and agree', 'No'],
                             mustBe: 'I understand and agree',
