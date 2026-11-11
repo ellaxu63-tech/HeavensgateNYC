@@ -76,7 +76,8 @@
         //            that instead of this site's own questions, and needs no `action`.
         //
         // Each form: id (also the name of its tab in the sheet), page, title, blurb (the line in the
-        // list), eyebrow, intro, start (the button), questions, done, and optionally `show` (the show
+        // list), eyebrow, intro, start (the button), questions, done, optionally `expect` ({ title, items: [{ title,
+        // text }] }, a "what to expect" list on the first screen) and optionally `show` (the show
         // it is for: title, date, location, text, and `includes`, a list of what the package covers under
         // the heading `includesTitle`; shown on the intro screen, and the title is saved as a "show" column).
         // Each question:
@@ -88,8 +89,11 @@
         //   required    – true to make it compulsory
         //   hint        – a small line under the question (optional)
         //   placeholder – the faint text in the empty answer (optional)
-        //   options     – for 'choice': the answers to pick from, each a string or { label, note }
-        //                 (the note, such as the pay, is shown on that answer's row)
+        //   options     – for 'choice': the answers to pick from, each a string or { label, note, text }
+        //                 (the note, such as the pay, is shown on that answer's row; the text, a longer
+        //                 description such as a job description, under its name)
+        //   mustBe      – for 'choice': the one answer that lets the form go on (a consent); any other
+        //                 shows `mustBeError` instead
         //   showIf      – only ask it when an earlier answer matches: { id: 'role', equals: 'Video' }
         //                 (or `in: ['Hair', 'Video']`, or `not: 'Hair'`)
         //   optionalIf  – with required: true, not compulsory when an earlier answer matches (same forms)
@@ -244,9 +248,20 @@
                     page: 'volunteers.html',
                     link: '',
                     title: 'Volunteers',
-                    blurb: 'Other ways to help at a show.',
+                    blurb: 'Other ways to help at a show. Unpaid, 6+ hour shifts.',
                     eyebrow: 'Sign up',
-                    intro: 'Volunteers: anyone who wants to help make a show happen. Tell us how you would like to help. (Volunteer photographers sign up under Crew.)',
+                    intro: 'Volunteers are the people who make a show run. This is serious, unpaid work: a volunteer shift is 6+ hours, and the team counts on you for all of it. Read what to expect and the roles, and apply only if you can commit. (Volunteer photographers sign up under Crew.)',
+                    // Shown on the first screen, under the intro (the draft wording: edit it to match how you run a show).
+                    expect: {
+                        title: 'What to expect',
+                        items: [
+                            { title: 'Unpaid.', text: 'This is a volunteer role. There is no payment.' },
+                            { title: '6+ hours.', text: 'A shift is at least 6 hours on show day, from your call time until your role is finished.' },
+                            { title: 'On time.', text: 'Arrive for your call time. Late or missing volunteers leave the whole team short.' },
+                            { title: 'On your feet.', text: 'Most roles mean standing, carrying and moving fast.' },
+                            { title: 'We confirm.', text: 'Applying puts you on our list. A shift is only yours once we confirm it with you.' },
+                        ],
+                    },
                     start: 'START',
                     questions: [
                         { id: 'name', label: 'What is your name?', type: 'text', required: true, placeholder: 'Full name' },
@@ -258,7 +273,30 @@
                             label: 'How would you like to help?',
                             type: 'choice',
                             required: true,
-                            options: ['Styling or dressing', 'Production or backstage', 'Sound or lights', 'Door or guest list', 'Something else'],
+                            hint: 'Each role is a 6+ hour shift on show day. The description is under each name.',
+                            // The text under each role is a draft job description: edit it to match the real jobs.
+                            options: [
+                                {
+                                    label: 'Styling or dressing',
+                                    text: 'Help designers and models get ready: prepare and steam garments, assist with fittings and quick changes, and keep every look on the right model. Calm under pressure, comfortable around clothes and people.',
+                                },
+                                {
+                                    label: 'Production or backstage',
+                                    text: 'Keep the show on schedule: line models up in order, move racks and props, set up the space and clear it afterwards. Physical work, a lot of standing, quick on your feet.',
+                                },
+                                {
+                                    label: 'Sound or lights',
+                                    text: 'Support the technical team: set up and test equipment, run cues from a cue sheet during the show, and pack down at the end. Experience helps; we will show you the rest.',
+                                },
+                                {
+                                    label: 'Door or guest list',
+                                    text: 'Be the first face guests meet: check names and tickets, manage the line, answer questions and keep the entrance calm. Friendly, organized and firm.',
+                                },
+                                {
+                                    label: 'Something else',
+                                    text: 'Tell us what you can do in the last question and we will look for the right place for you.',
+                                },
+                            ],
                         },
                         {
                             id: 'experience',
@@ -278,13 +316,34 @@
                             id: 'notes',
                             label: 'Anything we should know?',
                             type: 'longtext',
-                            hint: 'Dates you cannot do, anything else.',
+                            hint: 'Dates you cannot do, skills, anything else.',
                             placeholder: 'Type your answer here',
+                        },
+                        {
+                            id: 'commit',
+                            label: 'Can you work a full shift of 6 hours or more?',
+                            type: 'choice',
+                            required: true,
+                            hint: 'On show day, from your call time until your role is finished.',
+                            options: ['Yes, I can work the full shift', 'No, I cannot'],
+                            // `mustBe`: only this answer lets the form go on; the other shows `mustBeError`.
+                            mustBe: 'Yes, I can work the full shift',
+                            mustBeError: 'This role needs a full shift of 6 hours or more. If that does not work for you, please do not apply for now.',
+                        },
+                        {
+                            id: 'agree',
+                            label: 'Do you understand and agree?',
+                            type: 'choice',
+                            required: true,
+                            hint: 'I understand this is an unpaid volunteer role. I will arrive on time, stay for my whole shift, and tell the team as early as I can if I cannot make it.',
+                            options: ['I understand and agree', 'No'],
+                            mustBe: 'I understand and agree',
+                            mustBeError: 'We can only take volunteers who agree to this. If you have questions, email us before you apply.',
                         },
                     ],
                     done: {
                         title: 'Thank you.',
-                        text: 'You are on our volunteer list. We will reach out when we need a hand at a show.',
+                        text: 'You are on our volunteer list. We will write to you when we need volunteers for a show. A shift is only yours once we confirm it with you, so please reply when we do.',
                     },
                 },
                 {

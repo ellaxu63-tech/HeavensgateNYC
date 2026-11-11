@@ -84,6 +84,11 @@ optional for the volunteer photographers), and an answer can carry a note shown 
 is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add another
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
+The **volunteers** form says up front that this is serious, unpaid work with shifts of 6+ hours: a "What to expect" list
+on the first screen (`expect` in `js/data.js`), a short job description under each role (an option's `text`), and two
+required consent questions (`commit`, `agree`) that only let the form go on with the agreeing answer (`mustBe`). The role
+descriptions and the list are drafts: edit them to match how you run a show.
+
 The **models** form says casting is to be announced and that it is a volunteer position (the `intro` and `blurb` in
 `js/data.js`; reword them when casting opens). Height has its own question with boxes for feet and inches, or centimeters (saved as one answer in both units, for example "5 ft 10 in (178 cm)" in the `height` column). It also has a `photos` question: the person picks up to three pictures
 from their phone or computer, each is shrunk in their browser (about 150 KB) and sent with the answers. The script saves

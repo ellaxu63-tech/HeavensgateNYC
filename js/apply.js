@@ -99,6 +99,26 @@
         }, 3500)
     }
 
+    // A "what to expect" list on the first screen (js/data.js, expect): each item a bold lead-in and a sentence.
+    function expectHtml() {
+        var expect = cfg && cfg.expect
+        if (!expect || !expect.items || !expect.items.length) return ''
+        return (
+            '<div class="apply-expect">' +
+                '<p class="eyebrow">' + esc(expect.title || 'What to expect') + '</p>' +
+                '<ul>' +
+                    expect.items
+                        .map(function (item) {
+                            return typeof item === 'string'
+                                ? '<li>' + esc(item) + '</li>'
+                                : '<li><strong>' + esc(item.title) + '</strong> ' + esc(item.text || '') + '</li>'
+                        })
+                        .join('') +
+                '</ul>' +
+            '</div>'
+        )
+    }
+
     // Who has written about us, from the press list (js/data.js, press): each outlet once, newest first, then
     // "and more" (so the line stays true as press is added there, and is not limited to what is listed).
     function pressHtml() {
@@ -213,11 +233,13 @@
                             // An option is a string, or { label, note }: the note (the pay, say) is shown on its row.
                             var label = typeof option === 'string' ? option : option.label
                             var note = typeof option === 'string' ? '' : option.note
+                            var text = typeof option === 'string' ? '' : option.text
+                            var name = '<span class="apply-choice-label">' + esc(label) + '</span>'
                             return (
-                                '<label class="apply-choice">' +
+                                '<label class="apply-choice' + (text ? ' apply-choice--text' : '') + '">' +
                                     '<input type="radio" name="apply-choice" value="' + esc(label) + '"' + (value === label ? ' checked' : '') + '>' +
                                     '<span class="apply-key" aria-hidden="true">' + String.fromCharCode(65 + i) + '</span>' +
-                                    '<span class="apply-choice-label">' + esc(label) + '</span>' +
+                                    (text ? '<span class="apply-choice-body">' + name + '<span class="apply-choice-blurb">' + esc(text) + '</span></span>' : name) +
                                     (note ? '<span class="apply-choice-note">' + esc(note) + '</span>' : '') +
                                 '</label>'
                             )
@@ -256,6 +278,7 @@
                                       : '') +
                               '</div>'
                             : '') +
+                        expectHtml() +
                         pressHtml() +
                         '<div class="apply-actions">' +
                             (cfg.link
@@ -551,6 +574,10 @@
         var value = q.type === 'photos' ? (answers[q.id] || []).length : q.type === 'height' ? 1 : answers[q.id] || ''
         if (isRequired(q) && !value) {
             setError(q.type === 'choice' ? 'Please pick one.' : q.type === 'photos' ? 'Please add at least one photo.' : 'Please answer this one.')
+            return
+        }
+        if (q.mustBe && value !== q.mustBe) {
+            setError(q.mustBeError || 'Please choose the first answer to go on.')
             return
         }
         if (photosBusy) {

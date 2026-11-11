@@ -25,7 +25,7 @@ var MAX_PHOTO_BYTES = 3 * 1024 * 1024       // largest picture kept (the site se
 var TABS = {
   Designers: ['name', 'brand', 'email', 'instagram', 'portfolio', 'looks', 'about', 'confirm', 'show'],
   Crew: ['name', 'email', 'phone', 'instagram', 'role', 'quote', 'experience', 'portfolio', 'notes'],
-  Volunteers: ['name', 'email', 'phone', 'instagram', 'role', 'experience', 'portfolio', 'notes'],
+  Volunteers: ['name', 'email', 'phone', 'instagram', 'role', 'experience', 'portfolio', 'notes', 'commit', 'agree'],
   Models: ['name', 'email', 'phone', 'instagram', 'height', 'measurements', 'sizes', 'photos_1', 'photos_2', 'photos_3', 'experience', 'representation', 'agency', 'work', 'portfolio'],
 }
 var WIDE_COLUMNS = ['about', 'work', 'notes', 'quote'] // the long answers get a wide, wrapped column
