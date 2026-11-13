@@ -1159,6 +1159,23 @@
                 ],
             },
             {
+                // A placeholder until the poster and the details are ready (see the Liquid Sky entry above).
+                slug: 'horn-of-plenty',
+                tag: 'Upcoming',
+                title: 'Horn of Plenty',
+                date: 'Dec 12, 2026 \u00b7 6\u20139 PM',
+                location: 'Location to be announced',
+                type: 'Dinner',
+                summary: 'An edible ode to the great McQueen.\n\nJoin HEAVENSGATE x R\u00dcME for a specially curated holiday dinner.\n\nLimited seating available.',
+                details: [
+                    { role: 'Date', names: ['Saturday, December 12, 2026'] },
+                    { role: 'Time', names: ['6\u20139 PM'] },
+                    { role: 'Hosted by', names: ['HEAVENSGATE NYC', 'R\u00dcME'] },
+                    { role: 'Seating', names: ['Limited'] },
+                    { role: 'Venue', names: ['To be announced'] },
+                ],
+            },
+            {
                 slug: 'sound-form',
                 tag: 'Past',
                 title: 'SOUND / FORM',
