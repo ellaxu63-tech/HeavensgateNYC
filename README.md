@@ -84,7 +84,7 @@ optional for the volunteer photographers), and an answer can carry a note shown 
 is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add another
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
-The **volunteers** form says up front that this is serious, unpaid work with shifts of 6+ hours: a "What to expect" list
+The **volunteers** form says up front, in a friendly way, that this is unpaid work with shifts of 6+ hours: a "What to expect" list
 on the first screen (`expect` in `js/data.js`), a short job description under each role (an option's `text`), and two
 required consent questions (`commit`, `agree`) that only let the form go on with the agreeing answer (`mustBe`). The role
 descriptions and the list are drafts: edit them to match how you run a show.
