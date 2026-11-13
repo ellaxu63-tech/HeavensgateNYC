@@ -99,6 +99,31 @@
         }, 3500)
     }
 
+    // The show's venue (js/data.js, show.venue): its name, a short line and photos. Each photo opens full size in a new tab.
+    function venueHtml(venue) {
+        if (!venue) return ''
+        return (
+            '<div class="apply-venue">' +
+                '<p class="eyebrow">Venue</p>' +
+                '<p class="apply-venue-title">' + esc(venue.title) + '</p>' +
+                (venue.text ? '<p class="apply-text">' + esc(venue.text) + '</p>' : '') +
+                (venue.images && venue.images.length
+                    ? '<div class="apply-venue-photos">' +
+                          venue.images
+                              .map(function (image) {
+                                  return (
+                                      '<a href="' + esc(image.src) + '" target="_blank" rel="noopener noreferrer">' +
+                                          '<img src="' + esc(image.thumb || image.src) + '" alt="' + esc(image.alt || venue.title) + '" loading="lazy" decoding="async">' +
+                                      '</a>'
+                                  )
+                              })
+                              .join('') +
+                      '</div>'
+                    : '') +
+            '</div>'
+        )
+    }
+
     // A "what to expect" list on the first screen (js/data.js, expect): each item a bold lead-in and a sentence.
     function expectHtml() {
         var expect = cfg && cfg.expect
@@ -270,6 +295,7 @@
                                   '<p class="apply-show-title">' + esc(cfg.show.title) + '</p>' +
                                   (cfg.show.date || cfg.show.location ? '<p class="apply-show-date">' + esc([cfg.show.date, cfg.show.location].filter(Boolean).join(' \u00b7 ')) + '</p>' : '') +
                                   (cfg.show.text ? '<p class="apply-text">' + esc(cfg.show.text) + '</p>' : '') +
+                                  venueHtml(cfg.show.venue) +
                                   (cfg.show.includes && cfg.show.includes.length
                                       ? '<div class="apply-includes">' +
                                             '<p class="eyebrow">' + esc(cfg.show.includesTitle || 'Includes') + '</p>' +
@@ -280,7 +306,7 @@
                             : '') +
                         expectHtml() +
                         pressHtml() +
-                        '<div class="apply-actions">' +
+                        '<div class="apply-actions apply-actions--sticky">' +
                             (cfg.link
                                 ? '<a class="pill pill--accent apply-next" href="' + esc(cfg.link) + '" target="_blank" rel="noopener noreferrer">' + esc(cfg.start || 'START') + ' \u2197</a>'
                                 : '<button type="button" class="pill pill--accent apply-next">' + esc(cfg.start || 'START') + '</button>') +

@@ -78,8 +78,9 @@
         // Each form: id (also the name of its tab in the sheet), page, title, blurb (the line in the
         // list), eyebrow, intro, start (the button), questions, done, optionally `expect` ({ title, items: [{ title,
         // text }] }, a "what to expect" list on the first screen) and optionally `show` (the show
-        // it is for: title, date, location, text, and `includes`, a list of what the package covers under
-        // the heading `includesTitle`; shown on the intro screen, and the title is saved as a "show" column).
+        // it is for: title, date, location, text, `venue` ({ title, text, images: [{ src, thumb, alt }] }), and
+        // `includes`, a list of what the package covers under the heading `includesTitle`; shown on the intro
+        // screen, and the title is saved as a "show" column).
         // Each question:
         //   id          – the column name in the sheet (letters and numbers, unique within the form)
         //   label       – the question
@@ -125,6 +126,16 @@
                         date: 'February 13, 2027',
                         location: 'NYC',
                         text: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
+                        // The venue: a name, one short line and photos (each opens full size in a new tab), shown under the text.
+                        venue: {
+                            title: 'The Ornate Studio',
+                            text: 'A 4,400 sq. ft. duplex loft in downtown Brooklyn. Industrial-chic, full of natural light, with a flexible layout.',
+                            images: [
+                                { src: 'assets/venue/ornate-studio-1.webp', thumb: 'assets/venue/ornate-studio-1-thumb.webp', alt: 'The Ornate Studio: a tall loft with white-painted beams, skylights, chandeliers, a disco ball and wood floors.' },
+                                { src: 'assets/venue/ornate-studio-2.webp', thumb: 'assets/venue/ornate-studio-2-thumb.webp', alt: 'The Ornate Studio: the exposed brick wall with arched windows, speakers, a wooden DJ booth and grey sofas.' },
+                                { src: 'assets/venue/ornate-studio-3.webp', thumb: 'assets/venue/ornate-studio-3-thumb.webp', alt: 'The Ornate Studio: the empty loft floor, brick wall and glowing chandeliers.' },
+                            ],
+                        },
                         // The package: a heading and a list, shown under the show's text.
                         includesTitle: 'Production & support includes',
                         includes: [
@@ -448,7 +459,7 @@
                 {
                     title: 'Liquid Sky',
                     date: 'February 13, 2027',
-                    location: 'NYC',
+                    location: 'The Ornate Studio, Brooklyn',
                     text: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
                     link: '',
                     price: '',
@@ -1144,14 +1155,14 @@
                 tag: 'Upcoming',
                 title: 'Liquid Sky',
                 date: 'Feb 13, 2027',
-                location: 'NYC',
+                location: 'The Ornate Studio, Brooklyn',
                 type: 'Show',
                 summary: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
                 details: [
                     { role: 'Date', names: ['Saturday, February 13, 2027'] },
-                    { role: 'City', names: ['NYC'] },
+                    { role: 'City', names: ['Brooklyn, NYC'] },
                     { role: 'Tickets', names: ['On sale soon'] },
-                    { role: 'Venue', names: ['To be announced'] },
+                    { role: 'Venue', names: ['The Ornate Studio, downtown Brooklyn'] },
                 ],
                 links: [
                     { label: 'Apply as a designer', href: 'designers.html' },

@@ -81,7 +81,7 @@ a thank-you at the end. The questions, texts and answer choices are in
 [`js/data.js`](js/data.js) under `form.forms`: add, remove or reword them there. A question can depend on an earlier answer
 (`showIf`: the video quote is only asked of video applicants; `optionalIf`: the link to their work is
 optional for the volunteer photographers), and an answer can carry a note shown on its row (the pay). A form can also say which show it
-is for (`show`: title, date, text): that appears on its first screen and is saved as a "show" column. To add another
+is for (`show`: title, date, location, text, a `venue` with photos and the package `includes`): that appears on its first screen and the title is saved as a "show" column. On a long first screen the START button stays at the bottom of the window. To add another
 form, add another entry there and copy `crew.html` to a new page with its `data-form` changed.
 
 The **volunteers** form says up front, in a friendly way, that this is unpaid work with shifts of 6+ hours: a "What to expect" list

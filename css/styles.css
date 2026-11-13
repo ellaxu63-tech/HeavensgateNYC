@@ -869,6 +869,12 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-show-title { margin-top: 12px; font: 400 clamp(36px, 4vw, 64px) / 0.95 var(--serif); letter-spacing: -0.02em; text-transform: var(--display-case); }
 .apply-show-date { margin-top: 10px; color: var(--fg); font: 400 12px/1.4 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-show .apply-text { margin-top: 14px; }
+.apply-venue { margin-top: 22px; }
+.apply-venue-title { margin-top: 10px; font: 400 clamp(26px, 2.6vw, 40px) / 1 var(--serif); letter-spacing: -0.01em; text-transform: var(--display-case); }
+.apply-venue .apply-text { margin-top: 10px; }
+.apply-venue-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.apply-venue-photos a { display: block; border: 1px solid var(--grid); }
+.apply-venue-photos img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 .apply-includes,
 .apply-expect { margin-top: 22px; }
 .apply-expect ul { margin: 10px 0 0; padding: 0; list-style: none; }
@@ -882,6 +888,8 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-error { min-height: 1.8em; margin-top: 12px; color: var(--upcoming); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; }
 .apply-a > .apply-text + .apply-actions { margin-top: 28px; }
+/* On a long first screen the START button stays at the bottom of the window until its own place is reached. */
+.apply-actions--sticky { position: sticky; bottom: 0; z-index: 5; margin-top: 18px; padding: 14px 0 16px; background: var(--bg); border-top: 1px solid var(--rule); }
 .apply-back { margin-left: calc(var(--pill-pad) * -1); }
 .apply-next:disabled { opacity: 0.5; cursor: default; }
 .apply-keys { margin-left: 6px; color: var(--faint); font: 400 12px/1 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
