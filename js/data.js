@@ -1149,14 +1149,22 @@
         //   tag      – 'Upcoming' (pink) or 'Past'
         events: [
             {
-                // A placeholder until the poster and the details are ready: no poster yet, so the card is text only.
-                // Add `image` / `images` (as in the events below) and edit `summary` and `details` when you have them.
+                // The open call poster is up; edit `summary` and `details` as the show comes together.
                 slug: 'liquid-sky',
                 tag: 'Upcoming',
                 title: 'Liquid Sky',
                 date: 'Feb 13, 2027',
                 location: 'The Ornate Studio, Brooklyn',
                 type: 'Show',
+                image: 'assets/events/liquid-sky/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/liquid-sky/01-poster.webp',
+                        thumb: 'assets/events/liquid-sky/thumb-01.webp',
+                        label: 'Designer open call',
+                        alt: 'The Liquid Sky open call poster: NYFW Designer Open Call, Liquid Sky, Feb 13, 2027, apply at heavensgate.nyc. Full runway production, model casting, hair and makeup, photography and videography, backstage coordination, press and media coverage. Pink and lavender lettering with a checkered border.',
+                    },
+                ],
                 summary: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
                 details: [
                     { role: 'Date', names: ['Saturday, February 13, 2027'] },
