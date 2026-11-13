@@ -869,6 +869,12 @@ html.fall-on .stage-intro { visibility: hidden; }
 .apply-show-title { margin-top: 12px; font: 400 clamp(36px, 4vw, 64px) / 0.95 var(--serif); letter-spacing: -0.02em; text-transform: var(--display-case); }
 .apply-show-date { margin-top: 10px; color: var(--fg); font: 400 12px/1.4 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 .apply-show .apply-text { margin-top: 14px; }
+/* With a picture, the left half (title and picture) stays in view while the long right half scrolls. */
+@media (min-width: 861px) {
+    .apply-q--sticky { position: sticky; top: var(--header-h); align-self: start; padding-top: clamp(28px, 3.4vw, 48px); }
+}
+.apply-poster { display: block; width: min(340px, 62%, max(160px, calc((100vh - 400px) * 0.8))); margin-top: clamp(24px, 3vw, 40px); border: 1px solid var(--grid); }
+.apply-poster img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
 .apply-venue { margin-top: 22px; }
 .apply-venue-title { margin-top: 10px; font: 400 clamp(26px, 2.6vw, 40px) / 1 var(--serif); letter-spacing: -0.01em; text-transform: var(--display-case); }
 .apply-venue .apply-text { margin-top: 10px; }

@@ -76,7 +76,8 @@
         //            that instead of this site's own questions, and needs no `action`.
         //
         // Each form: id (also the name of its tab in the sheet), page, title, blurb (the line in the
-        // list), eyebrow, intro, start (the button), questions, done, optionally `expect` ({ title, items: [{ title,
+        // list), eyebrow, intro, start (the button), questions, done, optionally `poster` ({ src, thumb, alt }, a picture
+        // under the title on the first screen), optionally `expect` ({ title, items: [{ title,
         // text }] }, a "what to expect" list on the first screen) and optionally `show` (the show
         // it is for: title, date, location, text, `venue` ({ title, text, images: [{ src, thumb, alt }] }), and
         // `includes`, a list of what the package covers under the heading `includesTitle`; shown on the intro
@@ -120,6 +121,12 @@
                     blurb: 'Apply to show in Liquid Sky, February 13, 2027.',
                     eyebrow: 'Application',
                     intro: 'Designers: tell us about your brand and how your collection fits. It takes about two minutes.',
+                    // A picture beside the title on the intro screen (it opens full size in a new tab).
+                    poster: {
+                        src: 'assets/events/liquid-sky/01-poster.webp',
+                        thumb: 'assets/events/liquid-sky/poster-720.webp',
+                        alt: 'The Liquid Sky open call poster: NYFW Designer Open Call, Liquid Sky, Feb 13, 2027, apply at heavensgate.nyc.',
+                    },
                     // The show this form is for: shown on the intro screen, and saved with every answer.
                     show: {
                         title: 'Liquid Sky',

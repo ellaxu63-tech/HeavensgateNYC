@@ -99,6 +99,17 @@
         }, 3500)
     }
 
+    // A picture under the title on the first screen (js/data.js, poster); it opens full size in a new tab.
+    function posterHtml() {
+        var poster = cfg && cfg.poster
+        if (!poster) return ''
+        return (
+            '<a class="apply-poster" href="' + esc(poster.src) + '" target="_blank" rel="noopener noreferrer">' +
+                '<img src="' + esc(poster.thumb || poster.src) + '" alt="' + esc(poster.alt || cfg.title) + '" decoding="async">' +
+            '</a>'
+        )
+    }
+
     // The show's venue (js/data.js, show.venue): its name, a short line and photos. Each photo opens full size in a new tab.
     function venueHtml(venue) {
         if (!venue) return ''
@@ -283,9 +294,10 @@
         if (index < 0) {
             return (
                 '<div class="apply-step">' +
-                    '<div class="apply-q">' +
+                    '<div class="apply-q' + (cfg.poster ? ' apply-q--sticky' : '') + '">' +
                         '<p class="eyebrow">' + esc(cfg.eyebrow || '') + '</p>' +
                         '<h1 class="apply-title apply-title--intro" id="apply-q" tabindex="-1">' + esc(cfg.title) + '</h1>' +
+                        posterHtml() +
                     '</div>' +
                     '<div class="apply-a">' +
                         '<p class="apply-text">' + esc(cfg.intro || '') + '</p>' +
