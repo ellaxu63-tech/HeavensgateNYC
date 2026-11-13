@@ -1181,6 +1181,9 @@
                 ],
                 links: [
                     { label: 'Apply as a designer', href: 'designers.html' },
+                    { label: 'Model casting', href: 'models.html' },
+                    { label: 'Join the crew: hair and makeup, video, photography', href: 'crew.html' },
+                    { label: 'Volunteer', href: 'volunteers.html' },
                     { label: 'Tickets', href: 'tickets.html' },
                 ],
             },
