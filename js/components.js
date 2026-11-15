@@ -142,6 +142,11 @@
         return 'event.html?slug=' + encodeURIComponent(event.slug)
     }
 
+    // An event's ticket link (js/data.js, ticketUrl), or '' if it has none or it is not an http(s) address.
+    HG.ticketUrlOf = function (event) {
+        return /^https?:\/\//i.test(event.ticketUrl || '') ? event.ticketUrl : ''
+    }
+
     /*
      * Everything that floats on the home page: the projects, plus every poster
      * (image) of the events that have a page, each linking to its event. The

@@ -79,6 +79,28 @@
         )
     }
 
+    // GET TICKETS on the home page, under the intro sentence (wide screens and phones): one pink button for each upcoming
+    // event that has a ticket link (js/data.js, ticketUrl). It goes to that event's page, which has the ticket button
+    // and the other ways in. It is inside the sentence's box, so the floating images keep clear of it.
+    function addHomeTickets() {
+        var intro = document.querySelector('.stage-intro')
+        if (!isHome || !intro) return
+        var html = (data.events || [])
+            .filter(function (ev) {
+                return ev.tag === 'Upcoming' && ev.slug && HG.ticketUrlOf(ev)
+            })
+            .map(function (ev) {
+                return (
+                    '<a class="pill pill--accent home-tickets" href="' + esc(HG.eventUrl(ev)) + '">' +
+                        '<span class="home-tickets-main">GET TICKETS</span>' +
+                        '<span class="home-tickets-sub">' + esc([ev.title, ev.date].filter(Boolean).join(' \u00b7 ')) + '</span>' +
+                    '</a>'
+                )
+            })
+            .join('')
+        if (html) intro.insertAdjacentHTML('beforeend', html)
+    }
+
     // On phones the header has no room for links, so APPLY goes in the middle of the home page as a plain call
     // to action (white text, a white line under it) below the intro sentence. It is inside the sentence's box,
     // so the floating images keep clear of it too. (Wide screens hide it: they have the header button.)
@@ -445,6 +467,7 @@
     document.body.appendChild(buildFooter())
     if (isHome) initMotionToggle(document.getElementById('motion-toggle'))
     initNavCollapse()
+    addHomeTickets()
     addHomeApply()
     HG.capsBrand(document.body)
 })()

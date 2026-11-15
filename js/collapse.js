@@ -91,7 +91,12 @@
     // One copy per word of the intro sentence, measured where the word really is
     // (so bold words and line breaks come out right).
     function wordsOf(container) {
-        var walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT)
+        // The buttons inside the sentence's box fall as whole buttons (cloneOf), not word by word.
+        var walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+            acceptNode: function (node) {
+                return node.parentNode.closest('.home-tickets, .home-apply') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+            },
+        })
         var textNode
         while ((textNode = walker.nextNode())) {
             var text = textNode.nodeValue
@@ -127,7 +132,7 @@
         document.body.appendChild(layer)
         items = []
 
-        document.querySelectorAll('.site-nav .pill, .site-footer--fixed .pill, .home-apply').forEach(cloneOf)
+        document.querySelectorAll('.site-nav .pill, .site-footer--fixed .pill, .home-apply, .home-tickets').forEach(cloneOf)
         document.querySelectorAll('.brand-name, .brand-logo').forEach(cloneOf)
         var intro = document.querySelector('.stage-intro')
         if (intro) wordsOf(intro)

@@ -184,7 +184,7 @@ Advisor if it accepts you) and this page sends people there.
 
 An event can also carry the ticket link itself: `ticketUrl` on its entry in `events` (for example its RA, Eventbrite or Posh
 page). An upcoming event with one gets a pink **GET TICKETS ON RA** button on its card on the Events (and Shows) page and on
-its own page; the button names the site when it knows it. Remove `ticketUrl` to take the button away.
+its own page; the button names the site when it knows it. Remove `ticketUrl` to take the button away. The home page also shows a pink GET TICKETS button under the sentence for each such event; it goes to the event's page.
 
 ## The video on the home page
 

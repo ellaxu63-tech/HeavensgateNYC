@@ -270,6 +270,29 @@ main:focus { outline: none; }
 /* On phones APPLY is a plain call to action in the middle of the home page: white text with a white line under it. */
 .home-apply { display: none; }
 
+/* GET TICKETS under the sentence on the home page (wide screens and phones): a big pink button with the event's name. */
+.home-tickets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3px;
+    width: fit-content;
+    max-width: 100%;
+    height: auto;
+    min-height: 56px;
+    margin: 20px auto 0;
+    padding: 10px 30px;
+    text-align: center;
+    pointer-events: auto;
+    box-shadow: 0 0 0 1px var(--accent), 0 0 30px rgba(var(--accent-rgb), 0.38);
+    transition: transform 200ms ease, box-shadow 200ms ease, opacity 160ms ease;
+}
+.home-tickets:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 0 0 1px var(--accent), 0 0 44px rgba(var(--accent-rgb), 0.6); }
+.home-tickets-main { font: 400 16px/1.1 var(--mono); letter-spacing: 0.05em; }
+.home-tickets-sub { font: 400 11px/1.2 var(--mono); letter-spacing: 0.04em; opacity: 0.75; }
+@media (prefers-reduced-motion: reduce) { .home-tickets { transition: none; } .home-tickets:hover { transform: none; } }
+
 @media (max-width: 860px) {
     .home-apply {
         display: block;
@@ -678,6 +701,7 @@ html.fall-on .stage-intro { visibility: hidden; }
 }
 .fall-layer > * { position: absolute; margin: 0; white-space: nowrap; will-change: transform; }
 .fall-layer > .home-apply { display: block; margin: 0; }
+.fall-layer > .home-tickets { display: flex; margin: 0; }
 
 /* Reduced motion: nothing falls, the writing just fades out. */
 @media (prefers-reduced-motion: reduce) {
@@ -685,6 +709,7 @@ html.fall-on .stage-intro { visibility: hidden; }
     html.project-selected .site-footer--fixed .pill { color: transparent; background: transparent; }
     html.project-selected .site-nav .pill--jewel img { opacity: 0; }
     html.project-selected .home-apply { color: transparent; }
+    html.project-selected .home-tickets { color: transparent; background: transparent; box-shadow: none; }
     html.project-selected .site-header .brand-name,
     html.project-selected .stage-intro { color: transparent; }
     html.project-selected .site-header .brand-logo { opacity: 0; }

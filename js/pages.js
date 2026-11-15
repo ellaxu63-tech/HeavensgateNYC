@@ -257,7 +257,7 @@
     var TICKET_SITES = { 'ra.co': 'RA', 'eventbrite.com': 'Eventbrite', 'posh.vip': 'Posh', 'dice.fm': 'Dice', 'tixr.com': 'Tixr', 'tickettailor.com': 'Ticket Tailor' }
 
     function ticketUrlOf(ev) {
-        return /^https?:\/\//i.test(ev.ticketUrl || '') ? ev.ticketUrl : ''
+        return HG.ticketUrlOf(ev)
     }
 
     function ticketButtonText(ev) {
