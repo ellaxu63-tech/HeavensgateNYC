@@ -91,7 +91,7 @@
             })
             .map(function (ev) {
                 return (
-                    '<a class="pill pill--accent home-tickets" href="' + esc(HG.eventUrl(ev)) + '">' +
+                    '<a class="pill home-tickets" href="' + esc(HG.eventUrl(ev)) + '">' +
                         '<span class="home-tickets-main">GET TICKETS</span>' +
                         '<span class="home-tickets-sub">' + esc([ev.title, ev.date].filter(Boolean).join(' \u00b7 ')) + '</span>' +
                     '</a>'
