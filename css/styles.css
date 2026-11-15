@@ -1293,6 +1293,8 @@ a.events-card:hover .events-card-arrow { opacity: 1; }
 .ticket-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
 .ticket-off { border: 1px solid var(--grid); color: var(--muted); cursor: default; }
 .ticket-off:hover { background: transparent; }
+.ticket-big { height: 44px; padding: 0 24px; font-size: 14px; }
+.ticket--onsale .events-card-title { font-size: clamp(36px, 4.2vw, 72px); }
 .tickets-note { padding: 26px var(--pad); color: var(--muted); font: 400 12px/1.8 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
 
 @media (max-width: 860px) {

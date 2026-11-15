@@ -468,11 +468,11 @@
                     date: 'February 13, 2027',
                     location: 'The Ornate Studio, Brooklyn',
                     text: 'A surreal world where color, identity, and reality begin to dissolve. Electric hues, artificial light, futuristic textures, and unexpected silhouettes create a dreamlike atmosphere.',
-                    link: '',
+                    link: 'https://ra.co/events/2584980',
                     price: '',
                     onSale: '',
                     soldOut: false,
-                    button: 'GET TICKETS',
+                    button: 'GET TICKETS ON RA',
                 },
             ],
         },
@@ -1153,11 +1153,15 @@
         //              projects); an event also shows its project's video
         //   projectLabel – wording of the link to the project (default "See the photos")
         //   links    – [{ label, href }] shown as links under the text (tickets, the application ...)
+        //   ticketUrl – the address of the event's page on a ticketing site (RA, Eventbrite, Posh ...). An upcoming event
+        //              with one gets a pink GET TICKETS button in an "on sale now" row at the top of the Events page and
+        //              on its own page. `ticketLabel` changes the wording (default 'GET TICKETS').
         //   tag      – 'Upcoming' (pink) or 'Past'
         events: [
             {
                 // The open call poster is up; edit `summary` and `details` as the show comes together.
                 slug: 'liquid-sky',
+                ticketUrl: 'https://ra.co/events/2584980',
                 tag: 'Upcoming',
                 title: 'Liquid Sky',
                 date: 'Feb 13, 2027',
@@ -1176,7 +1180,7 @@
                 details: [
                     { role: 'Date', names: ['Saturday, February 13, 2027'] },
                     { role: 'City', names: ['Brooklyn, NYC'] },
-                    { role: 'Tickets', names: ['On sale soon'] },
+                    { role: 'Tickets', names: ['On sale on RA'] },
                     { role: 'Venue', names: ['The Ornate Studio, downtown Brooklyn'] },
                 ],
                 links: [

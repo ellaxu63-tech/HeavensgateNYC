@@ -215,6 +215,10 @@
         var photosLink = proj
             ? '<p class="page-lede"><a class="text-link" href="' + esc(HG.projectUrl(proj)) + '">' + esc(ev.projectLabel || 'See the photos') + ' →</a></p>'
             : ''
+        // The ticket button first, when the event has a ticket link (js/data.js, ticketUrl).
+        var ticketButton = ticketUrlOf(ev)
+            ? '<p class="page-lede"><a class="pill pill--accent ticket-big" href="' + esc(ticketUrlOf(ev)) + '" target="_blank" rel="noopener noreferrer">' + esc(ticketButtonText(ev)) + '</a></p>'
+            : ''
         // Links an event can carry (js/data.js, links): tickets, the application ...
         var eventLinks = (ev.links || [])
             .map(function (item) {
@@ -237,6 +241,7 @@
                     '<p class="eyebrow">' + esc([ev.type, ev.date, ev.location].filter(Boolean).join(' — ')) + '</p>' +
                     '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
                     bioHtml(ev.summary || (proj && proj.summary)) +
+                    ticketButton +
                     photosLink +
                     eventLinks +
                     creditsHtml((ev.details || []).concat(ev.credits || (proj && proj.credits) || [])) +
@@ -247,8 +252,53 @@
     }
 
     // ------------------------------------------------------ events / shows
+    // An event can have a `ticketUrl` (js/data.js): the address of its page on a ticketing site. The button says where
+    // it goes ("GET TICKETS ON RA"), and only http(s) addresses are used.
+    var TICKET_SITES = { 'ra.co': 'RA', 'eventbrite.com': 'Eventbrite', 'posh.vip': 'Posh', 'dice.fm': 'Dice', 'tixr.com': 'Tixr', 'tickettailor.com': 'Ticket Tailor' }
+
+    function ticketUrlOf(ev) {
+        return /^https?:\/\//i.test(ev.ticketUrl || '') ? ev.ticketUrl : ''
+    }
+
+    function ticketButtonText(ev) {
+        var site = ''
+        try {
+            site = TICKET_SITES[new URL(ev.ticketUrl).hostname.replace(/^www\./, '')] || ''
+        } catch (e) {}
+        return (ev.ticketLabel || 'GET TICKETS') + (site ? ' ON ' + site.toUpperCase() : '') + ' \u2197'
+    }
+
+    // The "on sale now" rows at the top of the Events page: one per upcoming event that has a ticket link.
+    function onSaleHtml(list) {
+        return list
+            .filter(function (ev) {
+                return ev.tag === 'Upcoming' && ticketUrlOf(ev)
+            })
+            .map(function (ev) {
+                return (
+                    '<article class="ticket ticket--onsale">' +
+                        '<div class="ticket-main">' +
+                            '<span class="events-card-tag upcoming">On sale now</span>' +
+                            '<span class="events-card-date">' + esc(ev.date) + '</span>' +
+                            '<h2 class="events-card-title">' + esc(ev.title) + '</h2>' +
+                            '<p class="ticket-meta">' + esc([ev.location, ev.type].filter(Boolean).join(' \u00b7 ')) + '</p>' +
+                        '</div>' +
+                        '<div class="ticket-side">' +
+                            '<div class="ticket-actions">' +
+                                '<a class="pill pill--accent ticket-big" href="' + esc(ticketUrlOf(ev)) + '" target="_blank" rel="noopener noreferrer">' + esc(ticketButtonText(ev)) + '</a>' +
+                                (ev.slug ? '<a class="text-link" href="' + esc(HG.eventUrl(ev)) + '">Event details</a>' : '') +
+                            '</div>' +
+                        '</div>' +
+                    '</article>'
+                )
+            })
+            .join('')
+    }
+
     function renderEvents(filter) {
         var list = data.events.filter(filter || function () { return true })
+        var onSale = main.querySelector('.onsale-list')
+        if (onSale) onSale.innerHTML = onSaleHtml(list)
         main.querySelector('.events-grid').innerHTML = list
             .map(function (ev) {
                 var link = ev.href || (ev.slug ? HG.eventUrl(ev) : '')
