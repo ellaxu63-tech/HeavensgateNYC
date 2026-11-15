@@ -265,7 +265,7 @@
         try {
             site = TICKET_SITES[new URL(ev.ticketUrl).hostname.replace(/^www\./, '')] || ''
         } catch (e) {}
-        return (ev.ticketLabel || 'GET TICKETS') + (site ? ' ON ' + site.toUpperCase() : '') + ' \u2197'
+        return (ev.ticketLabel || 'GET TICKETS') + (site ? ' ON ' + site.toUpperCase() : '') + '\u00a0\u2197'
     }
 
     function renderEvents(filter) {
@@ -282,7 +282,7 @@
                 var title = esc(ev.title)
                 if (ticket && link) title = '<a class="events-card-cover" href="' + esc(link) + '">' + title + '</a>'
                 var body =
-                    '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ev.tag) + '</span>' +
+                    '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ticket ? 'On sale now' : ev.tag) + '</span>' +
                     '<span class="events-card-date">' + esc(ev.date) + '</span>' +
                     '<h2 class="events-card-title">' + title + '</h2>' +
                     (ticket
