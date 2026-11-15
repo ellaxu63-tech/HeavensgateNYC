@@ -268,52 +268,33 @@
         return (ev.ticketLabel || 'GET TICKETS') + (site ? ' ON ' + site.toUpperCase() : '') + ' \u2197'
     }
 
-    // The "on sale now" rows at the top of the Events page: one per upcoming event that has a ticket link.
-    function onSaleHtml(list) {
-        return list
-            .filter(function (ev) {
-                return ev.tag === 'Upcoming' && ticketUrlOf(ev)
-            })
-            .map(function (ev) {
-                return (
-                    '<article class="ticket ticket--onsale">' +
-                        '<div class="ticket-main">' +
-                            '<span class="events-card-tag upcoming">On sale now</span>' +
-                            '<span class="events-card-date">' + esc(ev.date) + '</span>' +
-                            '<h2 class="events-card-title">' + esc(ev.title) + '</h2>' +
-                            '<p class="ticket-meta">' + esc([ev.location, ev.type].filter(Boolean).join(' \u00b7 ')) + '</p>' +
-                        '</div>' +
-                        '<div class="ticket-side">' +
-                            '<div class="ticket-actions">' +
-                                '<a class="pill pill--accent ticket-big" href="' + esc(ticketUrlOf(ev)) + '" target="_blank" rel="noopener noreferrer">' + esc(ticketButtonText(ev)) + '</a>' +
-                                (ev.slug ? '<a class="text-link" href="' + esc(HG.eventUrl(ev)) + '">Event details</a>' : '') +
-                            '</div>' +
-                        '</div>' +
-                    '</article>'
-                )
-            })
-            .join('')
-    }
-
     function renderEvents(filter) {
         var list = data.events.filter(filter || function () { return true })
-        var onSale = main.querySelector('.onsale-list')
-        if (onSale) onSale.innerHTML = onSaleHtml(list)
         main.querySelector('.events-grid').innerHTML = list
             .map(function (ev) {
                 var link = ev.href || (ev.slug ? HG.eventUrl(ev) : '')
-                var tag = link ? 'a' : 'article'
-                var href = link ? ' href="' + esc(link) + '"' : ''
+                // An upcoming event with a ticket link (js/data.js, ticketUrl) shows its GET TICKETS button inside the card.
+                // A button can't sit inside a link, so such a card is not one link: its title is the link, stretched over
+                // the whole card (.events-card-cover), and the button sits above that.
+                var ticket = ev.tag === 'Upcoming' && ticketUrlOf(ev)
+                var tag = link && !ticket ? 'a' : 'article'
+                var href = link && !ticket ? ' href="' + esc(link) + '"' : ''
+                var title = esc(ev.title)
+                if (ticket && link) title = '<a class="events-card-cover" href="' + esc(link) + '">' + title + '</a>'
                 var body =
                     '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ev.tag) + '</span>' +
                     '<span class="events-card-date">' + esc(ev.date) + '</span>' +
-                    '<h2 class="events-card-title">' + esc(ev.title) + '</h2>' +
+                    '<h2 class="events-card-title">' + title + '</h2>' +
+                    (ticket
+                        ? '<span class="events-card-ticket"><a class="pill pill--accent ticket-big" href="' + esc(ticketUrlOf(ev)) + '" target="_blank" rel="noopener noreferrer">' + esc(ticketButtonText(ev)) + '</a></span>'
+                        : '') +
                     '<div class="events-card-meta"><span>' + esc(ev.location) + '</span><span>' + esc(ev.type) + '</span></div>' +
                     (link ? '<span class="events-card-arrow" aria-hidden="true">↗</span>' : '')
-                if (!ev.image) return '<' + tag + ' class="events-card"' + href + '>' + body + '</' + tag + '>'
+                var cls = 'events-card' + (ticket ? ' events-card--ticket' : '')
+                if (!ev.image) return '<' + tag + ' class="' + cls + '"' + href + '>' + body + '</' + tag + '>'
                 // With a poster: the poster on the left, the text beside it.
                 return (
-                    '<' + tag + ' class="events-card events-card--poster"' + href + '>' +
+                    '<' + tag + ' class="' + cls + ' events-card--poster"' + href + '>' +
                         '<span class="events-card-poster"><img src="' + esc(ev.image) + '" alt="" loading="lazy" decoding="async"></span>' +
                         '<span class="events-card-body">' + body + '</span>' +
                     '</' + tag + '>'

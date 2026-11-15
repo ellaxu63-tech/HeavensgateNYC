@@ -1154,8 +1154,8 @@
         //   projectLabel – wording of the link to the project (default "See the photos")
         //   links    – [{ label, href }] shown as links under the text (tickets, the application ...)
         //   ticketUrl – the address of the event's page on a ticketing site (RA, Eventbrite, Posh ...). An upcoming event
-        //              with one gets a pink GET TICKETS button in an "on sale now" row at the top of the Events page and
-        //              on its own page. `ticketLabel` changes the wording (default 'GET TICKETS').
+        //              with one gets a pink GET TICKETS button on its card on the Events page and on its own page.
+        //              `ticketLabel` changes the wording (default 'GET TICKETS').
         //   tag      – 'Upcoming' (pink) or 'Past'
         events: [
             {
