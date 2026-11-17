@@ -1192,13 +1192,22 @@
                 ],
             },
             {
-                // A placeholder until the poster and the details are ready (see the Liquid Sky entry above).
+                // The poster is up; add the venue and a ticket or reservation link (ticketUrl) when you have them.
                 slug: 'horn-of-plenty',
                 tag: 'Upcoming',
                 title: 'Horn of Plenty',
                 date: 'Dec 12, 2026 \u00b7 6\u20139 PM',
                 location: 'Location to be announced',
                 type: 'Dinner',
+                image: 'assets/events/horn-of-plenty/thumb-01.webp',
+                images: [
+                    {
+                        src: 'assets/events/horn-of-plenty/01-poster.webp',
+                        thumb: 'assets/events/horn-of-plenty/thumb-01.webp',
+                        label: 'Holiday dinner',
+                        alt: 'The Horn of Plenty poster: HEAVENSGATE x R\u00dcME, Horn of Plenty, December 12th, 6\u20139 PM, an edible ode to the great McQueen. A black and red high-heeled shoe on a silver platter of forks and knives, on a chessboard with raw meat and a tomato.',
+                    },
+                ],
                 summary: 'An edible ode to the great McQueen.\n\nJoin HEAVENSGATE x R\u00dcME for a specially curated holiday dinner.\n\nLimited seating available.',
                 details: [
                     { role: 'Date', names: ['Saturday, December 12, 2026'] },
