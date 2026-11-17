@@ -282,7 +282,7 @@
                 var title = esc(ev.title)
                 if (ticket && link) title = '<a class="events-card-cover" href="' + esc(link) + '">' + title + '</a>'
                 var body =
-                    '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ticket ? 'On sale now' : ev.tag) + '</span>' +
+                    '<span class="events-card-tag' + (ev.tag === 'Upcoming' ? ' upcoming' : '') + '">' + esc(ticket ? ev.ticketTag || 'On sale now' : ev.tag) + '</span>' +
                     '<span class="events-card-date">' + esc(ev.date) + '</span>' +
                     '<h2 class="events-card-title">' + title + '</h2>' +
                     (ticket
@@ -318,7 +318,7 @@
             ? shows
                   .map(function (show) {
                       var live = /^https?:\/\//i.test(show.link || '') && !show.soldOut
-                      var status = show.soldOut ? 'Sold out' : live ? 'On sale' : 'On sale soon'
+                      var status = show.tag || (show.soldOut ? 'Sold out' : live ? 'On sale' : 'On sale soon')
                       var action = show.soldOut
                           ? '<span class="pill ticket-off">SOLD OUT</span>'
                           : live

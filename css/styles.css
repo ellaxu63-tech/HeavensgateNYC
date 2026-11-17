@@ -270,6 +270,8 @@ main:focus { outline: none; }
 /* On phones APPLY is a plain call to action in the middle of the home page: white text with a white line under it. */
 .home-apply { display: none; }
 
+/* The buttons sit in a row under the sentence (stacked on a narrow screen). */
+.home-tickets-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 12px; margin-top: 20px; }
 /* GET TICKETS under the sentence on the home page (wide screens and phones): a big button with a white outline (like the
    lines on the pages) and the event's name. */
 .home-tickets {
@@ -282,7 +284,7 @@ main:focus { outline: none; }
     max-width: 100%;
     height: auto;
     min-height: 56px;
-    margin: 20px auto 0;
+    margin: 0;
     padding: 10px 30px;
     border: 1px solid var(--fg);
     background: transparent;

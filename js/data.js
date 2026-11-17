@@ -460,6 +460,7 @@
         //   onSale  – optional line while `link` is empty, e.g. 'On sale in January'
         //   soldOut – true shows SOLD OUT and takes the button away
         //   button  – optional wording of the button (default 'GET TICKETS')
+        //   tag     – optional wording of the tag at the top (default On sale / On sale soon / Sold out)
         tickets: {
             note: 'Questions about tickets? Write to',
             shows: [
@@ -473,6 +474,16 @@
                     onSale: '',
                     soldOut: false,
                     button: 'GET TICKETS ON RA',
+                },
+                {
+                    title: 'Horn of Plenty',
+                    date: 'December 12, 2026 \u00b7 6\u20139 PM',
+                    location: 'R\u00dcME Atelier',
+                    text: 'An edible ode to the great McQueen. Join HEAVENSGATE x R\u00dcME for a specially curated holiday dinner. Limited seating available.',
+                    link: 'https://www.houseofcontra.com/events/horn-of-plenty',
+                    price: '$88 plus fees',
+                    tag: 'Limited seating',
+                    button: 'REQUEST TO ATTEND',
                 },
             ],
         },
@@ -1155,7 +1166,8 @@
         //   links    – [{ label, href }] shown as links under the text (tickets, the application ...)
         //   ticketUrl – the address of the event's page on a ticketing site (RA, Eventbrite, Posh ...). An upcoming event
         //              with one gets a pink GET TICKETS button on its card on the Events page and on its own page.
-        //              `ticketLabel` changes the wording (default 'GET TICKETS').
+        //              `ticketLabel` changes the wording (default 'GET TICKETS') and `ticketTag` the tag on the card
+        //              (default 'On sale now').
         //   tag      – 'Upcoming' (pink) or 'Past'
         events: [
             {
@@ -1194,10 +1206,15 @@
             {
                 // The poster is up; add the venue and a ticket or reservation link (ticketUrl) when you have them.
                 slug: 'horn-of-plenty',
+                // Seats are by request on House of Contra, so the button says so (ticketLabel) and the card tag
+                // says Limited seating (ticketTag) instead of On sale now.
+                ticketUrl: 'https://www.houseofcontra.com/events/horn-of-plenty',
+                ticketLabel: 'REQUEST TO ATTEND',
+                ticketTag: 'Limited seating',
                 tag: 'Upcoming',
                 title: 'Horn of Plenty',
                 date: 'Dec 12, 2026 \u00b7 6\u20139 PM',
-                location: 'Location to be announced',
+                location: 'R\u00dcME Atelier',
                 type: 'Dinner',
                 image: 'assets/events/horn-of-plenty/thumb-01.webp',
                 images: [
@@ -1214,7 +1231,8 @@
                     { role: 'Time', names: ['6\u20139 PM'] },
                     { role: 'Hosted by', names: ['HEAVENSGATE NYC', 'R\u00dcME'] },
                     { role: 'Seating', names: ['Limited'] },
-                    { role: 'Venue', names: ['To be announced'] },
+                    { role: 'Admission', names: ['$88 plus fees, by request'] },
+                    { role: 'Venue', names: ['R\u00dcME Atelier'] },
                 ],
             },
             {

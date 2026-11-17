@@ -85,20 +85,27 @@
     function addHomeTickets() {
         var intro = document.querySelector('.stage-intro')
         if (!isHome || !intro) return
+        // The soonest first. The wording is the event's own (ticketLabel: GET TICKETS, REQUEST TO ATTEND ...).
+        function day(ev) {
+            return Date.parse(String(ev.date || '').split(' \u00b7 ')[0]) || 0
+        }
         var html = (data.events || [])
             .filter(function (ev) {
                 return ev.tag === 'Upcoming' && ev.slug && HG.ticketUrlOf(ev)
             })
+            .sort(function (a, b) {
+                return day(a) - day(b)
+            })
             .map(function (ev) {
                 return (
                     '<a class="pill home-tickets" href="' + esc(HG.eventUrl(ev)) + '">' +
-                        '<span class="home-tickets-main">GET TICKETS</span>' +
-                        '<span class="home-tickets-sub">' + esc([ev.title, ev.date].filter(Boolean).join(' \u00b7 ')) + '</span>' +
+                        '<span class="home-tickets-main">' + esc(ev.ticketLabel || 'GET TICKETS') + '</span>' +
+                        '<span class="home-tickets-sub">' + esc([ev.title, String(ev.date || '').split(' \u00b7 ')[0]].filter(Boolean).join(' \u00b7 ')) + '</span>' +
                     '</a>'
                 )
             })
             .join('')
-        if (html) intro.insertAdjacentHTML('beforeend', html)
+        if (html) intro.insertAdjacentHTML('beforeend', '<div class="home-tickets-row">' + html + '</div>')
     }
 
     // On phones the header has no room for links, so APPLY goes in the middle of the home page as a plain call
