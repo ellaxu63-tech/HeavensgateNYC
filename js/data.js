@@ -1224,6 +1224,33 @@
                         label: 'Holiday dinner',
                         alt: 'The Horn of Plenty poster: HEAVENSGATE x R\u00dcME, Horn of Plenty, December 12th, 6\u20139 PM, an edible ode to the great McQueen. A black and red high-heeled shoe on a silver platter of forks and knives, on a chessboard with raw meat and a tomato.',
                     },
+                    // McQueen runway photographs, on this page only (`home: false` keeps them off the home page).
+                    // They are shown at their own size, never enlarged: swap in larger files for a sharper page.
+                    {
+                        src: 'assets/events/horn-of-plenty/02-feathers.webp',
+                        home: false,
+                        alt: 'A model in a navy feathered head covering with white face makeup and glossy red lips, against a black background.',
+                    },
+                    {
+                        src: 'assets/events/horn-of-plenty/03-runway.webp',
+                        home: false,
+                        alt: 'A line of runway models in black and white houndstooth suits and hats, walking past a towering heap of black wrecked objects and machinery.',
+                    },
+                    {
+                        src: 'assets/events/horn-of-plenty/04-snake-print.webp',
+                        home: false,
+                        alt: 'A model in a red and black snake-print dress, with a mask and sleeves made of silver metal plates.',
+                    },
+                    {
+                        src: 'assets/events/horn-of-plenty/05-wire-hat.webp',
+                        home: false,
+                        alt: 'A model in a dark wire dome hat with red spiky edges, a red and black feathered jacket and a metallic skirt.',
+                    },
+                    {
+                        src: 'assets/events/horn-of-plenty/06-houndstooth.webp',
+                        home: false,
+                        alt: 'A model in a houndstooth coat and a matching umbrella hat, with a red mouth, black gloves and black boots.',
+                    },
                 ],
                 summary: 'An edible ode to the great McQueen.\n\nJoin HEAVENSGATE x R\u00dcME for a specially curated holiday dinner.\n\nLimited seating available.',
                 details: [

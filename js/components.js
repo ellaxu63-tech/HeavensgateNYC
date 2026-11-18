@@ -189,6 +189,7 @@
             if (!ev.slug || !list) return
             list.forEach(function (item, i) {
                 var img = typeof item === 'string' ? { src: item } : item
+                if (img.home === false) return // shown on the event page only
                 cards.push({
                     slug: 'event-' + ev.slug + '-' + (i + 1),
                     title: img.label || ev.title,
