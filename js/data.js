@@ -1241,6 +1241,21 @@
                         home: false,
                         alt: 'A model in a red and black snake-print dress, with a mask and sleeves made of silver metal plates.',
                     },
+                    {
+                        src: 'assets/events/horn-of-plenty/05-bird-print.webp',
+                        home: false,
+                        alt: 'A model in a red satin dress printed with black birds and an oversized houndstooth collar, with a black plastic bag on her head and dark lips.',
+                    },
+                    {
+                        src: 'assets/events/horn-of-plenty/06-red-feather-hat.webp',
+                        home: false,
+                        alt: 'A close-up of a model in a tall red feathered hat, with white face makeup, dark plum lips, a black bin-bag bow at the neck and a red and white flecked coat.',
+                    },
+                    {
+                        src: 'assets/events/horn-of-plenty/07-orange-check.webp',
+                        home: false,
+                        alt: 'A model in an orange and black diamond-checked organza dress with matching striped tights and a black plastic headpiece, with red lips, on a black runway.',
+                    },
                 ],
                 summary: 'An edible ode to the great McQueen.\n\nJoin HEAVENSGATE x R\u00dcME for a specially curated holiday dinner.\n\nLimited seating available.',
                 details: [
