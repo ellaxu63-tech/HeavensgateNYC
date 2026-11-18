@@ -480,7 +480,7 @@
                     date: 'December 12, 2026 \u00b7 6\u20139 PM',
                     location: 'R\u00dcME Atelier',
                     text: 'An edible ode to the great McQueen. Join HEAVENSGATE x R\u00dcME for a specially curated holiday dinner. Limited seating available.',
-                    link: 'https://www.houseofcontra.com/events/horn-of-plenty',
+                    link: 'https://www.houseofcontra.com/events/d2d62aa9-0de6-42c4-a858-390a030069ec',
                     price: '$88 plus fees',
                     tag: 'Limited seating',
                     button: 'REQUEST TO ATTEND',
@@ -1208,7 +1208,7 @@
                 slug: 'horn-of-plenty',
                 // Seats are by request on House of Contra, so the button says so (ticketLabel) and the card tag
                 // says Limited seating (ticketTag) instead of On sale now.
-                ticketUrl: 'https://www.houseofcontra.com/events/horn-of-plenty',
+                ticketUrl: 'https://www.houseofcontra.com/events/d2d62aa9-0de6-42c4-a858-390a030069ec',
                 ticketLabel: 'REQUEST TO ATTEND',
                 ticketTag: 'Limited seating',
                 tag: 'Upcoming',
