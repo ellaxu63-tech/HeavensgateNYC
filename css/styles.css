@@ -568,6 +568,11 @@ html.lightbox-open #hg-cursor .cursor-label { opacity: 0; }
 .lightbox-close { position: absolute; top: 16px; right: var(--pad); }
 .lightbox-figure { display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: 100%; margin: 0; }
 .lightbox .project-video { width: min(100%, calc((100vh - 170px) * var(--ratio, 0.5625))); }
+/* The photo viewer: the photo (never enlarged past its own size) with PREV / NEXT under it. */
+.photo-viewer-figure { gap: 16px; }
+.photo-viewer-img { display: block; width: auto; max-width: 100%; height: auto; max-height: calc(100vh - 190px); box-shadow: 0 0 0 1px var(--grid); }
+.photo-controls { display: flex; align-items: center; justify-content: center; gap: 18px; }
+.photo-count { min-width: 6ch; color: var(--muted); font: 400 12px/1 var(--mono); letter-spacing: 0.04em; text-align: center; }
 .lightbox figcaption { max-width: 60ch; color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; text-transform: uppercase; }
 
 /* -------------------------------------------------------- project cards */
@@ -1124,6 +1129,8 @@ html.list-hold .site-footer--fixed::after { animation-play-state: paused; }
 .project-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
 /* All of a project's images, stacked in the left column. */
 .project-images { display: grid; justify-items: start; gap: 24px; padding: 32px var(--gutter) 64px var(--pad); }
+/* On a wide screen the lead photo / video stays in view while the credits beside it scroll. */
+@media (min-width: 861px) { .project-images { position: sticky; top: var(--header-h); } }
 /* A YouTube / Vimeo video: the player, then a big title that links to the video on its own site. If the
    player can't be shown (js/components.js, HG.checkEmbeds) only the title is left. */
 .video-embed { width: min(100%, calc((100vh - var(--header-h) - 150px) * var(--ratio, 1.7778))); }
@@ -1155,6 +1162,18 @@ html.list-hold .site-footer--fixed::after { animation-play-state: paused; }
 }
 .video-link:hover .video-link-title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.12em; }
 .video-link:hover .video-link-note { color: var(--fg); }
+/* A photo that opens in the viewer (js/photos.js), and the grid of small ones under the text. */
+.photo { display: block; cursor: zoom-in; }
+.photo--hero { max-width: 100%; }
+.photo-grid { padding: 0 var(--gutter) 64px var(--pad); border-top: 1px solid var(--rule); }
+.photo-grid .eyebrow { padding: 22px 0 16px; }
+.photo-grid-items { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.photo-grid .photo { aspect-ratio: 4 / 5; overflow: hidden; background: rgba(var(--fg-rgb), 0.06); box-shadow: 0 0 0 1px var(--grid); }
+.photo-grid img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; transition: opacity 160ms ease, transform 400ms ease; }
+.photo-grid .photo:hover img { opacity: 0.85; transform: scale(1.03); }
+@media (max-width: 1199px) { .photo-grid-items { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 860px) { .photo-grid { padding: 0 var(--pad) 48px; } .photo-grid-items { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+@media (prefers-reduced-motion: reduce) { .photo-grid img { transition: none; } .photo-grid .photo:hover img { transform: none; } }
 .project-hero {
     display: block;
     width: auto;

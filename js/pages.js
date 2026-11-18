@@ -54,17 +54,52 @@
     }
 
     // Each item is a path or { src, alt }. Everything after the first loads lazily.
-    function imagesHtml(items, fallbackAlt) {
-        return items
-            .map(function (item, i) {
-                var src = typeof item === 'string' ? item : item.src
-                var alt = (typeof item === 'string' ? '' : item.alt) || fallbackAlt
-                return (
-                    '<img class="project-hero" src="' + esc(src) + '" alt="' + esc(alt) + '"' +
-                    (i > 0 ? ' loading="lazy"' : '') + ' decoding="async">'
-                )
-            })
-            .join('')
+    // Photos on a project or event page: the first one is large beside the text, the rest are a grid of small
+    // pictures under it, and every photo opens full size in a viewer (js/photos.js). The links work without it too.
+    function photoParts(item, fallbackAlt) {
+        return {
+            src: typeof item === 'string' ? item : item.src,
+            thumb: typeof item === 'string' ? '' : item.thumb || '',
+            alt: (typeof item === 'string' ? '' : item.alt) || fallbackAlt,
+        }
+    }
+
+    function heroPhotoHtml(item, fallbackAlt) {
+        var p = photoParts(item, fallbackAlt)
+        return (
+            '<a class="photo photo--hero" href="' + esc(p.src) + '" data-photo data-alt="' + esc(p.alt) + '" aria-label="View this photo full size">' +
+                '<img class="project-hero" src="' + esc(p.src) + '" alt="' + esc(p.alt) + '" decoding="async">' +
+            '</a>'
+        )
+    }
+
+    function photoGridHtml(items, fallbackAlt) {
+        if (!items.length) return ''
+        return (
+            '<section class="photo-grid" aria-label="Photos">' +
+                '<p class="eyebrow">Photos</p>' +
+                '<div class="photo-grid-items">' +
+                    items
+                        .map(function (item) {
+                            var p = photoParts(item, fallbackAlt)
+                            return (
+                                '<a class="photo" href="' + esc(p.src) + '" data-photo data-alt="' + esc(p.alt) + '" aria-label="View this photo full size">' +
+                                    '<img src="' + esc(p.thumb || p.src) + '" alt="' + esc(p.alt) + '" loading="lazy" decoding="async">' +
+                                '</a>'
+                            )
+                        })
+                        .join('') +
+                '</div>' +
+            '</section>'
+        )
+    }
+
+    // With a video the video is the large thing and every photo goes in the grid; without one the first photo is large.
+    function photoLayout(images, hasVideo, fallbackAlt) {
+        return {
+            hero: !hasVideo && images.length ? heroPhotoHtml(images[0], fallbackAlt) : '',
+            grid: photoGridHtml(hasVideo ? images : images.slice(1), fallbackAlt),
+        }
     }
 
     // ------------------------------------------------------ project detail
@@ -99,13 +134,14 @@
             .join('')
         var bio = bioHtml(project.summary)
         var credits = creditsHtml(project.credits)
+        var photos = photoLayout(images, videoItems.length > 0, project.title)
 
         holder.innerHTML =
             '<a class="back-link" href="gallery.html">← Gallery</a>' +
             '<div class="project-layout">' +
                 '<div class="project-images">' +
                     videos +
-                    imagesHtml(images, project.title) +
+                    photos.hero +
                 '</div>' +
                 '<div class="project-info">' +
                     '<p class="eyebrow">' + esc(HG.projectMeta(project)) + '</p>' +
@@ -114,6 +150,7 @@
                     credits +
                 '</div>' +
             '</div>' +
+            photos.grid +
             '<nav class="project-pager" aria-label="More projects">' +
                 '<a href="' + esc(HG.projectUrl(prev)) + '" data-cursor="open"><span>Previous</span>' + esc(prev.title) + '</a>' +
                 '<a href="' + esc(HG.projectUrl(next)) + '" data-cursor="open"><span>Next</span>' + esc(next.title) + '</a>' +
@@ -233,10 +270,11 @@
                 return HG.videoHtml(item, ev.title)
             })
             .join('')
+        var photos = photoLayout(images, videoItems.length > 0, ev.title)
         holder.innerHTML =
             '<a class="back-link" href="events.html">← Events</a>' +
             '<div class="project-layout">' +
-                '<div class="project-images">' + videos + imagesHtml(images, ev.title) + '</div>' +
+                '<div class="project-images">' + videos + photos.hero + '</div>' +
                 '<div class="project-info">' +
                     '<p class="eyebrow">' + esc([ev.type, ev.date, ev.location].filter(Boolean).join(' — ')) + '</p>' +
                     '<h1 class="page-title">' + esc(ev.title) + '</h1>' +
@@ -246,7 +284,8 @@
                     eventLinks +
                     creditsHtml((ev.details || []).concat(ev.credits || (proj && proj.credits) || [])) +
                 '</div>' +
-            '</div>'
+            '</div>' +
+            photos.grid
 
         initVideos(holder)
     }
