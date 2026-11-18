@@ -1108,7 +1108,8 @@ html.list-hold .site-footer--fixed::after { animation-play-state: paused; }
 }
 
 /* Gallery */
-.gallery-grid { columns: 4 240px; column-gap: var(--pad); padding: 40px var(--pad) 80px; }
+/* Own background: keeps the page's centre line from running through the middle column when there are 3 (the outer lines stay). */
+.gallery-grid { columns: 4 240px; column-gap: var(--pad); padding: 40px var(--pad) 80px; background: var(--grid-edges), var(--bg); }
 .gallery-grid .project-card { margin-bottom: 40px; break-inside: avoid; }
 .gallery-grid .project-card:hover img { transform: scale(1.03); }
 
