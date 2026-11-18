@@ -1109,8 +1109,9 @@ html.list-hold .site-footer--fixed::after { animation-play-state: paused; }
 
 /* Gallery */
 /* Own background: keeps the page's centre line from running through the middle column when there are 3 (the outer lines stay). */
-.gallery-grid { columns: 4 240px; column-gap: var(--pad); padding: 40px var(--pad) 80px; background: var(--grid-edges), var(--bg); }
-.gallery-grid .project-card { margin-bottom: 40px; break-inside: avoid; }
+.gallery-grid { display: flex; align-items: flex-start; gap: var(--pad); padding: 40px var(--pad) 80px; background: var(--grid-edges), var(--bg); }
+.gallery-col { flex: 1 1 0; min-width: 0; }
+.gallery-grid .project-card { margin-bottom: 40px; }
 .gallery-grid .project-card:hover img { transform: scale(1.03); }
 
 /* Project detail: image left, text right (split at the centre line). */

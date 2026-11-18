@@ -13,11 +13,44 @@
     if (!main) return
 
     // ------------------------------------------------------------- gallery
+    // The gallery is plain stacked columns (not CSS multi-column, which Safari can leave blank). Each project goes
+    // in the shortest column so far, using its cover's shape to estimate heights; 4 columns at most, 240px at least.
     function renderGallery() {
         var grid = main.querySelector('.gallery-grid')
-        data.projects.forEach(function (project) {
-            grid.appendChild(HG.createProjectCard(project))
+        var items = data.projects.map(function (project) {
+            var card = HG.createProjectCard(project)
+            var img = card.querySelector('img')
+            if (img) img.decoding = 'auto'
+            return { card: card, ratio: project.ratio || 1 }
         })
+        var count = 0
+        function layout() {
+            var style = getComputedStyle(grid)
+            var gap = parseFloat(style.columnGap) || 0
+            var inner = grid.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+            var n = Math.max(1, Math.min(4, Math.floor((inner + gap) / (240 + gap))))
+            if (n === count) return
+            count = n
+            var width = (inner - gap * (n - 1)) / n
+            var columns = []
+            var heights = []
+            grid.textContent = ''
+            for (var i = 0; i < n; i++) {
+                var column = document.createElement('div')
+                column.className = 'gallery-col'
+                grid.appendChild(column)
+                columns.push(column)
+                heights.push(0)
+            }
+            items.forEach(function (item) {
+                var shortest = heights.indexOf(Math.min.apply(null, heights))
+                columns[shortest].appendChild(item.card)
+                heights[shortest] += width / item.ratio + 70 // the cover, plus its caption and the space under it
+            })
+        }
+        layout()
+        if ('ResizeObserver' in window) new ResizeObserver(layout).observe(grid)
+        else window.addEventListener('resize', layout)
     }
 
     // ----------------------------------------- shared by project / event pages
