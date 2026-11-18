@@ -1165,7 +1165,8 @@ html.list-hold .site-footer--fixed::after { animation-play-state: paused; }
 /* A photo that opens in the viewer (js/photos.js), and the grid of small ones under the text. */
 .photo { display: block; cursor: zoom-in; }
 .photo--hero { max-width: 100%; }
-.photo-grid { padding: 0 var(--gutter) 64px var(--pad); border-top: 1px solid var(--rule); }
+/* Its own background keeps the page's centre line from showing through the gaps between tiles (the outer lines stay). */
+.photo-grid { padding: 0 var(--gutter) 64px var(--pad); border-top: 1px solid var(--rule); background: var(--grid-edges), var(--bg); }
 .photo-grid .eyebrow { padding: 22px 0 16px; }
 .photo-grid-items { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .photo-grid .photo { aspect-ratio: 4 / 5; overflow: hidden; background: rgba(var(--fg-rgb), 0.06); box-shadow: 0 0 0 1px var(--grid); }
